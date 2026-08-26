@@ -3,203 +3,291 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>B1 — Slides</title>
+<title>B1 — Slides (BORRADOR)</title>
 <style>
-  body { font-family: Arial, sans-serif; background: #ccc; margin: 0; padding: 30px; }
-  .slide {
-    background: white;
-    width: 860px;
-    max-width: 100%;
-    min-height: 480px;
-    margin: 0 auto;
-    padding: 36px 44px;
-    box-sizing: border-box;
+  /* ── Base ── */
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: #7A90A8;
+    margin: 0;
+    padding: 32px 16px;
+    color: #1a1a1a;
+    -webkit-font-smoothing: antialiased;
   }
-  .page-break {
-    width: 860px;
-    max-width: 100%;
-    margin: 0 auto;
-    border: none;
-    border-top: 6px dashed #555;
-    padding: 6px 0;
-  }
-  .slide-label {
-    width: 860px;
-    max-width: 100%;
-    margin: 0 auto;
-    font-size: 0.75em;
-    color: #555;
-    padding: 4px 0 2px 0;
-    text-align: right;
-  }
-  .block-title {
-    width: 860px;
-    max-width: 100%;
-    margin: 18px auto 4px;
-    font-size: 0.8em;
-    font-weight: bold;
-    color: #333;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 4px 0;
-    border-bottom: 1px solid #aaa;
-  }
-  h1 { font-size: 1.3em; margin: 0 0 14px 0; padding-bottom: 8px; border-bottom: 2px solid #222; }
-  h2 { font-size: 1em; margin: 12px 0 5px; }
-  p, li { font-size: 0.88em; margin: 4px 0; line-height: 1.45; }
-  ul { margin: 4px 0; padding-left: 18px; }
-  table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: 0.85em; }
-  th, td { border: 1px solid #aaa; padding: 5px 9px; text-align: left; }
-  th { background: #eee; font-weight: bold; }
-  .rule { background: #f5f5f5; border-left: 3px solid #555; padding: 5px 10px; margin: 6px 0; font-size: 0.87em; }
-  .note { font-size: 0.82em; color: #444; margin: 4px 0; }
-  .ok { color: #2a7; }
-  .warn { color: #b80; }
-  .bad { color: #c22; }
-  .cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .cols3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
 
-  /* NOTAS COLAPSABLES */
-  .teacher-notes-toggle {
+  /* ── Layout wrappers ── */
+  .slide, .slide-label, .block-title,
+  .page-break, .teacher-notes-toggle,
+  .teacher-notes-content, .draft-banner {
     width: 860px;
     max-width: 100%;
-    margin: 0 auto;
-    padding: 8px 12px;
-    background: #fff3cd;
-    border-left: 4px solid #d4a017;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .draft-banner {
+    padding: 10px 18px;
+    background: #e8d5f5;
+    border-left: 5px solid #8e44ad;
+    font-size: 0.88em;
+    color: #5b2c6f;
+    font-weight: bold;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+
+  /* ── Slide card — bone white with blue boundary ── */
+  .slide {
+    background: #F7F3EC;
+    min-height: 480px;
+    padding: 44px 52px;
+    border-radius: 3px;
+    border: 1.5px solid #BDD0E8;
+    border-top: 4px solid #1E52A0;
+    box-shadow: 0 3px 18px rgba(20, 55, 130, 0.14), 0 1px 4px rgba(0,0,0,.10);
+    scroll-margin-top: 16px;
+  }
+
+  .page-break {
+    border: none;
+    border-top: 4px dashed #8AAAC8;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 8px 0;
+  }
+
+  .slide-label {
+    font-size: 0.72em;
+    color: #6A85A8;
+    padding: 6px 2px 2px;
+    text-align: right;
+    letter-spacing: .5px;
+  }
+
+  .block-title {
+    margin-top: 28px;
+    margin-bottom: 6px;
+    font-size: 0.72em;
+    font-weight: 700;
+    color: #1E52A0;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 0;
+    border-bottom: 2px solid #1E52A0;
+  }
+
+  /* ── Slide number badge in h1 ── */
+  .slide-num {
+    display: inline-block;
+    color: #2563EB;
+    font-weight: 700;
     font-size: 0.85em;
-    color: #856404;
+    margin-right: 8px;
+    opacity: 0.75;
+    letter-spacing: 0;
+  }
+
+  /* ── Typography ── */
+  h1 {
+    font-size: 1.35em;
+    font-weight: 700;
+    margin: 0 0 18px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #1A3A7A;
+    line-height: 1.3;
+    color: #1A3A7A;
+  }
+
+  h2 {
+    font-size: 0.95em;
+    font-weight: 700;
+    margin: 22px 0 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #C8D8EE;
+    color: #1E52A0;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+
+  p { font-size: 0.9em; margin: 0 0 8px; line-height: 1.65; }
+
+  ul { margin: 4px 0 10px; padding-left: 20px; }
+  li { font-size: 0.9em; line-height: 1.65; margin-bottom: 10px; }
+  li:last-child { margin-bottom: 0; }
+
+  /* ── Tables ── */
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 0.85em; }
+  th, td { border: 1px solid #C8D8EE; padding: 8px 12px; text-align: left; vertical-align: top; line-height: 1.5; }
+  th { background: #E4EEF9; font-weight: 700; color: #1A3A7A; }
+  tr:nth-child(even) td { background: #F2F7FD; }
+
+  /* ── Rule boxes ── */
+  .rule {
+    background: #EDF3FB;
+    border-left: 4px solid #2563EB;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88em;
+    line-height: 1.7;
+    border-radius: 0 4px 4px 0;
+  }
+  .rule strong { color: #1A3A7A; }
+  .rule em {
+    background: #DBEAFE;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-style: italic;
+    color: #1E40AF;
+  }
+
+  /* ── Notes ── */
+  .note {
+    font-size: 0.82em;
+    color: #4A6080;
+    line-height: 1.55;
+    margin: 8px 0;
+    padding-left: 10px;
+    border-left: 2px solid #B8CCE4;
+  }
+
+  /* ── Status colors ── */
+  .ok   { color: #1e7e34; font-weight: 600; }
+  .warn { color: #856404; font-weight: 600; }
+  .bad  { color: #a71d2a; font-weight: 600; }
+
+  /* ── Inline key-term highlight ── */
+  .key {
+    background: #DBEAFE;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-weight: 700;
+    color: #1E40AF;
+  }
+
+  /* ── Layout columns ── */
+  .cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .cols3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+
+  /* ── Teacher notes (collapsible) ── */
+  .teacher-notes-toggle {
+    display: block;
+    padding: 9px 14px;
+    background: #fff8e1;
+    border-left: 4px solid #d4a017;
+    font-size: 0.83em;
+    color: #795b04;
     cursor: pointer;
     user-select: none;
     border-radius: 3px;
+    margin-top: 2px;
   }
-  .teacher-notes-toggle:hover {
-    background: #ffe69c;
-  }
+  .teacher-notes-toggle:hover { background: #ffe69c; }
+
   .teacher-notes-content {
-    width: 860px;
-    max-width: 100%;
-    margin: 0 auto 30px;
-    padding: 12px 14px;
+    margin-bottom: 32px;
+    padding: 0 18px;
     background: #fef7e0;
     border-left: 4px solid #d4a017;
-    font-size: 0.82em;
-    line-height: 1.4;
+    font-size: 0.83em;
+    line-height: 1.65;
     color: #333;
-    border-radius: 0 3px 3px 0;
+    border-radius: 0 4px 4px 0;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease;
+    transition: max-height 0.35s ease, padding 0.35s ease;
   }
-  .teacher-notes-content.show {
-    max-height: 1000px;
-  }
-  .teacher-notes-content strong { color: #b8860b; }
-  .teacher-notes-content em { font-style: italic; color: #666; }
+  .teacher-notes-content.show { max-height: 2400px; padding: 14px 18px; }
+  .teacher-notes-content strong { color: #7d5a00; }
+  .teacher-notes-content em { font-style: italic; color: #555; }
+  .teacher-notes-content p { margin-bottom: 10px; }
 
-  /* EJERCICIOS INTERACTIVOS */
+  /* ── Interactive exercises ── */
   .exercise-item {
-    background: #f9f9f9;
-    border-left: 4px solid #3498db;
-    padding: 12px;
-    margin: 12px 0;
-    border-radius: 3px;
+    background: #EDF3FB;
+    border-left: 4px solid #2563EB;
+    padding: 14px 16px;
+    margin: 14px 0;
+    border-radius: 0 5px 5px 0;
+  }
+  .exercise-context {
+    font-size: 0.82em;
+    color: #4A6080;
+    margin-bottom: 8px;
+    font-style: italic;
+    line-height: 1.5;
   }
   .exercise-prompt {
     font-size: 0.92em;
-    margin-bottom: 8px;
-    color: #333;
+    margin-bottom: 10px;
+    color: #1a1a1a;
+    line-height: 1.6;
   }
-  .exercise-input {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    margin-bottom: 8px;
-  }
+  .exercise-input { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; }
   .exercise-input input {
     flex: 1;
-    padding: 6px 8px;
-    border: 1px solid #bbb;
-    border-radius: 3px;
-    font-family: monospace;
-    font-size: 0.9em;
+    padding: 7px 10px;
+    border: 1px solid #B0C4DE;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.92em;
+    color: #222;
+    background: #fff;
   }
+  .exercise-input input:focus { outline: 2px solid #2563EB; border-color: transparent; }
   .exercise-input button {
-    padding: 6px 14px;
-    background: #3498db;
+    padding: 7px 16px;
+    background: #2563EB;
     color: white;
     border: none;
-    border-radius: 3px;
+    border-radius: 4px;
     cursor: pointer;
     font-size: 0.85em;
-    font-weight: bold;
+    font-weight: 700;
+    white-space: nowrap;
   }
-  .exercise-input button:hover {
-    background: #2980b9;
-  }
-  .exercise-feedback {
-    margin-top: 8px;
-    padding: 8px;
-    border-radius: 3px;
-    font-size: 0.88em;
-    display: none;
-  }
-  .exercise-feedback.show {
-    display: block;
-  }
-  .feedback-correct {
-    background: #d5f4e6;
-    border-left: 3px solid #27ae60;
-    color: #27ae60;
-  }
-  .feedback-incorrect {
-    background: #fadbd8;
-    border-left: 3px solid #c0392b;
-    color: #c0392b;
-  }
-  .feedback-answer {
-    font-weight: bold;
-    margin-top: 4px;
-    font-family: monospace;
-  }
+  .exercise-input button:hover { background: #1D4ED8; }
+  .exercise-feedback { margin-top: 8px; padding: 9px 12px; border-radius: 4px; font-size: 0.88em; display: none; line-height: 1.5; }
+  .exercise-feedback.show { display: block; }
+  .feedback-correct  { background: #d4edda; border-left: 3px solid #28a745; color: #155724; }
+  .feedback-incorrect { background: #f8d7da; border-left: 3px solid #c0392b; color: #721c24; }
+  .feedback-answer   { font-weight: 700; margin-top: 5px; font-family: 'Courier New', monospace; }
 
-  /* EJEMPLOS COLAPSABLES */
+  /* ── Collapsible examples ── */
   .examples-toggle {
     display: inline-block;
-    padding: 4px 8px;
-    background: #e8f4f8;
-    border-left: 3px solid #1a8fa8;
-    font-size: 0.82em;
-    color: #1a8fa8;
+    padding: 4px 10px;
+    background: #DBEAFE;
+    border-left: 3px solid #1D4ED8;
+    font-size: 0.8em;
+    color: #1D4ED8;
     cursor: pointer;
     user-select: none;
-    border-radius: 2px;
-    margin: 8px 0;
+    border-radius: 0 3px 3px 0;
+    margin: 10px 0 2px;
   }
-  .examples-toggle:hover {
-    background: #d4ecf4;
-  }
+  .examples-toggle:hover { background: #BFDBFE; }
   .examples-content {
-    max-height: 2000px;
+    max-height: 2400px;
     overflow: hidden;
-    transition: max-height 0.3s ease;
+    transition: opacity 0.3s ease, max-height 0.35s ease;
     opacity: 1;
-    transition: opacity 0.3s ease, max-height 0.3s ease;
+    padding-top: 4px;
   }
-  .examples-content.collapsed {
-    max-height: 0;
-    opacity: 0;
-  }
+  .examples-content.collapsed { max-height: 0; opacity: 0; }
 
-  @media (max-width: 600px) {
-    body { padding: 10px; }
-    .slide { padding: 18px 16px; min-height: unset; }
-    .cols2, .cols3 { grid-template-columns: 1fr; gap: 12px; }
+  /* ── Responsive ── */
+  @media (max-width: 680px) {
+    body { padding: 10px 8px; }
+    .slide { padding: 22px 18px; min-height: unset; }
+    .cols2, .cols3 { grid-template-columns: 1fr; gap: 14px; }
     table { font-size: 0.78em; }
-    th, td { padding: 4px 6px; }
+    th, td { padding: 5px 7px; }
     h1 { font-size: 1.1em; }
+    h2 { font-size: 0.9em; }
     .exercise-input { flex-wrap: wrap; }
     .exercise-input input { min-width: 0; }
+    .rule { padding: 9px 12px; }
   }
 </style>
 </head>
@@ -218,7 +306,6 @@ function checkAnswer(buttonEl) {
   const userAnswer = input.value.trim().toLowerCase();
   const normalizedAnswer = removeTildes(answer).toLowerCase();
   const normalizedUser = removeTildes(userAnswer).toLowerCase();
-
   const isCorrect = normalizedAnswer === normalizedUser;
 
   feedback.classList.add('show');
@@ -233,9 +320,7 @@ function checkAnswer(buttonEl) {
 }
 
 function handleKeyPress(e, buttonEl) {
-  if (e.key === 'Enter') {
-    checkAnswer(buttonEl);
-  }
+  if (e.key === 'Enter') checkAnswer(buttonEl);
 }
 
 function toggleNotes(toggleEl) {
@@ -251,305 +336,421 @@ function toggleExamples(toggleEl) {
 }
 </script>
 
+
 <!-- ===================== BLOQUE 1 ===================== -->
 <div class="block-title">Bloque 1 — Imperativo afirmativo + pronombres</div>
 
 <!-- SLIDE 1 -->
 <div class="slide-label">1 / 12</div>
-<div class="slide">
-  <h1>Imperativo afirmativo — repaso</h1>
-  <div class="rule"><strong>Vocal contraria:</strong> -AR → tú = <strong>-a</strong>, usted = <strong>-e</strong> &nbsp;|&nbsp; -ER/-IR → tú = <strong>-e</strong>, usted = <strong>-a</strong></div>
+<div class="slide" id="slide-1">
+  <h1><span class="slide-num">1.</span> Imperativo afirmativo — repaso</h1>
+  <p><strong>Para qué sirve:</strong> dar órdenes, consejos o permisos. <em>¡Habla más despacio! · Come más verdura. · Pasa, pasa.</em></p>
 
-  <div class="examples-toggle" onclick="toggleExamples(this)">▼ Ocultar ejemplos</div>
+  <div class="rule" style="margin-top: 10px;"><strong>Vocal contraria</strong> — tú y usted usan vocales opuestas porque usted toma su forma del subjuntivo:<br>
+  verbos <strong>-AR</strong> → (tú) = <strong>-a</strong>, (usted) = <strong>-e</strong> &nbsp;&nbsp;<em>esperar: (tú) <strong>espera</strong> aquí, (ud.) <strong>espere</strong> aquí</em><br>
+  verbos <strong>-ER/-IR</strong> → (tú) = <strong>-e</strong>, (usted) = <strong>-a</strong> &nbsp;&nbsp;<em>comer: <strong>come</strong>, <strong>coma</strong> &nbsp;·&nbsp; vivir: <strong>vive</strong>, <strong>viva</strong></em></div>
+
+  <p class="note" style="margin-top: 6px;"><strong>Por qué son opuestos:</strong> usted no tiene forma propia de imperativo — toma prestada la del presente de subjuntivo, que siempre usa la vocal del "otro" grupo.</p>
+
+  <div class="examples-toggle" onclick="toggleExamples(this)">▼ Ocultar tabla y ejemplos</div>
   <div class="examples-content">
-    <table>
-      <tr><th>Sujeto</th><th>Formación</th><th>-AR (llevar)</th><th>-ER/-IR (comer)</th></tr>
-      <tr><td>tú</td><td>raíz + vocal "contraria"</td><td>lleva</td><td>come</td></tr>
-      <tr><td>usted</td><td>como el subjuntivo</td><td>lleve</td><td>coma</td></tr>
-      <tr><td>vosotros/as</td><td>infinitivo: -r → -d</td><td>llevad</td><td>comed</td></tr>
+    <table style="margin-top: 8px;">
+      <tr><th>Sujeto</th><th>Formación</th><th>-AR (llevar)</th><th>-ER (comer)</th><th>-IR (vivir)</th></tr>
+      <tr><td>tú</td><td>raíz + vocal contraria</td><td>lleva</td><td>come</td><td>vive</td></tr>
+      <tr><td>usted</td><td>= presente de subjuntivo</td><td>lleve</td><td>coma</td><td>viva</td></tr>
+      <tr><td>vosotros/as</td><td>infinitivo: -r → -d</td><td>llevad</td><td>comed</td><td>vivid</td></tr>
     </table>
-    <p><strong>Error típico:</strong> confundir "lleva" (tú) con "lleve" (usted). Si el ejercicio dice <em>usted</em>, siempre la vocal contraria.</p>
-    <h2>Irregulares frecuentes (tú)</h2>
-    <p><strong>di · haz · ve · pon · sal · ten · ven · sé</strong></p>
+    <p style="margin-top: 10px;"><strong>Error típico:</strong> escribir "lleve" para tú. Recuerda: si el ejercicio dice <em>tú</em>, es la vocal "contraria" — no la del subjuntivo.</p>
+    <h2>Irregulares frecuentes (solo para tú — no siguen la regla)</h2>
+    <table>
+      <tr><th>Infinitivo</th><th>Imperativo tú</th><th>Ejemplo</th></tr>
+      <tr><td>decir</td><td><strong>di</strong></td><td><em>Di la verdad.</em></td></tr>
+      <tr><td>hacer</td><td><strong>haz</strong></td><td><em>Haz los deberes.</em></td></tr>
+      <tr><td>ir</td><td><strong>ve</strong></td><td><em>Ve al mercado.</em></td></tr>
+      <tr><td>poner</td><td><strong>pon</strong></td><td><em>Pon la mesa.</em></td></tr>
+      <tr><td>salir</td><td><strong>sal</strong></td><td><em>Sal de aquí.</em></td></tr>
+      <tr><td>tener</td><td><strong>ten</strong></td><td><em>Ten paciencia.</em></td></tr>
+      <tr><td>venir</td><td><strong>ven</strong></td><td><em>Ven conmigo.</em></td></tr>
+      <tr><td>ser</td><td><strong>sé</strong></td><td><em>Sé amable.</em></td></tr>
+    </table>
+    <p class="note">Estos 8 no siguen ningún patrón — hay que memorizarlos.</p>
   </div>
 </div>
 
 <div class="teacher-notes-toggle" onclick="toggleNotes(this)">▶ Notas del maestro</div>
 <div class="teacher-notes-content">
-  <strong>Clave para explicar:</strong> El imperativo de tú y usted son opuestos porque el sistema del español lo hace así. Los estudiantes esperan que se parezcan, pero la "vocal contraria" viene del subjuntivo (donde usted vive). Es solo una mecánica, no hay lógica profunda.
-  <br><br>
-  <strong>Trampa común:</strong> Muchos estudiantes aceptan la regla pero luego escriben "lleve" para tú en las respuestas. Repite: usted = subjuntivo = vocal del otro grupo.
-  <br><br>
-  <strong>Irregulares:</strong> Estos 8 casos no siguen la regla. Son atajos históricos. No hay patrón. Solo hay que memorizarlos—es como los verbos irregulares en otros tiempos. Haz una lista visual y que memoricen la primera vez que los ven.
+  <strong>Por qué son opuestos (para explicarlo en clase):</strong> Los estudiantes esperan que tú y usted se parezcan. Explica: usted no tiene forma propia — toma prestada la del subjuntivo. Y el subjuntivo siempre usa la vocal del otro grupo. Es el sistema, no una rareza aleatoria.<br><br>
+  <strong>Trampa común:</strong> Muchos aceptan la regla pero en el ejercicio escriben "lleve" para tú. Repite: usted = subjuntivo = vocal del otro grupo.<br><br>
+  <strong>Irregulares:</strong> No hay patrón. Son formas cortas históricas. Ponlos en un cartel visual y pide que los memoricen desde la primera clase. La tabla con ejemplos en contexto ayuda más que solo la lista.
 </div>
 
 <hr class="page-break">
 
 <!-- SLIDE 2 -->
 <div class="slide-label">2 / 12</div>
-<div class="slide">
-  <h1>Pronombres OD y OI</h1>
+<div class="slide" id="slide-2">
+  <h1><span class="slide-num">2.</span> Pronombres de objeto directo e indirecto</h1>
+
   <div class="cols2">
     <div>
-      <div class="rule"><strong>¿OD o OI?</strong><br>
-        ¿<em>qué</em>? → OD (una cosa)<br>
-        ¿<em>a quién / para quién</em>? → OI (una persona)
+      <div class="rule"><strong>¿Cómo identificarlos?</strong><br>
+        Pregunta: ¿<em>qué</em>? → <strong>objeto directo</strong> (una cosa o persona que recibe directamente la acción)<br>
+        Pregunta: ¿<em>a quién / para quién</em>? → <strong>objeto indirecto</strong> (el destinatario o beneficiario)
       </div>
-      <div class="rule" style="margin-top: 12px;"><strong>Duplicación del OI:</strong> cuando mencionamos a la persona con "a", el español añade igualmente le/les.<br>
-      (A mi hermano) <strong>le</strong> compro un regalo.</div>
+      <p class="note" style="margin-top: 8px;"><span class="warn">⚠️ Excepción:</span> este truco falla cuando el objeto directo es una persona — ver slide 3.</p>
+
+      <div class="rule" style="margin-top: 10px;"><strong>Clave:</strong> para yo/tú/nosotros/vosotros el pronombre es el mismo en OD y en OI (me, te, nos, os). Solo la 3.ª persona distingue entre los dos.</div>
     </div>
     <div>
-      <!-- Ejemplos colapsables -->
+      <div class="rule"><strong>Concordancia:</strong> el pronombre copia el género y número de lo que reemplaza, no del sujeto.<br>
+        <em>Compro <u>la camisa</u> → <strong>La</strong> compro.</em><br>
+        <em>Compro <u>los pantalones</u> → <strong>Los</strong> compro.</em><br>
+        <em>Doy el libro a <u>mis padres</u> → <strong>Les</strong> doy el libro.</em>
+      </div>
+
+      <div class="rule" style="margin-top: 10px;"><strong>Duplicación del objeto indirecto:</strong> cuando la persona destinataria aparece con "a", el español añade también le/les — aunque parezca redundante.<br>
+        <em>(A mi hermano) <strong>le</strong> compro un regalo.</em><br>
+        <em><strong>Le</strong> doy el libro a Juan.</em><br>
+        <span class="note">En inglés no se hace: "I give my brother a gift" (sin "to him" adicional). En español siempre se duplica.</span>
+      </div>
     </div>
   </div>
 
-  <div class="examples-toggle" onclick="toggleExamples(this)">▼ Ocultar ejemplos</div>
+  <div class="examples-toggle" onclick="toggleExamples(this)">▼ Ocultar tabla de pronombres</div>
   <div class="examples-content">
-    <div class="cols2">
-      <div>
-        <table>
-          <tr><th>Persona</th><th>OD</th><th>OI</th></tr>
-          <tr><td>yo</td><td>me</td><td>me</td></tr>
-          <tr><td>tú</td><td>te</td><td>te</td></tr>
-          <tr><td>él/ella/usted</td><td>lo, la</td><td>le</td></tr>
-          <tr><td>nosotros/as</td><td>nos</td><td>nos</td></tr>
-          <tr><td>vosotros/as</td><td>os</td><td>os</td></tr>
-          <tr><td>ellos/ustedes</td><td>los, las</td><td>les</td></tr>
-        </table>
-        <p class="note">Solo cambian en 3.ª persona: <strong>lo/la/los/las</strong> (OD) vs. <strong>le/les</strong> (OI).</p>
-      </div>
-      <div>
-        <p><strong>Concordancia:</strong> el pronombre concuerda con lo que reemplaza, no con el sujeto.<br>
-        Compro <em>la camisa</em> → <strong>La</strong> compro.<br>
-        Compro <em>los pantalones</em> → <strong>Los</strong> compro.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="teacher-notes-toggle" onclick="toggleNotes(this)">▶ Notas del maestro</div>
-<div class="teacher-notes-content">
-  <strong>Concepto clave:</strong> OD = directo (sin preposición, responde a "qué"). OI = indirecto (va con "a", responde a "a quién/para quién"). La tabla muestra que solo la tercera persona distingue entre ellos; todas las demás usan la misma forma.
-  <br><br>
-  <strong>Concordancia:</strong> Esto es el error más común. Los estudiantes ponen "Lo compro" para cualquier cosa, olvidando que los pronombres concuerdan con el sustantivo que reemplazan. La camisa → la; los pantalones → los. Insiste: si dijeras "Compro la camisa roja", la camisa es femenino → "La compro".
-  <br><br>
-  <strong>Duplicación:</strong> Es una rareza del español. En inglés dices "I give my brother a gift" (sin "to" duplicado en la oración). En español añadimos "le" incluso cuando ya mencionamos "a mi hermano". Normalízalo: es cómo funciona el idioma.
-</div>
-
-<hr class="page-break">
-
-<!-- SLIDE 3 -->
-<div class="slide-label">3 / 12</div>
-<div class="slide">
-  <h1>Leísmo · Verbos-trampa · "A personal"</h1>
-  <div class="cols2">
-    <div>
-      <h2>Leísmo — jerarquía</h2>
-      <p><span class="ok">✅ Estándar:</span> lo/la (OD) · le/les (OI)</p>
-      <p><span class="warn">⚠️ Variante admitida:</span> "le" como OD masc. sg. (España)</p>
-      <p><span class="bad">❌ Incorrecto:</span> laísmo ("la" como OI) · loísmo ("lo" como OI)</p>
-
-      <h2 style="margin-top:14px">"A personal"</h2>
-      <p>OD persona lleva "a" pero sigue siendo OD → <strong>lo/la</strong></p>
-      <p>OI persona lleva "a" y es OI → <strong>le</strong></p>
-    </div>
-    <div>
-      <h2>Verbos-trampa</h2>
-      <table>
-        <tr><th>La persona es…</th><th>Pron.</th><th>Verbos</th></tr>
-        <tr><td>OD (acción directa)</td><td>lo/la</td><td>llamar, ver, felicitar, ayudar</td></tr>
-        <tr><td>OI (hay una cosa detrás)</td><td>le</td><td>dar, decir, enviar, regalar, enseñar</td></tr>
-        <tr><td>OI (comunicación)</td><td>le</td><td>telefonear, escribir, hablar</td></tr>
-      </table>
-      <p class="note">Truco: ¿puedes añadir "algo/una cosa"? Si sí → la persona es OI.</p>
-    </div>
-  </div>
-
-  <div class="examples-toggle" onclick="toggleExamples(this)">▼ Ocultar ejemplos</div>
-  <div class="examples-content">
-    <div class="cols2">
-      <div>
-        <p><span class="ok">Estándar:</span> <em>¿Viste a Juan? → <strong>Lo</strong> vi.</em></p>
-        <p><span class="warn">Variante (España):</span> <em>¿Viste a Juan? → <strong>Le</strong> vi.</em></p>
-        <p><span class="bad">Incorrecto:</span> <em><s>La dije la verdad</s> → <strong>Le</strong> dije la verdad.</em></p>
-        <p><em>Veo a María → <strong>La</strong> veo.</em> (OD, "a" personal)</p>
-        <p><em>Doy el libro a María → <strong>Le</strong> doy el libro.</em> (OI)</p>
-      </div>
-      <div></div>
-    </div>
-  </div>
-</div>
-
-<div class="teacher-notes-toggle" onclick="toggleNotes(this)">▶ Notas del maestro</div>
-<div class="teacher-notes-content">
-  <strong>Leísmo:</strong> Es un tema delicado si tienes estudiantes de España. En España, "le" para OD masculino singular es corriente y aceptado en niveles más altos. Pero en exámenes oficiales (DELE, etc.), se sigue pidiendo lo/la/los/las para OD. Así que enseña el estándar (lo/la). Puedes mencionar el leísmo como "algo que oirás", pero no lo pidas en ejercicios.
-  <br><br>
-  <strong>"A personal":</strong> Es una confusión típica. La "a" no define si es OD u OI. La pregunta clave es: ¿la persona es el receptáculo directo de la acción o el receptor indirecto? Veo a María (¿qué veo? a María → OD). Doy el libro a María (¿a quién? a María; ¿qué doy? el libro → OI).
-  <br><br>
-  <strong>Verbos-trampa:</strong> El truco de "¿puedes añadir una cosa?" es oro puro. Si dices "Le digo a Juan algo", tienes OI. Si dices "Veo a Juan algo", suena raro → es OD. Practica con ellos en voz alta.
-</div>
-
-<hr class="page-break">
-
-<!-- SLIDE 4 -->
-<div class="slide-label">4 / 12</div>
-<div class="slide">
-  <h1>Las 4 reglas del imperativo + pronombres</h1>
-  <div class="cols2">
-    <div>
-      <h2>R1 — Enclisis: el pronombre se pega</h2>
-      <div class="rule">verbo + pronombre(s)<br><em>Compra → <strong>Cómpralo</strong>. Di → <strong>Dímelo</strong>.</em></div>
-
-      <h2>R2 — Orden fijo: OI antes que OD</h2>
-      <div class="rule">verbo + OI + OD<br><em>Dame la mano → <strong>Dámela</strong>.</em></div>
-
-      <h2>R3 — Le/les + lo/la → "se"</h2>
-      <div class="rule">le/les + lo/la/los/las → <strong>se</strong> + lo/la/los/las<br>
-      <em>Le compro un regalo → <strong>Se lo</strong> compro.</em><br>
-      <span class="bad">✗ nunca "le lo"</span></div>
-    </div>
-    <div>
-      <h2>R4 — La tilde es obligatoria</h2>
-      <div class="rule">Al pegar pronombres la palabra pasa a ser esdrújula o sobresdrújula → siempre tilde.<br>
-      <em>compra → <strong>cómprala</strong> · diga → <strong>dígamelo</strong></em></div>
-
-      <h2>Excepción — vosotros + <em>os</em></h2>
-      <div class="rule">Se elimina la -d final.<br>
-      <em>Sentad + os → <strong>Sentaos</strong></em><br>
-      <span class="note">Única excepción real: <em>idos</em></span></div>
-    </div>
-  </div>
-</div>
-
-<div class="teacher-notes-toggle" onclick="toggleNotes(this)">▶ Notas del maestro</div>
-<div class="teacher-notes-content">
-  <strong>R1 (Enclisis):</strong> Los pronombres se cuelgan del imperativo afirmativo como satélites. Es diferente a otros tiempos verbales. Enfatiza la pegadura: no hay espacio, son una sola palabra.
-  <br><br>
-  <strong>R2 (Orden OI+OD):</strong> Si hay dos pronombres, el orden es fijo: OI primero (te digo "a quién"), OD segundo (te digo "qué"). Dámela = dame (a mí) lo (la mano). Cómpraselo = compra (a él/ella) lo (eso).
-  <br><br>
-  <strong>R3 (se):</strong> Es una regla de distancia. Le/les NO pueden tocarse con lo/la/los/las. El sistema usa "se" como amortiguador. No es una sustitución, es un cambio de forma. Repítelo: nunca "le lo", siempre "se lo". Es una de las reglas más fuertes del español.
-  <br><br>
-  <strong>R4 (Tilde):</strong> Cuando pegas pronombres, la palabra se alarga y generalmente se vuelve esdrújula (acentúa la sílaba antepenúltima) o sobresdrújula (aún más atrás). Las esdrújulas y sobresdrújulas siempre llevan tilde. Cómprala tiene 3 sílabas (COM-pra-la), la tónica es COM → tilde.
-</div>
-
-<hr class="page-break">
-
-<!-- SLIDE 5 -->
-<div class="slide-label">5 / 12</div>
-<div class="slide">
-  <h1>Proclisis · Cambio me↔te · Comparación</h1>
-  <div class="cols2">
-    <div>
-      <h2>Fuera del imperativo: proclisis</h2>
-      <div class="rule">pronombre(s) + verbo conjugado (separado)<br>
-      <em>¿Has dado el libro? → <strong>Se lo he dado.</strong></em></div>
-      <p class="note">El orden OI+OD y la regla le→se no cambian.</p>
-      <p class="note">me/te/nos/os nunca se convierten en "se":<br>
-      <em>¿Nos enviaste las fotos? → <strong>Nos las</strong> enviaste.</em></p>
-
-      <h2 style="margin-top:14px">Cambio me ↔ te al responder</h2>
-      <div class="rule">¿<strong>Me</strong> has traído las patatas? → Sí, <strong>te</strong> las he traído.</div>
-      <p class="note">El punto de vista cambia de hablante a oyente.</p>
-    </div>
-    <div>
-      <h2>Afirmativo vs. negativo</h2>
-      <div class="rule"><strong>Regla de oro:</strong> Afirmativo = enclisis (después), Negativo = proclisis (antes)</div>
-    </div>
-  </div>
-
-  <div class="examples-toggle" onclick="toggleExamples(this)">▼ Ocultar tabla comparativa</div>
-  <div class="examples-content">
-    <table style="font-size: 0.8em;">
-      <tr><th></th><th>Afirmativo</th><th>Negativo</th></tr>
-      <tr><td>Modo</td><td>imperativo</td><td>subjuntivo</td></tr>
-      <tr><td>Pronombres</td><td>después, pegados</td><td>antes, separados</td></tr>
-      <tr><td>tú</td><td>Díselo</td><td>No se lo digas</td></tr>
-      <tr><td>usted</td><td>Dígaselo</td><td>No se lo diga</td></tr>
-      <tr><td>ustedes</td><td>Díganselo</td><td>No se lo digan</td></tr>
+    <table style="margin-top: 8px;">
+      <tr><th>Persona</th><th>Objeto directo</th><th>Objeto indirecto</th><th>¿Cambia?</th></tr>
+      <tr><td>yo</td><td>me</td><td>me</td><td>No</td></tr>
+      <tr><td>tú</td><td>te</td><td>te</td><td>No</td></tr>
+      <tr><td>él / ella / usted</td><td><strong>lo, la</strong></td><td><strong>le</strong></td><td><span class="warn">Sí</span></td></tr>
+      <tr><td>nosotros/as</td><td>nos</td><td>nos</td><td>No</td></tr>
+      <tr><td>vosotros/as</td><td>os</td><td>os</td><td>No</td></tr>
+      <tr><td>ellos / ellas / ustedes</td><td><strong>los, las</strong></td><td><strong>les</strong></td><td><span class="warn">Sí</span></td></tr>
     </table>
   </div>
 </div>
 
 <div class="teacher-notes-toggle" onclick="toggleNotes(this)">▶ Notas del maestro</div>
 <div class="teacher-notes-content">
-  <strong>Proclisis:</strong> Fuera del imperativo afirmativo, los pronombres van ANTES del verbo y separados. Es lo opuesto a la enclisis. Cuando dices "Se lo he dado", los pronombres se cuelgan del verbo conjugado (he) pero en el lado izquierdo.
-  <br><br>
-  <strong>Me/te/nos/os NO se convierten en se:</strong> La regla "le/les + lo/la → se" SOLO aplica a le/les. Si tienes me, te, nos, os + un pronombre OD, se quedan como están: "Nos las enviaste", no "Nos las" (bueno, ya es Nos las). Esto sorprende porque parece inconsistente, pero así funciona.
-  <br><br>
-  <strong>Cambio me ↔ te:</strong> Es perspectiva. Cuando el hablante pregunta "¿Me has traído...?", el oyente responde desde su punto de vista, así que "me" se vuelve "te" (porque ahora tú eres quien habla). Es natural en la conversación pero confunde a estudiantes que lo ven por primera vez. Practica con diálogos.
-  <br><br>
-  <strong>Afirmativo vs. negativo:</strong> La negación fuerza subjuntivo y proclisis. Imperativo afirmativo = indicativo + enclisis. Imperativo negativo = subjuntivo + proclisis. Es una dualidad fundamental del imperativo español.
+  <strong>La tabla:</strong> Subraya que solo cambia en 3.ª persona. Me/te/nos/os son los mismos para los dos. El esfuerzo de memorización es mínimo: solo lo/la/los/las vs. le/les.<br><br>
+  <strong>Concordancia:</strong> El error más común. Los estudiantes ponen "Lo compro" para todo. Insiste: el pronombre concuerda con lo que reemplaza. Haz que practiquen señalando el sustantivo primero: "¿qué es la camisa? Femenino → la".<br><br>
+  <strong>Duplicación:</strong> Rareza del español que no existe en inglés. No intentes darle lógica — simplemente normalízala. Practica con frases donde la persona esté mencionada explícitamente.
+</div>
+
+<hr class="page-break">
+
+<!-- SLIDE 3 -->
+<div class="slide-label">3 / 12</div>
+<div class="slide" id="slide-3">
+  <h1><span class="slide-num">3.</span> Verbos-trampa · "A personal" · Variantes regionales</h1>
+  <div class="cols2">
+    <div>
+      <h2>Verbos-trampa: ¿la persona es OD o OI?</h2>
+      <p class="note">En inglés "I called her" y "I gave her the book" usan el mismo "her". En español cambia el pronombre según el tipo de verbo.</p>
+      <table>
+        <tr><th>La persona es…</th><th>Pronombre 3.ª</th><th>Verbos</th></tr>
+        <tr><td>Objeto directo (acción directa sobre la persona)</td><td><strong>lo/la</strong></td><td>llamar, ver, felicitar, ayudar, saludar, conocer</td></tr>
+        <tr><td>Objeto indirecto (hay una cosa que va hacia la persona)</td><td><strong>le</strong></td><td>dar, decir, enviar, regalar, enseñar, preguntar</td></tr>
+        <tr><td>Objeto indirecto (comunicación — el mensaje llega a la persona)</td><td><strong>le</strong></td><td>telefonear, escribir, hablar</td></tr>
+      </table>
+      <div class="rule" style="margin-top: 8px;"><strong>Truco:</strong> ¿puedes añadir "algo" al verbo y suena natural? Si sí → la persona es objeto indirecto.<br>
+        <em>dar algo ✓ → Le di el libro. · llamar algo ✗ → La llamé.</em>
+      </div>
+    </div>
+    <div>
+      <h2>"A personal" — por qué confunde</h2>
+      <p>En español, cuando el <strong>objeto directo es una persona</strong>, se añade "a". Esto confunde porque "a" también aparece con el objeto indirecto.</p>
+      <div class="rule">La "a" no decide si es OD o OI — decide el verbo y lo que la persona recibe.<br><br>
+        <em>Veo <strong>a</strong> María → ¿qué hago? verla → es <strong>objeto directo</strong> → <strong>La</strong> veo.</em><br>
+        <em>Doy el libro <strong>a</strong> María → ¿qué le doy? el libro → María es <strong>objeto indirecto</strong> → <strong>Le</strong> doy el libro.</em>
+      </div>
+      <p class="note" style="margin-top: 6px;"><strong>Truco:</strong> quita la persona — ¿la frase necesita una cosa para tener sentido? Si sí, la persona era OI.<br>
+        <em>"¿Ver?" → ya funciona sola (OD). "¿Dar?" → dar ¿qué? → necesita algo (OI).</em>
+      </p>
+
+      <h2 style="margin-top: 14px;">Variantes regionales (leísmo)</h2>
+      <p><span class="ok">✅ Estándar (enseña esto):</span> lo/la para OD · le/les para OI</p>
+      <p><span class="warn">⚠️ Admitido (España):</span> "le" como OD masc. sg. — <em>¿Viste a Juan? → Le vi.</em></p>
+      <p><span class="bad">❌ Incorrecto siempre:</span> laísmo ("la" como OI) · loísmo ("lo" como OI)<br>
+        <em><s>La dije la verdad</s> → Le dije la verdad.</em></p>
+    </div>
+  </div>
+</div>
+
+<div class="teacher-notes-toggle" onclick="toggleNotes(this)">▶ Notas del maestro</div>
+<div class="teacher-notes-content">
+  <strong>Verbos-trampa — el porqué:</strong> "Llamar" = acción directa sobre la persona (you call ON someone). "Telefonear" = envías un mensaje a través de un medio, la acción llega a la persona (you phone TO someone). La misma diferencia que "ver a alguien" (OD) vs. "escribir a alguien" (OI).<br><br>
+  <strong>"A personal":</strong> La "a" confunde porque parece un OI. Enseña el truco de quitar la persona: "dar" sin persona destinataria no tiene sentido (¿dar qué? ¿a dónde?) — necesita completarse con una cosa, por eso la persona es OI. "Ver" funciona sin nada más — la persona es OD.<br><br>
+  <strong>Leísmo:</strong> En exámenes DELE y escritura formal, enseña lo/la para OD. El leísmo de persona masculina singular es habitual en España pero no obligatorio ni universal. Menciónalo como "algo que oirás en España", no como alternativa.
+</div>
+
+<hr class="page-break">
+
+<!-- SLIDE 6b -->
+<div class="slide-label">6b / 12</div>
+<div class="slide" id="slide-6b">
+  <h1><span class="slide-num">6b.</span> Pronombres OD e OI — Ejemplos</h1>
+
+  <div class="cols2">
+    <div>
+      <h2>Objeto directo (OD) — cosas</h2>
+      <table>
+        <tr><th>Frase original</th><th>Con pronombre</th></tr>
+        <tr><td>Compro <u>la camisa</u>.</td><td><strong>La</strong> compro.</td></tr>
+        <tr><td>Compro <u>el abrigo</u>.</td><td><strong>Lo</strong> compro.</td></tr>
+        <tr><td>Tengo <u>las llaves</u>.</td><td><strong>Las</strong> tengo.</td></tr>
+        <tr><td>Necesito <u>los documentos</u>.</td><td><strong>Los</strong> necesito.</td></tr>
+      </table>
+
+      <h2 style="margin-top: 14px;">Objeto directo (OD) — personas</h2>
+      <table>
+        <tr><th>Frase original</th><th>Con pronombre</th></tr>
+        <tr><td>Veo <u>a María</u>.</td><td><strong>La</strong> veo.</td></tr>
+        <tr><td>Llamo <u>a Juan</u>.</td><td><strong>Lo</strong> llamo.</td></tr>
+        <tr><td>Ayudo <u>a mis amigos</u>.</td><td><strong>Los</strong> ayudo.</td></tr>
+        <tr><td>Felicito <u>a las chicas</u>.</td><td><strong>Las</strong> felicito.</td></tr>
+      </table>
+      <p class="note" style="margin-top: 6px;">Con personas: OD → <strong>lo/la/los/las</strong>. El pronombre concuerda con el género y número de la persona, no del sujeto.</p>
+    </div>
+
+    <div>
+      <h2>Objeto indirecto (OI) — destinatario</h2>
+      <table>
+        <tr><th>Frase original</th><th>Con pronombre</th></tr>
+        <tr><td>Doy el libro <u>a María</u>.</td><td><strong>Le</strong> doy el libro.</td></tr>
+        <tr><td>Escribo <u>a mis padres</u>.</td><td><strong>Les</strong> escribo.</td></tr>
+        <tr><td>Pregunto algo <u>al profesor</u>.</td><td><strong>Le</strong> pregunto algo.</td></tr>
+        <tr><td>Traigo café <u>a vosotros</u>.</td><td><strong>Os</strong> traigo café.</td></tr>
+      </table>
+
+      <h2 style="margin-top: 14px;">OI + OD juntos</h2>
+      <table>
+        <tr><th>Frase original</th><th>Con pronombres</th></tr>
+        <tr><td>Doy <u>el libro</u> <u>a María</u>.</td><td><strong>Se lo</strong> doy.</td></tr>
+        <tr><td>Compro <u>la camisa</u> <u>para ti</u>.</td><td><strong>Te la</strong> compro.</td></tr>
+        <tr><td>Envío <u>las flores</u> <u>a mis padres</u>.</td><td><strong>Se las</strong> envío.</td></tr>
+        <tr><td>Traigo <u>el café</u> <u>a ti</u>.</td><td><strong>Te lo</strong> traigo.</td></tr>
+      </table>
+      <p class="note" style="margin-top: 6px;">le/les + lo/la/los/las → siempre <strong>se</strong> + lo/la/los/las. Nunca "le lo".</p>
+    </div>
+  </div>
+
+  <div class="rule" style="margin-top: 16px;">
+    <strong>Pasos para reemplazar:</strong>
+    1. ¿Qué reemplazas? → identifica si es cosa/persona recibida directamente (OD) o destinatario (OI)<br>
+    2. OD → elige <strong>lo / la / los / las</strong> según género y número<br>
+    3. OI → elige <strong>le / les</strong> (o me/te/nos/os según persona)<br>
+    4. Si hay OI + OD: le/les → <strong>se</strong>, orden fijo OI + OD
+  </div>
+</div>
+
+<div class="teacher-notes-toggle" onclick="toggleNotes(this)">▶ Notas del maestro</div>
+<div class="teacher-notes-content">
+  <strong>OD personas:</strong> Recuerda que con verbos como "ver", "llamar", "felicitar", la persona es OD → lo/la. El error más común es usar "le" por analogía con "a". Insiste: la "a personal" no indica OI — indica OD con persona.<br><br>
+  <strong>OI solo (sin cosa):</strong> Con verbos de comunicación (escribir, telefonear, preguntar), la persona es OI aunque no haya cosa explícita — hay un mensaje implícito que "llega" a ella. Resultado: le/les solo, sin segundo pronombre.<br><br>
+  <strong>OI + OD:</strong> El orden OI antes que OD es fijo en español. Y la colisión le/les + lo/la siempre produce "se". Practica con la pregunta: "¿a quién? → OI. ¿Qué? → OD."
+</div>
+
+<hr class="page-break">
+
+<!-- SLIDE 4 -->
+<div class="slide-label">4 / 12</div>
+<div class="slide" id="slide-4">
+  <h1><span class="slide-num">4.</span> Las 4 reglas del imperativo + pronombres</h1>
+  <div class="cols2">
+    <div>
+      <h2>R1 — Enclisis: el pronombre se pega al final</h2>
+      <div class="rule">Solo en imperativo afirmativo: verbo + pronombre(s) = una sola palabra.<br>
+        <em>Compra → Cómpr<strong>a</strong> + <strong>lo</strong> = <strong>Cómpralo</strong> (el abrigo)</em><br>
+        <em>Di → <strong>Di</strong> + <strong>me</strong> + <strong>lo</strong> = <strong>Dímelo</strong></em>
+      </div>
+      <p class="note">En todos los demás tiempos verbales el pronombre va <strong>antes</strong> y separado (ver slide 5).</p>
+
+      <h2 style="margin-top: 12px;">R2 — Orden fijo: OI antes que OD</h2>
+      <div class="rule">Si hay dos pronombres: verbo + <strong>OI</strong> + <strong>OD</strong><br>
+        <em>Dame <u>a mí</u> <u>la mano</u> → Dá<strong>me</strong><strong>la</strong></em><br>
+        <em>Compra <u>para él</u> <u>el regalo</u> → Cómpra<strong>se</strong><strong>lo</strong></em>
+      </div>
+
+      <h2 style="margin-top: 12px;">R3 — Le/les nunca toca a lo/la/los/las → se</h2>
+      <div class="rule">le + lo/la/los/las → <strong>se</strong> + lo/la/los/las<br>
+        <em>Le compro un regalo → <strong>Se lo</strong> compro.</em><br>
+        <span class="bad">✗ nunca "le lo"</span>
+      </div>
+      <p class="note"><span class="warn">⚠️ Excepción:</span> me, te, nos, os <strong>nunca</strong> se convierten en "se". Solo les pasa a le/les.<br>
+        <em>¿Nos enviaste las fotos? → <strong>Nos las</strong> enviaste.</em> <span class="bad">(✗ "se las")</span>
+      </p>
+    </div>
+    <div>
+      <h2>R4 — La tilde es obligatoria</h2>
+      <div class="rule">Al pegar pronombres la palabra se alarga y pasa a ser esdrújula (acento en la 3.ª sílaba desde el final) o sobresdrújula (4.ª o más). Esas palabras siempre llevan tilde.<br><br>
+        com·<strong>PRA</strong> → com·<strong>PRA</strong>·la = <strong>cóm</strong>·pra·la ✓<br>
+        <em>compra → cómprala · diga → dígamelo</em>
+      </div>
+      <p class="note">Truco: cuenta sílabas desde el final. Si el golpe de voz cae en la 3.ª o antes, va tilde.</p>
+
+      <h2 style="margin-top: 14px;">Excepción — vosotros + <em>os</em></h2>
+      <div class="rule">Se elimina la -d final antes de añadir -os.<br>
+        <em>Sentad + os → <strong>Sentaos</strong></em><br>
+        <em>Levantad + os → <strong>Levantaos</strong></em><br>
+        <span class="note">Única excepción: "id + os" → <em>idos</em> (conserva la d)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="teacher-notes-toggle" onclick="toggleNotes(this)">▶ Notas del maestro</div>
+<div class="teacher-notes-content">
+  <strong>R1 — Enclisis:</strong> Enfatiza que el pronombre forma una sola palabra con el verbo. No hay espacio. Esto es exclusivo del imperativo afirmativo — en todos los demás tiempos el pronombre va antes.<br><br>
+  <strong>R2 — Orden:</strong> OI primero porque habla de la persona destinataria; OD segundo porque habla de la cosa. Dámela = dame (a mí) + la (mano). El orden nunca cambia.<br><br>
+  <strong>R3 — "se":</strong> Es una regla de colisión: le/les y lo/la no pueden estar juntos. El sistema usa "se" como separador. No es una sustitución de significado — "se" aquí no es reflexivo, es solo una adaptación fonológica. Repite: <em>nunca "le lo"</em>. Y la excepción de me/te/nos/os es importante — corrígela siempre que salga.<br><br>
+  <strong>R4 — Tilde:</strong> La clave es enseñar esdrújula/sobresdrújula con palmadas. Que los estudiantes cuenten sílabas en voz alta. COM-pra-la → la tónica cae en COM, que es la 3.ª sílaba desde el final → tilde obligatoria.
+</div>
+
+<hr class="page-break">
+
+<!-- SLIDE 5 -->
+<div class="slide-label">5 / 12</div>
+<div class="slide" id="slide-5">
+  <h1><span class="slide-num">5.</span> Pronombres fuera del imperativo · me↔te · Negativo</h1>
+  <div class="cols2">
+    <div>
+      <h2>Fuera del imperativo afirmativo: proclisis</h2>
+      <div class="rule">En <strong>todos los demás tiempos</strong> (presente, perfecto, imperfecto…), el pronombre va <strong>antes</strong> del verbo conjugado y separado.<br>
+        <em>Dáselo. (imperativo)</em><br>
+        <em><strong>Se lo</strong> he dado. (perfecto — proclisis)</em><br>
+        <em><strong>Se lo</strong> doy siempre. (presente habitual)</em>
+      </div>
+      <p class="note">El orden OI+OD y la regla le→se siguen igual en todos los tiempos.</p>
+
+      <h2 style="margin-top: 12px;">¿Cuántos pronombres usar?</h2>
+      <p>No siempre son dos. Usa solo los que la frase necesita:</p>
+      <ul>
+        <li>Verbo con persona como OD (llamar, ver, felicitar): <em>Lo llamé. La vi.</em></li>
+        <li>Verbo de comunicación, OI solo: <em>Le telefoneé. Le escribí.</em></li>
+        <li>Verbo de transferencia, OI + OD: <em>Se lo di. Se la compré.</em></li>
+        <li>Solo una cosa, sin persona: <em>La tiré. Lo compré.</em></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Cambio me ↔ te al responder</h2>
+      <div class="rule">Cuando alguien te pregunta con <strong>me</strong> (a mí), tú respondes con <strong>te</strong> (a ti), porque el punto de vista cambia de hablante a oyente.<br>
+        <em>¿<strong>Me</strong> has traído las patatas? → Sí, <strong>te</strong> las he traído.</em><br>
+        <em>¿<strong>Me</strong> puedes explicar esto? → Claro, <strong>te</strong> lo explico.</em>
+      </div>
+
+      <h2 style="margin-top: 12px;">Afirmativo vs. negativo</h2>
+      <div class="rule"><strong>Afirmativo</strong> = imperativo + pronombres pegados detrás (enclisis)<br>
+        <strong>Negativo</strong> = subjuntivo + pronombres delante y separados (proclisis)
+      </div>
+    </div>
+  </div>
+
+  <p class="note" style="margin-top: 8px;">La tabla completa con todos los sujetos aparece en slide 11 como resumen del bloque.</p>
+</div>
+
+<div class="teacher-notes-toggle" onclick="toggleNotes(this)">▶ Notas del maestro</div>
+<div class="teacher-notes-content">
+  <strong>Proclisis:</strong> Fuera del imperativo afirmativo, los pronombres van antes del verbo. Compara siempre con el imperativo: "Dáselo" (imperativo) vs. "Se lo he dado" (perfecto). Mismo pronombre, mismo orden, posición opuesta.<br><br>
+  <strong>¿Cuántos pronombres?:</strong> Los estudiantes a veces añaden pronombres que no hacen falta. Insiste: si el verbo solo lleva una cosa (sin persona destinataria), solo hay un pronombre OD. Si hay persona y cosa, dos pronombres.<br><br>
+  <strong>Me ↔ te:</strong> Es un cambio de perspectiva. Practica con diálogos cortos en clase. El que pregunta usa "me" porque habla de sí mismo; el que responde cambia a "te" porque habla del otro.<br><br>
+  <strong>Negativo:</strong> El cambio es doble — cambia el modo verbal (a subjuntivo) y la posición del pronombre (a proclisis). Son inseparables: si hay "no" delante, el pronombre va antes sí o sí.
 </div>
 
 <hr class="page-break">
 
 <!-- SLIDE 6 -->
 <div class="slide-label">6 / 12</div>
-<div class="slide">
-  <h1>Práctica — Imperativo + Pronombres</h1>
+<div class="slide" id="slide-6">
+  <h1><span class="slide-num">6.</span> Práctica — Imperativo + Pronombres</h1>
 
-  <h2>Ejercicio 1: Formar imperativo con pronombre (tú)</h2>
+  <h2>Ejercicio 1: Enclisis — forma el imperativo con pronombres (tú)</h2>
 
-  <div class="exercise-item" data-answer="damelo">
-    <div class="exercise-prompt">dame + me + lo = ?</div>
+  <div class="exercise-item" data-answer="cómprala">
+    <div class="exercise-context">La camisa está de oferta. Tu amigo quiere comprarla.</div>
+    <div class="exercise-prompt">Dile que compre la camisa. → _____ (imperativo tú + pronombre OD)</div>
     <div class="exercise-input">
-      <input type="text" placeholder="Escribe el imperativo" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <input type="text" placeholder="verbo + pronombre" onkeypress="handleKeyPress(event, this.nextElementSibling)">
       <button onclick="checkAnswer(this)">Verificar</button>
     </div>
     <div class="exercise-feedback"></div>
   </div>
 
-  <div class="exercise-item" data-answer="compralo">
-    <div class="exercise-prompt">compra + lo = ?</div>
+  <div class="exercise-item" data-answer="díselo">
+    <div class="exercise-context">Tienes un secreto. Quieres que tu amigo se lo cuente a María.</div>
+    <div class="exercise-prompt">Dile a tu amigo que <strong>diga</strong> el secreto a María. → _____ (imperativo tú + OI + OD)</div>
     <div class="exercise-input">
-      <input type="text" placeholder="Escribe el imperativo" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <input type="text" placeholder="verbo + OI + OD" onkeypress="handleKeyPress(event, this.nextElementSibling)">
       <button onclick="checkAnswer(this)">Verificar</button>
     </div>
     <div class="exercise-feedback"></div>
   </div>
 
-  <div class="exercise-item" data-answer="diselo">
-    <div class="exercise-prompt">di + se + lo = ?</div>
+  <div class="exercise-item" data-answer="dámelo">
+    <div class="exercise-context">Tu amigo tiene el libro que necesitas.</div>
+    <div class="exercise-prompt">Pídele el libro. → _____ (dar + a mí + el libro)</div>
     <div class="exercise-input">
-      <input type="text" placeholder="Escribe el imperativo" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <input type="text" placeholder="verbo + OI + OD" onkeypress="handleKeyPress(event, this.nextElementSibling)">
       <button onclick="checkAnswer(this)">Verificar</button>
     </div>
     <div class="exercise-feedback"></div>
   </div>
 
-  <h2 style="margin-top: 16px;">Ejercicio 2: Cambiar a imperativo negativo (proclisis)</h2>
-
-  <div class="exercise-item" data-answer="no lo compres">
-    <div class="exercise-prompt">Afirmativo: Compra lo → Negativo: ?</div>
+  <div class="exercise-item" data-answer="dámelas">
+    <div class="exercise-context">Tu amigo tiene las llaves que necesitas.</div>
+    <div class="exercise-prompt">Pídele las llaves. → _____ (dar + a mí + las llaves)</div>
     <div class="exercise-input">
-      <input type="text" placeholder="Escribe el imperativo negativo" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <input type="text" placeholder="verbo + OI + OD" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+  <div class="exercise-item" data-answer="envíaselas">
+    <div class="exercise-context">Quieres mandar las flores a tus padres. Se lo pides a tu hermano.</div>
+    <div class="exercise-prompt">Dile a tu hermano que envíe las flores a tus padres. → _____ (enviar + a ellos + las flores)</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="verbo + OI + OD" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+  <h2 style="margin-top: 16px;">Ejercicio 2: Afirmativo → negativo (enclisis → proclisis)</h2>
+
+  <div class="exercise-item" data-answer="no la compres">
+    <div class="exercise-prompt">Afirmativo: <strong>Cómprala.</strong> → Negativo: _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="no + pronombre + verbo" onkeypress="handleKeyPress(event, this.nextElementSibling)">
       <button onclick="checkAnswer(this)">Verificar</button>
     </div>
     <div class="exercise-feedback"></div>
   </div>
 
   <div class="exercise-item" data-answer="no se lo digas">
-    <div class="exercise-prompt">Afirmativo: Diselo → Negativo: ?</div>
+    <div class="exercise-prompt">Afirmativo: <strong>Díselo.</strong> → Negativo: _____</div>
     <div class="exercise-input">
-      <input type="text" placeholder="Escribe el imperativo negativo" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <input type="text" placeholder="no + pronombres + verbo" onkeypress="handleKeyPress(event, this.nextElementSibling)">
       <button onclick="checkAnswer(this)">Verificar</button>
     </div>
     <div class="exercise-feedback"></div>
   </div>
 
-  <div class="exercise-item" data-answer="no me lo des">
-    <div class="exercise-prompt">Afirmativo: Damelo → Negativo: ?</div>
+  <h2 style="margin-top: 16px;">Ejercicio 3: Cambio de perspectiva me ↔ te</h2>
+
+  <div class="exercise-item" data-answer="te lo he traído">
+    <div class="exercise-prompt">Tu amigo pregunta: "¿Me has traído el libro?" Tú respondes: "Sí, _____"</div>
     <div class="exercise-input">
-      <input type="text" placeholder="Escribe el imperativo negativo" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <input type="text" placeholder="pronombres + verbo" onkeypress="handleKeyPress(event, this.nextElementSibling)">
       <button onclick="checkAnswer(this)">Verificar</button>
     </div>
     <div class="exercise-feedback"></div>
   </div>
 
-  <h2 style="margin-top: 16px;">Ejercicio 3: Identificar OD u OI</h2>
+  <h2 style="margin-top: 16px;">Ejercicio 4: Identificar objeto directo o indirecto</h2>
 
   <div class="exercise-item" data-answer="objeto directo">
-    <div class="exercise-prompt">¿Qué es "lo" en "Lo compré"?</div>
+    <div class="exercise-prompt">¿"lo" en "Lo compré ayer" es objeto directo o indirecto?</div>
     <div class="exercise-input">
       <input type="text" placeholder="objeto directo o indirecto" onkeypress="handleKeyPress(event, this.nextElementSibling)">
       <button onclick="checkAnswer(this)">Verificar</button>
@@ -558,9 +759,31 @@ function toggleExamples(toggleEl) {
   </div>
 
   <div class="exercise-item" data-answer="objeto indirecto">
-    <div class="exercise-prompt">¿Qué es "le" en "Le doy un regalo"?</div>
+    <div class="exercise-prompt">¿"le" en "Le di el regalo a ella" es objeto directo o indirecto?</div>
     <div class="exercise-input">
       <input type="text" placeholder="objeto directo o indirecto" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+  <div class="exercise-item" data-answer="objeto directo">
+    <div class="exercise-prompt">¿"la" en "La llamé ayer" es objeto directo o indirecto?<br>
+    <span class="note">Pista: ¿qué verbo es? ¿Puedes añadir "algo" y suena natural?</span></div>
+    <div class="exercise-input">
+      <input type="text" placeholder="objeto directo o indirecto" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+  <h2 style="margin-top: 16px;">Ejercicio 5: Imperativo de usted (trato formal)</h2>
+
+  <div class="exercise-item" data-answer="cómprelo">
+    <div class="exercise-context">Atiendes a un cliente y lo tratas de usted. El billete está a punto de agotarse.</div>
+    <div class="exercise-prompt">Dígale que compre el billete ahora. → _____ (usted: comprar + el billete)</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="verbo (usted) + pronombre" onkeypress="handleKeyPress(event, this.nextElementSibling)">
       <button onclick="checkAnswer(this)">Verificar</button>
     </div>
     <div class="exercise-feedback"></div>
@@ -570,11 +793,13 @@ function toggleExamples(toggleEl) {
 
 <div class="teacher-notes-toggle" onclick="toggleNotes(this)">▶ Notas del maestro</div>
 <div class="teacher-notes-content">
-  <strong>Uso de esta slide:</strong> Los estudiantes escriben sus respuestas y verifican inmediatamente. El sistema ignora tildes, así que "díselo" y "diselo" se aceptan como iguales.
-  <br><br>
-  <strong>Errores típicos a vigilar:</strong> (1) Enclisis mal hecha: "di se lo" en lugar de "díselo" (espacios). (2) Orden incorrecto: "lo me" en lugar de "me lo". (3) Me/te/nos/os confundidos con se: "le lo" en lugar de "se lo".
-  <br><br>
-  <strong>Consejos:</strong> Haz que los estudiantes repitan en voz alta mientras escriben. El imperativo es "acción", así que la pronunciación refuerza la forma enclítica.
+  <strong>Ejercicio 1:</strong> El contexto determina el pronombre — "la camisa" es femenino → pronombre OD "la" → <em>cómprala</em>. Haz que el alumno identifique el sustantivo antes de escribir: "¿qué compra? La camisa. ¿Género? Femenino. ¿Pronombre? la."<br><br>
+  <strong>Ejercicio 2:</strong> Vigila: (1) espacios incorrectos — "no lo com pres", (2) olvidar cambiar el modo — "no lo compra" (indicativo en vez de subjuntivo).<br><br>
+  <strong>Ejercicio 3:</strong> El error más común es repetir "me" — "sí, me lo he traído". Practica el cambio de perspectiva verbalmente antes del ejercicio escrito.<br><br>
+  <strong>Ejercicio 4:</strong> "llamar" es OD porque la acción recae directamente en la persona (no hay cosa de por medio). Si un alumno duda, aplica el truco: "¿llamar algo?" → suena raro → es OD.<br><br>
+  <strong>Ejercicio 1 — <em>dámelas</em> / <em>envíaselas</em>:</strong> Dos contrastes clave. <em>Dámelas</em> conserva <strong>me</strong> (nunca se convierte en "se" — solo le/les lo hacen) y concuerda en femenino plural con "las llaves"; compáralo con <em>dámelo</em> justo arriba como par mínimo (masc. sg. → fem. pl.). <em>Envíaselas</em> sí aplica la colisión: <em>a tus padres</em> = les → <strong>se</strong> ante "las".<br><br>
+  <strong>Ejercicio 5 — usted:</strong> El objetivo es que noten el cambio de vocal: tú <em>cómpralo</em> → usted <em>cómprelo</em>. Recuérdales que el imperativo de usted es el presente de subjuntivo (slide 11).<br><br>
+  <strong>Nota sobre las tildes:</strong> el verificador ignora los acentos, así que aceptará <em>compralo</em> sin tilde como correcto. La tilde obligatoria de la enclisis (R4) revísala a mano al corregir la producción del alumno.
 </div>
 
 <hr class="page-break">
@@ -586,40 +811,40 @@ function toggleExamples(toggleEl) {
 
 <!-- SLIDE 7 -->
 <div class="slide-label">7 / 12</div>
-<div class="slide">
-  <h1>poco / un poco — negativo vs. positivo</h1>
+<div class="slide" id="slide-7">
+  <h1><span class="slide-num">7.</span> poco / un poco — negativo vs. positivo</h1>
+
   <div class="cols2">
     <div>
-      <div class="rule"><strong>poco</strong> = casi nada, insuficiente → sentido <strong>negativo</strong></div>
-      <div class="rule" style="margin-top: 8px;"><strong>un poco (de)</strong> = algo que existe → sentido <strong>positivo/neutro</strong></div>
+      <div class="rule"><strong>La diferencia clave:</strong><br>
+        <strong>poco</strong> = casi nada, cantidad insuficiente → sentido <span class="bad">negativo</span><br>
+        <strong>un poco (de)</strong> = algo pequeño pero que existe → sentido <span class="ok">positivo/neutro</span><br><br>
+        Equivalente en inglés: <em>poco</em> = "little/few" · <em>un poco</em> = "a little/a bit of"
+      </div>
 
-      <h2 style="margin-top:14px">Con nombre</h2>
-      <div class="rule"><strong>poco/a/os/as</strong> + nombre (concuerda, sin "de")</div>
-      <div class="rule" style="margin-top: 8px;"><strong>un poco de</strong> + nombre (invariable, siempre con "de")</div>
+      <h2 style="margin-top: 12px;">Con sustantivo</h2>
+      <div class="rule"><strong>poco/a/os/as</strong> + sustantivo (sin "de") — concuerda en género y número<br>
+        <em>poco tiempo · poca sal · pocos amigos · pocas ideas</em>
+      </div>
+      <div class="rule" style="margin-top: 6px;"><strong>un poco de</strong> + sustantivo — siempre invariable, siempre con "de"<br>
+        <em>un poco de sal · un poco de calor · un poco de tiempo</em><br>
+        <span class="bad">✗ "una poca de sal" no existe</span>
+      </div>
     </div>
     <div>
       <h2>Con adjetivo o verbo</h2>
-      <div class="rule"><strong>un poco</strong> + adjetivo / verbo + <strong>un poco</strong><br>
-      Suaviza → "algo, un tanto"</div>
-      <div class="rule" style="margin-top: 8px;"><strong>poco</strong> + adjetivo / verbo + <strong>poco</strong><br>
-      Niega → "no muy / casi nada" · invariable</div>
-    </div>
-  </div>
-
-  <div class="examples-toggle" onclick="toggleExamples(this)">▼ Ocultar ejemplos</div>
-  <div class="examples-content">
-    <div class="cols2">
-      <div>
-        <p><em>Tengo <strong>poco</strong> tiempo</em> (I have little time)</p>
-        <p><em>Tengo <strong>un poco de</strong> tiempo</em> (I have a bit of time)</p>
-        <p style="margin-top: 12px;"><em>poco tiempo · poca sal · pocos amigos · pocas ideas</em></p>
-        <p><em>un poco de sal · un poco de calor</em></p>
-        <p><span class="bad">✗ "una poca de" no existe</span></p>
+      <div class="rule"><strong>un poco</strong> + adjetivo/verbo → suaviza ("algo, un tanto")<br>
+        <em>un poco caro · le queda un poco pequeño · habla un poco rápido</em>
       </div>
-      <div>
-        <p><em>un poco caro · le queda un poco pequeño</em></p>
-        <p><em>poco práctico · come poco</em></p>
-        <p class="note" style="margin-top: 12px;">Trampa: poco + nombre concuerda (poca sal); poco + adjetivo NO concuerda (poco prácticos, no "pocos prácticos").</p>
+      <div class="rule" style="margin-top: 6px;"><strong>poco</strong> + adjetivo/verbo → niega o reduce ("no muy / casi nada") — <strong>invariable</strong><br>
+        <em>poco práctico · come poco · es poco frecuente</em>
+      </div>
+
+      <div class="rule" style="margin-top: 10px; border-left-color: #c0392b; background: #fdf2f0;">
+        <strong>⚠️ Trampa frecuente:</strong> "poco" concuerda con sustantivos pero NO con adjetivos o verbos.<br>
+        <span class="ok">✓ poca sal</span> (poco + sustantivo = concuerda)<br>
+        <span class="ok">✓ poco prácticos</span> (poco + adjetivo = invariable)<br>
+        <span class="bad">✗ pocos prácticos</span>
       </div>
     </div>
   </div>
@@ -627,45 +852,135 @@ function toggleExamples(toggleEl) {
 
 <div class="teacher-notes-toggle" onclick="toggleNotes(this)">▶ Notas del maestro</div>
 <div class="teacher-notes-content">
-  <strong>Concepto clave:</strong> "Poco" solo = negativo (falta). "Un poco" = positivo (existe algo, aunque sea pequeño). Es una cuestión de matiz que los estudiantes necesitan internalizar con ejemplos.
-  <br><br>
-  <strong>Con nombre:</strong> Cuando "poco" va con nombre, concuerda: poca sal (fem.), pocos amigos (masc. pl.). Con "un poco de" es invariable: "un poco de sal", "un poco de amigos". "Una poca de" no existe en español—es uno de esos errores calcos del inglés (a little bit).
-  <br><br>
-  <strong>Con adjetivo/verbo:</strong> Aquí es donde más fallos hay. "Un poco" suaviza (es atenuador), "poco" niega. "Un poco caro" = algo caro (pero tolerable). "Poco práctico" = casi nada práctico. Y nota la trampa: "poco" + adjetivo nunca concuerda. Dices "es poco práctico" (invariable), no "es pocos prácticos".
+  <strong>La distinción central:</strong> "Poco" solo = falta (negativo). "Un poco" = existe algo aunque sea pequeño (positivo). La analogía en inglés es directa: "little/few" vs "a little/a bit of". Para anglófonos esta explicación es inmediata.<br><br>
+  <strong>"una poca de" no existe:</strong> Es uno de los errores más comunes por calco del inglés ("a little bit of" → *"una poca de"). Corrígelo siempre — "un poco de" es fijo e invariable.<br><br>
+  <strong>La trampa de la concordancia:</strong> Este es el error más frecuente en ejercicios. Los estudiantes aplican la concordancia de los sustantivos también a los adjetivos. Escríbelo en la pizarra como contraste: "poca sal" (✓) vs. "poco práctico" / "poco prácticos" (✓, invariable). Haz que lo repitan varias veces.
+</div>
+
+<hr class="page-break">
+
+<!-- SLIDE 7b -->
+<div class="slide-label">7b / 12</div>
+<div class="slide" id="slide-7b">
+  <h1><span class="slide-num">7b.</span> Práctica — poco / un poco</h1>
+
+  <h2>Ejercicio 1: ¿poco o un poco? — sentido negativo vs. positivo</h2>
+
+  <div class="exercise-item" data-answer="un poco de">
+    <div class="exercise-context">La sopa está sosa. Quieres añadir sal, pero solo una pizca (sentido positivo).</div>
+    <div class="exercise-prompt">Añade _____ sal. → (cantidad pequeña que sí existe)</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="poco / un poco de…" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+  <div class="exercise-item" data-answer="poco">
+    <div class="exercise-context">Trabajas mucho y apenas descansas (sentido negativo: casi nada).</div>
+    <div class="exercise-prompt">Tengo _____ tiempo libre. → (cantidad insuficiente, masc. sg.)</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="una sola palabra" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+  <h2 style="margin-top: 16px;">Ejercicio 2: Concordancia con sustantivo</h2>
+
+  <div class="exercise-item" data-answer="pocos">
+    <div class="exercise-prompt">A la fiesta vinieron _____ amigos. → (poco + sustantivo, masc. pl.)</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="poco / poca / pocos / pocas" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+  <div class="exercise-item" data-answer="pocas">
+    <div class="exercise-prompt">El proyecto tiene _____ ideas nuevas. → (poco + sustantivo, fem. pl.)</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="poco / poca / pocos / pocas" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+  <h2 style="margin-top: 16px;">Ejercicio 3: Invariable con adjetivo — la trampa</h2>
+
+  <div class="exercise-item" data-answer="poco">
+    <div class="exercise-prompt">Este método es _____ práctico. → (poco + adjetivo = "no muy")</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="¿concuerda o no?" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+  <div class="exercise-item" data-answer="poco">
+    <div class="exercise-prompt">Estos zapatos son _____ cómodos. → (poco + adjetivo, masc. pl. — ¡cuidado!)</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="¿concuerda o no?" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+  <h2 style="margin-top: 16px;">Ejercicio 4: Corrige el error</h2>
+
+  <div class="exercise-item" data-answer="un poco de">
+    <div class="exercise-context">"una poca de" no existe en español.</div>
+    <div class="exercise-prompt">Corrige: "Añade una poca de leche." → "Añade _____ leche."</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="forma correcta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+</div>
+
+<div class="teacher-notes-toggle" onclick="toggleNotes(this)">▶ Notas del maestro</div>
+<div class="teacher-notes-content">
+  <strong>Ejercicio 1 (sentido):</strong> <em>un poco de sal</em> = existe algo, positivo; <em>poco tiempo</em> = falta, negativo. Si el alumno pone "poca sal", es gramatical pero cambia el matiz a negativo — comenta la diferencia de sentido, no lo des por simple error.<br><br>
+  <strong>Ejercicio 2 (concordancia):</strong> Aquí <em>poco</em> sí concuerda porque acompaña a un sustantivo: <em>pocos amigos</em>, <em>pocas ideas</em>. Que identifiquen género y número del sustantivo antes de escribir.<br><br>
+  <strong>Ejercicio 3 (la trampa — clave):</strong> <em>poco</em> ante adjetivo es <strong>invariable</strong>: <em>poco práctico</em>, <em>poco cómodos</em> (NO "pocos cómodos"). Es el error más frecuente del tema. El segundo ítem tiene un adjetivo masc. pl. a propósito para tentar a la concordancia.<br><br>
+  <strong>Ejercicio 4:</strong> <em>un poco de</em> es fijo e invariable — nunca "una poca de" (calco del inglés "a little bit of"). El verificador acepta "un poco de leche"; si el alumno escribe solo "un poco" sin "de", márcalo: la preposición es obligatoria.
 </div>
 
 <hr class="page-break">
 
 <!-- SLIDE 8 -->
 <div class="slide-label">8 / 12</div>
-<div class="slide">
-  <h1>Cuantificadores — tabla comparativa</h1>
+<div class="slide" id="slide-8">
+  <h1><span class="slide-num">8.</span> Cuantificadores — tabla comparativa</h1>
   <table>
-    <tr><th></th><th>+ nombre masc. sg.</th><th>+ nombre fem. sg.</th><th>+ nombre masc. pl.</th><th>+ nombre fem. pl.</th><th>+ adjetivo / verbo</th></tr>
+    <tr><th></th><th>+ sust. masc. sg.</th><th>+ sust. fem. sg.</th><th>+ sust. masc. pl.</th><th>+ sust. fem. pl.</th><th>+ adjetivo / verbo</th></tr>
     <tr><td><strong>poco</strong></td><td>poco</td><td>poca</td><td>pocos</td><td>pocas</td><td>poco (inv.)</td></tr>
     <tr><td><strong>mucho</strong></td><td>mucho</td><td>mucha</td><td>muchos</td><td>muchas</td><td>mucho (inv.)</td></tr>
     <tr><td><strong>bastante</strong></td><td>bastante</td><td>bastante</td><td>bastantes</td><td>bastantes</td><td>bastante (inv.)</td></tr>
     <tr><td><strong>demasiado</strong></td><td>demasiado</td><td>demasiada</td><td>demasiados</td><td>demasiadas</td><td>demasiado (inv.)</td></tr>
   </table>
-  <div class="rule" style="margin-top:14px"><strong>Regla de oro:</strong> con <strong>nombre</strong> → concuerda (excepto <em>bastante</em>, que ignora el género). Con <strong>adjetivo o verbo</strong> → siempre forma corta invariable.</div>
+  <div class="rule" style="margin-top:14px"><strong>Regla de oro:</strong> con <strong>sustantivo</strong> → concuerda en género y número (excepto <em>bastante</em>, que ignora el género pero sí concuerda en número). Con <strong>adjetivo o verbo</strong> → siempre forma invariable.</div>
+  <p class="note" style="margin-top: 6px;"><strong>Bastante</strong> es el raro: "bastante sal" y "bastante gente" (no distingue género), pero sí "bastantes amigos" (sí distingue número).</p>
 
   <div class="examples-toggle" onclick="toggleExamples(this)">▼ Ocultar ejemplos</div>
   <div class="examples-content">
     <div class="cols3" style="margin-top:12px">
       <div>
-        <p><strong>mucho/bastante/demasiado</strong> con nombre:</p>
+        <p><strong>Con sustantivo:</strong></p>
         <p><em>mucho tiempo · mucha gente</em><br>
         <em>bastante sal · bastantes amigos</em><br>
         <em>demasiado azúcar · demasiadas reuniones</em></p>
       </div>
       <div>
-        <p><strong>Como adverbio</strong> (con verbo):</p>
+        <p><strong>Como adverbio (con verbo):</strong></p>
         <p><em>trabaja <strong>mucho</strong></em><br>
         <em>come <strong>bastante</strong></em><br>
         <em>habla <strong>demasiado</strong></em></p>
       </div>
       <div>
-        <p><strong>Como adverbio</strong> (con adjetivo):</p>
+        <p><strong>Como adverbio (con adjetivo):</strong></p>
         <p><em>es <strong>mucho</strong> más caro</em><br>
         <em>es <strong>bastante</strong> tarde</em><br>
         <em>es <strong>demasiado</strong> caro</em></p>
@@ -676,11 +991,85 @@ function toggleExamples(toggleEl) {
 
 <div class="teacher-notes-toggle" onclick="toggleNotes(this)">▶ Notas del maestro</div>
 <div class="teacher-notes-content">
-  <strong>Tabla como puente:</strong> Esta tabla es la que recopila los patrones. La "regla de oro" es lo que necesitan recordar: con nombre hay concordancia (excepto bastante, que es un perezoso); con adjetivo/verbo, invariable.
-  <br><br>
-  <strong>Excepciones notables:</strong> (1) Bastante ignora el género: "bastante tiempo" y "bastante gente" (aunque gente es fem.). (2) Con plural, bastante sí concuerda: "bastantes amigos". Es una rareza—explícalo pero acepta que es así.
-  <br><br>
-  <strong>Uso adverbial:</strong> Cuando estos cuantificadores modifican verbos o adjetivos, son adverbios invariables. "Habla mucho" (mucho no cambia). "Es demasiado caro" (demasiado no cambia aunque caro sea masc.). Subraya esta separación: nombre ↔ concordancia; adjetivo/verbo ↔ invariable.
+  <strong>La regla de oro:</strong> Sustantivo = concordancia (salvo el género en bastante); adjetivo/verbo = invariable. Es la misma distinción que en slide 7 con "poco".<br><br>
+  <strong>Bastante:</strong> Explícalo como excepción parcial. Ignora el género (bastante sal, bastante tiempo) pero sí marca el plural (bastantes amigos, bastantes ideas). Es una rareza — acéptala sin buscarle lógica.<br><br>
+  <strong>Adverbial:</strong> Cuando acompañan a verbos o adjetivos, son adverbios invariables. "Habla mucho" (mucho no cambia). "Es demasiado caro" (demasiado no cambia aunque caro sea masculino). Subraya esta separación cada vez que salga en ejercicios.
+</div>
+
+<hr class="page-break">
+
+<!-- SLIDE 8b -->
+<div class="slide-label">8b / 12</div>
+<div class="slide" id="slide-8b">
+  <h1><span class="slide-num">8b.</span> Práctica — mucho / bastante / demasiado</h1>
+
+  <h2>Ejercicio 1: Concordancia con sustantivo</h2>
+
+  <div class="exercise-item" data-answer="mucha">
+    <div class="exercise-prompt">Hay _____ gente en la plaza. → (mucho + sustantivo, fem. sg.)</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="mucho / mucha / muchos / muchas" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+  <div class="exercise-item" data-answer="demasiadas">
+    <div class="exercise-prompt">Tengo _____ reuniones esta semana. → (demasiado + sustantivo, fem. pl. — exceso)</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="demasiado / -a / -os / -as" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+  <h2 style="margin-top: 16px;">Ejercicio 2: "bastante" — el raro (no distingue género, sí número)</h2>
+
+  <div class="exercise-item" data-answer="bastante">
+    <div class="exercise-prompt">Hay _____ sal en el guiso. → (bastante + sustantivo, fem. sg.)</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="bastante / bastantes" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+  <div class="exercise-item" data-answer="bastantes">
+    <div class="exercise-prompt">Tengo _____ amigos en esta ciudad. → (bastante + sustantivo, masc. pl.)</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="bastante / bastantes" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+  <h2 style="margin-top: 16px;">Ejercicio 3: Invariable como adverbio (con adjetivo o verbo)</h2>
+
+  <div class="exercise-item" data-answer="demasiado">
+    <div class="exercise-prompt">Estos coches son _____ caros. → (demasiado + adjetivo, masc. pl. — ¡cuidado!)</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="¿concuerda o no?" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+  <div class="exercise-item" data-answer="mucho">
+    <div class="exercise-prompt">Ella trabaja _____. → (mucho + verbo)</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="¿concuerda o no?" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+</div>
+
+<div class="teacher-notes-toggle" onclick="toggleNotes(this)">▶ Notas del maestro</div>
+<div class="teacher-notes-content">
+  <strong>Ejercicio 1 (concordancia):</strong> Con sustantivo, mucho y demasiado concuerdan en género y número: <em>mucha gente</em>, <em>demasiadas reuniones</em>. Que señalen género y número del sustantivo antes de responder.<br><br>
+  <strong>Ejercicio 2 (bastante):</strong> Es la excepción parcial. Ignora el género (<em>bastante sal</em>, <em>bastante tiempo</em>) pero sí marca el plural (<em>bastantes amigos</em>). No le busques lógica; enséñalo como rareza fija.<br><br>
+  <strong>Ejercicio 3 (la trampa):</strong> Ante adjetivo o verbo son <strong>invariables</strong>: <em>demasiado caros</em> (NO "demasiados caros"), <em>trabaja mucho</em>. El primer ítem pone un adjetivo masc. pl. a propósito para tentar la concordancia. Es el mismo error que con "poco" en la slide 7b.
 </div>
 
 <hr class="page-break">
@@ -692,25 +1081,35 @@ function toggleExamples(toggleEl) {
 
 <!-- SLIDE 9 -->
 <div class="slide-label">9 / 12</div>
-<div class="slide">
-  <h1>Indicativo vs. subjuntivo — idea central</h1>
+<div class="slide" id="slide-9">
+  <h1><span class="slide-num">9.</span> Indicativo vs. subjuntivo — idea central</h1>
   <div class="cols2">
     <div>
-      <div class="rule"><strong>Indicativo</strong> = hechos reales, seguros, conocidos<br>
-      <em>Sé que <strong>viene</strong>. · Creo que <strong>tiene</strong> razón.</em></div>
-      <div class="rule"><strong>Subjuntivo</strong> = duda, deseo, emoción, valoración, hipótesis<br>
-      <em>Dudo que <strong>venga</strong>. · No creo que <strong>tenga</strong> razón.</em></div>
-      <p class="note">Al negar un verbo de certeza, el modo cambia:<br>
-      <em>Creo que <strong>tiene</strong> → No creo que <strong>tenga</strong>.</em></p>
+      <div class="rule"><strong>Indicativo</strong> = modo de la realidad: hechos reales, seguros o ya conocidos<br>
+        <em>Sé que <strong>viene</strong>. · Creo que <strong>tiene</strong> razón.</em>
+      </div>
+      <div class="rule" style="margin-top: 8px;"><strong>Subjuntivo</strong> = modo de la subordinación: duda, deseo, emoción, valoración, o hechos no verificados<br>
+        <em>Dudo que <strong>venga</strong>. · No creo que <strong>tenga</strong> razón.</em>
+      </div>
+      <p class="note" style="margin-top: 8px;">Al negar un verbo de certeza, el modo cambia:<br>
+        <em>Creo que <strong>tiene</strong> razón → No creo que <strong>tenga</strong> razón.</em>
+      </p>
+      <div class="rule" style="margin-top: 10px; border-left-color: #8e44ad; background: #f8f0fd;">
+        <strong>⚠️ Emoción + subjuntivo aunque el hecho sea real:</strong><br>
+        Con verbos de emoción (alegrarse, sorprender, molestar…) se usa subjuntivo <strong>aunque el hecho sea completamente cierto</strong>. Lo importante es la reacción, no confirmar el hecho.<br>
+        <em>Me alegra que <strong>estés</strong> aquí.</em> (estás aquí = hecho real, pero va subjuntivo)<br>
+        <em>Me sorprende que <strong>sepa</strong> tanto.</em>
+      </div>
     </div>
     <div>
       <h2>Inductores del subjuntivo</h2>
       <ul>
-        <li><strong>Deseo/voluntad:</strong> querer que, esperar que, ojalá<br><em>Quiero que <strong>vengas</strong>.</em></li>
-        <li><strong>Duda/negación:</strong> dudar que, no creer que<br><em>No creo que <strong>tenga</strong> razón.</em></li>
-        <li><strong>Emoción:</strong> alegrarse de que, me sorprende que<br><em>Me alegra que <strong>estés</strong> aquí.</em></li>
-        <li><strong>Necesidad impersonal:</strong> es importante que<br><em>Es importante que <strong>estudies</strong>.</em></li>
-        <li><strong>Finalidad:</strong> para que → siempre subj.<br><em>Te lo digo para que lo <strong>sepas</strong>.</em></li>
+        <li><strong>Deseo/voluntad</strong> → querer que, esperar que, ojalá<br><em>Quiero que <strong>vengas</strong>.</em> — <span class="note">lo quiero, pero no sé si pasará</span></li>
+        <li><strong>Duda o negación de certeza</strong> → dudar que, no creer que<br><em>No creo que <strong>tenga</strong> razón.</em></li>
+        <li><strong>Emoción/valoración</strong> → alegrarse de que, es una lástima que<br><em>Me alegra que <strong>estés</strong> aquí.</em></li>
+        <li><strong>Necesidad impersonal</strong> → es importante que, es necesario que<br><em>Es importante que <strong>estudies</strong>.</em> — <span class="note">valoración, no hecho</span></li>
+        <li><strong>Finalidad</strong> → para que (siempre subjuntivo)<br><em>Te lo digo para que lo <strong>sepas</strong>.</em></li>
+        <li><strong>Petición/orden indirecta</strong> → pedir que, decir que (como orden)<br><em>Te pido que <strong>esperes</strong>.</em></li>
       </ul>
     </div>
   </div>
@@ -718,125 +1117,123 @@ function toggleExamples(toggleEl) {
 
 <div class="teacher-notes-toggle" onclick="toggleNotes(this)">▶ Notas del maestro</div>
 <div class="teacher-notes-content">
-  <strong>Idea central (fundamental):</strong> El indicativo es el territorio de la realidad; el subjuntivo, el de la incertidumbre, el deseo, la emoción. No es un cambio caprichoso. Es la lengua expresando "yo sé que esto es real" (indicativo) vs. "yo no sé si será, pero lo deseo/lo dudo" (subjuntivo).
-  <br><br>
-  <strong>Cambio por negación:</strong> Cuando niegas un verbo de certeza (creer, pensar, saber), el hablante pasa de "esto es real" a "no sé". El subjuntivo refleja esa incertidumbre. "Creo que viene" = indicativo (sé que viene). "No creo que venga" = subjuntivo (no sé si viene).
-  <br><br>
-  <strong>Inductores (factores desencadenantes):</strong> Estos cinco grupos son los principales. Cada uno expresa algo que no es un hecho seguro: el deseo abre una brecha (lo quiero, pero ¿pasará?), la duda aún más (no sé si...), la emoción (me sorprende que = algo inesperado), la necesidad impersonal (es importante = una evaluación, no un hecho), la finalidad (para que = intención futura).
+  <strong>La idea central:</strong> Indicativo = yo sé que esto es real. Subjuntivo = yo no sé si será, o lo deseo, o reacciono ante ello. No es capricho — es la lengua expresando el grado de certeza del hablante.<br><br>
+  <strong>Emoción + subjuntivo (el matiz que más confunde):</strong> Los estudiantes piensan que subjuntivo = hecho falso. Corrige esto desde el principio. "Me alegra que estés aquí" → tú SÍ estás aquí. El subjuntivo no lo niega — simplemente desplaza el foco hacia la reacción emocional, no hacia la confirmación del hecho. En coloquial oral a veces se oye indicativo ("me alegra que estás aquí"), pero en escritura formal y en exámenes enseña siempre subjuntivo.<br><br>
+  <strong>Inductores:</strong> Cada grupo expresa algo distinto al hecho seguro. El deseo abre una brecha (¿pasará?), la duda la amplía, la emoción desplaza el foco, la necesidad impersonal es una evaluación (no un hecho), la finalidad es intención futura (no confirmada).
 </div>
 
 <hr class="page-break">
 
 <!-- SLIDE 10 -->
 <div class="slide-label">10 / 12</div>
-<div class="slide">
-  <h1>Mismo conector, distinto modo · Truco rápido</h1>
+<div class="slide" id="slide-10">
+  <h1><span class="slide-num">10.</span> Mismo conector, distinto modo · Truco rápido</h1>
   <table>
-    <tr><th>Conector</th><th>+ Indicativo</th><th>+ Subjuntivo</th></tr>
-    <tr><td><strong>aunque</strong></td><td>hecho conocido/real<br><em>Aunque es caro, lo compro.</em></td><td>hecho no verificado o futuro<br><em>Aunque sea caro, lo compraré.</em></td></tr>
-    <tr><td><strong>cuando</strong></td><td>acción habitual o pasada<br><em>Cuando llego a casa, ceno.</em></td><td>acción futura, aún no realizada<br><em>Cuando llegue a casa, cenaré.</em></td></tr>
-    <tr><td><strong>decir que</strong></td><td>informar un hecho<br><em>Me dijo que venía.</em></td><td>dar una orden<br><em>Me dijo que viniera.</em></td></tr>
+    <tr><th>Conector</th><th>+ Indicativo → función</th><th>+ Subjuntivo → función</th></tr>
+    <tr><td><strong>aunque</strong></td><td>hecho conocido/real<br><em>Aunque <strong>es</strong> caro, lo compro.</em></td><td>hecho no verificado o futuro<br><em>Aunque <strong>sea</strong> caro, lo compraré.</em></td></tr>
+    <tr><td><strong>cuando</strong></td><td>acción habitual o pasada<br><em>Cuando <strong>llego</strong> a casa, ceno.</em></td><td>acción futura, aún no realizada<br><em>Cuando <strong>llegue</strong> a casa, cenaré.</em></td></tr>
+    <tr><td><strong>decir que</strong></td><td>informar un hecho<br><em>Me dijo que <strong>venía</strong>.</em></td><td>dar una orden o petición<br><em>Me dijo que <strong>viniera</strong>.</em></td></tr>
   </table>
-  <div class="rule" style="margin-top:16px"><strong>Truco rápido:</strong><br>
-  1. ¿Hecho seguro/real/ya sabido? → <strong>indicativo</strong><br>
-  2. ¿Deseo, duda, orden, emoción, futuro no confirmado? → <strong>subjuntivo</strong><br>
-  3. Frase con "que" + verbo de duda/deseo/emoción/valoración/orden → casi siempre <strong>subjuntivo</strong>
+  <p class="note" style="margin-top: 8px;"><strong>Estos pares se enseñan siempre juntos</strong> — ninguna forma es "la correcta" y la otra "el error". Cada una tiene su función.</p>
+  <div class="rule" style="margin-top:12px"><strong>Truco rápido para decidir:</strong><br>
+    1. ¿Hecho seguro, real o ya sabido? → <strong>indicativo</strong><br>
+    2. ¿Deseo, duda, orden, emoción, o acción futura no confirmada? → <strong>subjuntivo</strong><br>
+    3. "que" + verbo de duda/deseo/emoción/valoración/orden → casi siempre <strong>subjuntivo</strong>
   </div>
 </div>
 
 <div class="teacher-notes-toggle" onclick="toggleNotes(this)">▶ Notas del maestro</div>
 <div class="teacher-notes-content">
-  <strong>Conectores flexibles:</strong> Estos tres casos muestran que el mismo conector puede pedir indicativo o subjuntivo según el contexto. No es el conector lo que decide, es la certeza o incertidumbre de lo que viene después.
-  <br><br>
-  <strong>Aunque:</strong> "Aunque es caro" (indicativo: sé que es caro, es un hecho). "Aunque sea caro" (subjuntivo: no sé si será caro, pero si lo fuera...). Anticipación vs. realidad.
-  <br><br>
-  <strong>Cuando:</strong> "Cuando llego a casa" (indicativo: es algo que ocurre habitualmente, es real). "Cuando llegue a casa" (subjuntivo: es futuro, aún no ha pasado, es una condición). El futuro siempre pide subjuntivo con "cuando".
-  <br><br>
-  <strong>Decir que:</strong> "Me dijo que venía" (indicativo: me informó de un hecho). "Me dijo que viniera" (subjuntivo: me dio una orden/instrucción). El acto del habla cambia todo.
-  <br><br>
-  <strong>Truco rápido (regla del pulgar):</strong> Es un atajo para estudiantes nuevos. No es perfecto, pero es eficaz. Úsalo cuando enseñes pero añade los matices. La verdadera regla es la idea central de la slide anterior.
+  <strong>Conectores flexibles:</strong> El mismo conector puede pedir indicativo o subjuntivo según el contexto. No es el conector lo que decide — es el grado de certeza o la naturaleza de la acción.<br><br>
+  <strong>Aunque:</strong> "Aunque es caro" (sé que es caro, es un hecho conocido). "Aunque sea caro" (no sé si será caro, pero si lo fuera… / aunque pudiera ser caro). Realidad vs. hipótesis futura.<br><br>
+  <strong>Cuando:</strong> Trampa clásica para anglófonos — en inglés se dice "when I arrive" (indicativo). En español con referencia futura, "cuando" exige subjuntivo siempre. Es una regla dura, no una zona gris.<br><br>
+  <strong>Decir que:</strong> El modo cambia según el acto de habla. Informar = indicativo. Ordenar/pedir = subjuntivo. Útil para contextos de estilo indirecto.
 </div>
 
 <hr class="page-break">
 
 <!-- SLIDE 11 -->
 <div class="slide-label">11 / 12</div>
-<div class="slide">
-  <h1>Imperativo de usted = subjuntivo · Negación</h1>
+<div class="slide" id="slide-11">
+  <h1><span class="slide-num">11.</span> Imperativo de usted = subjuntivo · Imperativo negativo</h1>
   <div class="cols2">
     <div>
-      <div class="rule">Solo tú y vosotros tienen formas propias de imperativo. Para usted/ustedes se usa el presente de subjuntivo.<br>
-      <em>Que usted <strong>compre</strong> (subj.) → ¡<strong>Compre</strong> usted! (imp.)</em></div>
-      <div class="rule" style="margin-top:10px"><strong>Imperativo negativo</strong> → siempre subjuntivo + pronombres <strong>antes</strong> del verbo (proclisis).<br>
-      <em>Cómprasela → <strong>No se la compres</strong></em></div>
+      <h2>¿Por qué usted usa subjuntivo?</h2>
+      <div class="rule">Solo tú y vosotros tienen formas propias de imperativo. Para usted/ustedes el español toma prestado el <strong>presente de subjuntivo</strong> — son la misma forma verbal.<br><br>
+        Subj.: Que usted <strong>compre</strong> más despacio.<br>
+        Imp.:  ¡<strong>Compre</strong> más despacio, por favor!
+      </div>
+      <p class="note" style="margin-top: 8px;">No es que el subjuntivo "actúe como" imperativo — es que el imperativo de usted/ustedes <em>es</em> el subjuntivo.</p>
     </div>
     <div>
-      <table>
-        <tr><th></th><th>Afirmativo</th><th>Negativo</th></tr>
-        <tr><td>Modo</td><td>imperativo / subj.</td><td>siempre subj.</td></tr>
-        <tr><td>Pronombres</td><td>después, pegados</td><td>antes, separados</td></tr>
-        <tr><td>tú</td><td>Díselo</td><td>No se lo digas</td></tr>
-        <tr><td>usted</td><td>Dígaselo</td><td>No se lo diga</td></tr>
-        <tr><td>ustedes</td><td>Díganselo</td><td>No se lo digan</td></tr>
-      </table>
+      <h2>Imperativo negativo: siempre subjuntivo</h2>
+      <div class="rule">Al añadir "no", el modo cambia a subjuntivo <strong>para todos los sujetos</strong> (incluido tú), y los pronombres pasan delante (proclisis).<br><br>
+        <em>Cómprasela → <strong>No se la compres</strong></em> (tú)<br>
+        <em>Dígaselo → <strong>No se lo diga</strong></em> (usted)
+      </div>
     </div>
+  </div>
+
+  <div class="examples-toggle" onclick="toggleExamples(this)">▼ Ocultar tabla comparativa</div>
+  <div class="examples-content">
+    <table style="font-size: 0.82em; margin-top: 8px;">
+      <tr><th></th><th>Afirmativo</th><th>Negativo</th></tr>
+      <tr><td>Modo</td><td>imperativo (tú/vosotros) o subj. (usted)</td><td>siempre subjuntivo</td></tr>
+      <tr><td>Pronombres</td><td>después, pegados (enclisis)</td><td>antes, separados (proclisis)</td></tr>
+      <tr><td>tú</td><td><em>Díselo</em></td><td><em>No se lo digas</em></td></tr>
+      <tr><td>usted</td><td><em>Dígaselo</em></td><td><em>No se lo diga</em></td></tr>
+      <tr><td>ustedes</td><td><em>Díganselo</em></td><td><em>No se lo digan</em></td></tr>
+    </table>
   </div>
 </div>
 
 <div class="teacher-notes-toggle" onclick="toggleNotes(this)">▶ Notas del maestro</div>
 <div class="teacher-notes-content">
-  <strong>Imperativo de usted = subjuntivo:</strong> Esto es una simplificación de la gramática española. Tú y vosotros tienen formas de imperativo exclusivas ("dí", "decid"). Usted y ustedes no—usan el subjuntivo. "Que usted diga algo" se pronuncia como "¡Diga!". No es tanto que el subjuntivo sea imperativo; es que el imperativo de usted ES subjuntivo. Es arquitectura del idioma.
-  <br><br>
-  <strong>Imperativo negativo:</strong> Cuando niegas un imperativo, siempre cae al subjuntivo. Y cuando cae al subjuntivo, los pronombres cambian de sitio: de enclisis (pegados atrás) a proclisis (antes, separados). "Cómprala" (afirmativo) → "No la compres" (negativo). Es un cambio dual de modo y posición de pronombre.
-  <br><br>
-  <strong>Tabla como resumen visual:</strong> Esta tabla agrupa todo lo que hemos visto del imperativo en esta unidad: afirmativo con enclisis, negativo con subjuntivo y proclisis, y las variantes para tú/usted/ustedes. Es un buen punto de referencia al final.
+  <strong>Usted = subjuntivo:</strong> Tú y vosotros tienen formas exclusivas de imperativo ("di", "decid"). Usted y ustedes no las tienen — toman la forma del subjuntivo. Es arquitectura del idioma, no una excepción extraña.<br><br>
+  <strong>Negativo:</strong> Cuando niegas el imperativo, cambian dos cosas a la vez: el modo (a subjuntivo) y la posición del pronombre (a proclisis). "Cómprala" → "No la compres". No es un cambio de pronombre — es el mismo, pero ahora delante. Los estudiantes a veces olvidan el cambio de posición. Practícalo como pareja: afirmativo/negativo juntos.<br><br>
+  <strong>Esta tabla es el resumen visual del bloque 1</strong> — un buen momento para repasar y verificar que todo encajó.
 </div>
 
 <hr class="page-break">
 
 <!-- SLIDE 12 -->
 <div class="slide-label">12 / 12</div>
-<div class="slide">
-  <h1>Excepciones · Tabla resumen final</h1>
+<div class="slide" id="slide-12">
+  <h1><span class="slide-num">12.</span> Excepciones · Tabla resumen final</h1>
   <div class="cols2">
     <div>
       <h2>Zonas grises</h2>
       <ul>
-        <li><span class="warn">⚠️</span> <strong>Verbos de emoción + coloquial:</strong> se oye indicativo, pero enseña siempre subjuntivo.</li>
-        <li><span class="ok">✅</span> <strong>No sé si:</strong> indicativo o subjuntivo, ambos válidos.</li>
-        <li><span class="ok">✅</span> <strong>Quizás/tal vez:</strong> más certeza → ind.; más duda → subj. Ambos correctos.</li>
-        <li><span class="ok">✅</span> <strong>Cuando + futuro → siempre subj.</strong><br>
-        <span class="bad">✗ Cuando <em>llego</em> a casa, te llamo</span> (si es futuro)<br>
-        <span class="ok">✓ Cuando <em>llegue</em> a casa, te llamo</span></li>
+        <li><span class="warn">⚠️</span> <strong>Verbos de emoción coloquial:</strong> en el habla oral se oye indicativo ("me alegra que estás aquí"), pero en escritura formal y exámenes enseña siempre subjuntivo.</li>
+        <li><span class="ok">✅</span> <strong>No sé si:</strong> indicativo o subjuntivo — ambos válidos, sin diferencia de significado.<br><em>No sé si <strong>viene</strong> / <strong>venga</strong>.</em></li>
+        <li><span class="ok">✅</span> <strong>Quizás / tal vez:</strong> más certeza → indicativo; más duda → subjuntivo. Ambos correctos.<br><em>Quizás <strong>viene</strong> mañana. / Quizás <strong>venga</strong> mañana.</em></li>
+        <li><span class="bad">⚠️ Regla dura:</span> <strong>Cuando + futuro → siempre subjuntivo</strong> (trampa para anglófonos).<br>
+          <span class="bad">✗ Cuando <em>llego</em> a casa, te llamo</span> (si es futuro)<br>
+          <span class="ok">✓ Cuando <em>llegue</em> a casa, te llamo</span>
+        </li>
       </ul>
     </div>
     <div>
-      <h2>Tabla resumen (mismo verbo, todos los contextos)</h2>
+      <h2>Tabla resumen — mismo verbo, todos los contextos</h2>
       <table>
         <tr><th>Situación</th><th>Modo</th><th>Pronombres</th></tr>
         <tr><td>Orden directa (tú)</td><td>imperativo</td><td>después, pegados<br><em>Cómprasela</em></td></tr>
         <tr><td>Orden directa (usted)</td><td>subjuntivo</td><td>después, pegados<br><em>Cómpresela</em></td></tr>
         <tr><td>Orden negativa</td><td>subjuntivo</td><td>antes, separados<br><em>No se la compres</em></td></tr>
-        <tr><td>Pregunta/respuesta</td><td>indicativo</td><td>antes, separados<br><em>Se la he comprado</em></td></tr>
-        <tr><td>Deseo/duda</td><td>subjuntivo</td><td>antes, separados<br><em>Espero que se la compres</em></td></tr>
+        <tr><td>Pregunta/respuesta</td><td>indicativo</td><td>antes, separados<br><em>¿Se la has comprado? Sí, se la he comprado.</em></td></tr>
+        <tr><td>Deseo / duda</td><td>subjuntivo</td><td>antes, separados<br><em>Espero que se la compres.</em></td></tr>
+        <tr><td>Hecho seguro</td><td>indicativo</td><td>antes, separados<br><em>Sé que se la has comprado.</em></td></tr>
       </table>
+      <p class="note" style="margin-top: 6px;">El mismo verbo (comprar + se + la) en todos los contextos: lo que cambia es el modo y la posición del pronombre, nunca el pronombre en sí.</p>
     </div>
   </div>
 </div>
 
 <div class="teacher-notes-toggle" onclick="toggleNotes(this)">▶ Notas del maestro</div>
 <div class="teacher-notes-content">
-  <strong>Zonas grises (ambigüedades reales del español):</strong> No todas las reglas son 100% duras. Aquí señalamos dónde la lengua viva es más flexible:
-  <ul style="margin: 4px 0; padding-left: 18px;">
-    <li>Verbos de emoción coloquiales: Oralmente se oye "Me sorprende que viene" (indicativo), pero formal/escrito es subjuntivo. Enseña subjuntivo como correcto—es la forma estándar.</li>
-    <li>"No sé si": Ambos modos funcionan. "No sé si viene / viniera". Es una zona de variación legítima.</li>
-    <li>"Quizás/tal vez": Pueden ir con indicativo (más seguro) o subjuntivo (más duda). Ambos están bien.</li>
-    <li>"Cuando + futuro": Esta es una regla dura. Cualquier acción futura con "cuando" DEBE llevar subjuntivo.</li>
-  </ul>
-  <br>
-  <strong>Tabla final como referencia:</strong> Esta tabla consolida toda la unidad. Un solo verbo (comprar) en cinco contextos diferentes, mostrando cómo cambia el modo y la posición de pronombre. Es una chuleta visual que los estudiantes pueden fotografiar.
-  <br><br>
-  <strong>Cierre de la lección:</strong> Recuerda que el subjuntivo no es capricho; es la expresión gramatical de la incertidumbre, el deseo, la emoción. Si enseñas con esa idea de fondo, todo encaja mejor.
+  <strong>Zonas grises:</strong> No todas las reglas son absolutas. Hay que distinguir las reglas duras (cuando + futuro = subjuntivo siempre) de las zonas de variación legítima (quizás + ind. o subj.).<br><br>
+  <strong>Emoción + coloquial:</strong> Si un estudiante lo oye en conversación, puede entenderlo — pero en producción propia (escrita y formal) siempre subjuntivo.<br><br>
+  <strong>Tabla final:</strong> Esta tabla usa el mismo verbo en seis contextos distintos para que el alumno vea que el pronombre no cambia — cambia solo el modo verbal y su posición. Es una chuleta que los estudiantes pueden fotografiar.
 </div>
 
 </body>
