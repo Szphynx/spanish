@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La línea del tiempo — pasado, presente y futuro</title>
+<style>
+  :root {
+    --accent: #2c3e8a; --line: #e2e2e2;
+    --real: #2c3e8a; --mental: #8a5bd6; --perif: #1f7a6b; --ok: #1a7a3a; --bad: #b3261e;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif; color: #1c1c1c; background: #ececec;
+    margin: 0; padding: 22px; line-height: 1.5;
+    display: flex; justify-content: center; align-items: flex-start;
+  }
+  .slide {
+    width: 100%; max-width: 1120px; background: #fff; border-radius: 8px;
+    box-shadow: 0 2px 14px rgba(0,0,0,.14); padding: 24px 40px 28px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  header h1 { font-size: 1.45em; margin: 0; padding-bottom: 9px; border-bottom: 3px solid #1a1a1a; }
+  header p.sub { color: #555; font-size: .9em; margin: 7px 0 0; }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; padding: 6px 0 2px; }
+  .controls .grp { display: flex; align-items: center; gap: 8px; }
+  .controls label { font-size: .8em; color: #555; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+  select { font-family: inherit; font-size: .92em; padding: 6px 10px; border: 1px solid #cfcfcf; border-radius: 6px; background: #fff; }
+  .persona-group { display: inline-flex; gap: 4px; flex-wrap: wrap; }
+  .persona-group button { font-family: inherit; font-size: .8em; padding: 5px 11px; border: 1px solid #cfcfcf; border-radius: 999px; background: #fff; cursor: pointer; }
+  .persona-group button.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  /* interruptor deslizante (EN) */
+  .switch { position: relative; display: inline-flex; align-items: center; cursor: pointer; }
+  .switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .switch .track { width: 42px; height: 24px; background: #cfcfcf; border-radius: 999px; transition: .2s; }
+  .switch .thumb { position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; background: #fff; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: .2s; }
+  .switch input:checked + .track { background: var(--accent); }
+  .switch input:checked + .track .thumb { transform: translateX(18px); }
+  .switch .sw-label { margin-left: 8px; font-size: .82em; font-weight: 700; color: #888; }
+  .switch input:checked ~ .sw-label { color: var(--accent); }
+
+  .stage { position: relative; width: 100%; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
+  .stage > svg { width: 100%; min-width: 1160px; height: auto; aspect-ratio: 1240 / 548; display: block; }
+  .stage::-webkit-scrollbar { height: 9px; }
+  .stage::-webkit-scrollbar-thumb { background: #c7cbdc; border-radius: 999px; }
+
+  .now-line  { stroke: #1a1a1a; stroke-width: 2; stroke-dasharray: 2 4; opacity: .65; }
+  .now-label { font-size: 12.5px; font-weight: 700; fill: #1a1a1a; paint-order: stroke; stroke: #fff; stroke-width: 3.5px; stroke-linejoin: round; }
+  .axis-line { stroke: #b9b9b9; stroke-width: 1.5; }
+  .zone-label { font-size: 10.5px; fill: #a0a0a0; letter-spacing: .5px; }
+  .group-label { font-size: 10.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+  .group-label.real   { fill: var(--real); }
+  .group-label.mental { fill: var(--mental); }
+  .divider { stroke: var(--line); stroke-width: 1; stroke-dasharray: 4 5; }
+
+  .lane-hit { fill: transparent; cursor: pointer; }
+  .lane-name { font-size: 12px; font-weight: 600; text-anchor: end; }
+  .lane-conj { font-size: 11px; font-weight: 600; text-anchor: end; }
+  .lane.dim { opacity: .34; }
+  .conn-label { font-size: 10.5px; font-weight: 700; paint-order: stroke; stroke: #fff; stroke-width: 3.5px; stroke-linejoin: round; }
+
+  .panel { border-radius: 8px; padding: 13px 18px; background: #eef3ff; border-left: 6px solid var(--accent); }
+  .panel.mental { background: #f3edfc; border-left-color: var(--mental); }
+  .panel .top { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+  .chip { display: inline-block; background: var(--accent); color: #fff; font-size: .68em; font-weight: 700; padding: 3px 10px; border-radius: 999px; letter-spacing: .5px; text-transform: uppercase; }
+  .panel.mental .chip { background: var(--mental); }
+  .plane-tag { font-size: .72em; color: #888; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .en-sub { color: #adadad; font-style: italic; font-size: .82em; margin-top: -6px; }
+  .panel.mental .en-sub { color: #b3a6c8; }
+  header p.sub.en-sub { font-size: .8em; margin-top: -4px; }
+  .chip.en-chip { background: #6b6b6b; }
+  .panel.mental .chip.en-chip { background: #7a6a94; }
+  .uso { font-size: .96em; color: #2a2a2a; margin: 0 0 8px; }
+  .uso b { color: var(--accent); }
+  .panel.mental .uso b { color: var(--mental); }
+  .frase { font-size: 1.24em; margin: 0 0 9px; color: #1a1a1a; }
+  .frase b { color: var(--accent); }
+  .panel.mental .frase b { color: var(--mental); }
+  .conj { display: flex; flex-wrap: wrap; gap: 6px; }
+  .conj .c { font-size: .8em; padding: 4px 10px; border-radius: 6px; background: #e3e8f6; color: #33406e; }
+  .conj .c.on { background: var(--accent); color: #fff; font-weight: 600; }
+  .panel.mental .conj .c { background: #e9e0fa; color: #5b3e94; }
+  .panel.mental .conj .c.on { background: var(--mental); color: #fff; }
+  .conj .c .p { opacity: .55; margin-right: 5px; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 9px 16px; background: #f7f8fc; border: 1px solid var(--line); border-radius: 6px; font-size: .78em; }
+  .legend .item { display: flex; align-items: center; gap: 8px; }
+  .legend .swatch { width: 40px; height: 20px; flex: none; }
+
+  /* --- botón practicar --- */
+  .btn-practicar { font-family: inherit; font-size: .92em; font-weight: 700; padding: 8px 16px; border: none; border-radius: 999px; background: var(--accent); color: #fff; cursor: pointer; box-shadow: 0 2px 6px rgba(44,62,138,.3); }
+  .btn-practicar:hover { background: #22306e; }
+
+  /* --- modal de práctica (flashcards) --- */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(20,20,30,.55); display: flex; align-items: center; justify-content: center; z-index: 50; padding: 20px; }
+  .modal-card { position: relative; width: 100%; max-width: 540px; background: #fff; border-radius: 14px; padding: 22px 26px 20px; box-shadow: 0 10px 40px rgba(0,0,0,.3); border-top: 6px solid var(--accent); }
+  .modal-card.mental { border-top-color: var(--mental); }
+  .modal-card.perif  { border-top-color: var(--perif); }
+  .group-label.perif { fill: var(--perif); }
+  .panel.perif { background: #e9f5f2; border-left-color: var(--perif); }
+  .panel.perif .chip { background: var(--perif); }
+  .panel.perif .uso b, .panel.perif .frase b { color: var(--perif); }
+  .btn-imp { font-family: inherit; font-size: .92em; font-weight: 700; padding: 8px 16px; border: 2px solid var(--accent); border-radius: 999px; background: #fff; color: var(--accent); cursor: pointer; }
+  .btn-imp:hover { background: #f0f2fb; }
+  /* tabla del imperativo */
+  .imp-intro { font-size: .92em; color: #2a2a2a; margin: 2px 0 12px; }
+  .imp-table { width: 100%; border-collapse: collapse; }
+  .imp-table th, .imp-table td { text-align: left; padding: 7px 10px; border-bottom: 1px solid #eee; font-size: .96em; }
+  .imp-table th { font-size: .72em; text-transform: uppercase; letter-spacing: .5px; color: #888; }
+  .imp-table td.persona { font-weight: 700; color: #555; }
+  .imp-af  { color: var(--ok);  font-weight: 600; }
+  .imp-neg { color: var(--bad); font-weight: 600; }
+  .modal-x { position: absolute; top: 8px; right: 14px; border: none; background: none; font-size: 1.6em; line-height: 1; color: #aaa; cursor: pointer; }
+  .modal-x:hover { color: #666; }
+  .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .modal-title { font-size: 1.15em; font-weight: 700; color: var(--accent); }
+  .modal-card.mental .modal-title { color: var(--mental); }
+  .modal-score { font-size: .9em; font-weight: 700; color: #666; background: #f0f2f8; padding: 4px 12px; border-radius: 999px; }
+  .q-tags { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .q-meta { font-size: .85em; color: #666; }
+  .q-frase { font-size: 1.35em; margin: 6px 0 4px; color: #1a1a1a; }
+  .q-frase b { color: var(--accent); letter-spacing: 1px; }
+  .modal-card.mental .q-frase b { color: var(--mental); }
+  .q-ask { font-size: .85em; color: #777; margin: 6px 0 10px; }
+  .q-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .q-op { font-family: inherit; font-size: 1.02em; padding: 12px 14px; border: 2px solid #dcdfea; border-radius: 10px; background: #fff; cursor: pointer; transition: .12s; }
+  .q-op:hover:not(:disabled) { border-color: var(--accent); background: #f4f6fc; }
+  .q-op:disabled { cursor: default; }
+  .q-op.op-ok  { border-color: var(--ok);  background: #e7f6ec; color: #0f5e2a; font-weight: 700; }
+  .q-op.op-bad { border-color: var(--bad); background: #fdecea; color: #8a1e16; }
+  .q-foot { display: flex; align-items: center; gap: 12px; margin-top: 16px; min-height: 38px; }
+  .q-result { font-weight: 700; }
+  .q-result.ok  { color: var(--ok); }
+  .q-result.bad { color: var(--bad); }
+  .btn-next { font-family: inherit; font-size: .95em; font-weight: 700; padding: 9px 18px; border: none; border-radius: 999px; background: var(--accent); color: #fff; cursor: pointer; margin-left: auto; }
+  .btn-next:hover { background: #22306e; }
+
+  @media (max-width: 680px) {
+    .q-options { grid-template-columns: 1fr; }
+    body { padding: 12px; }
+    .slide { padding: 16px 16px 20px; }
+    header h1 { font-size: 1.15em; }
+    .frase { font-size: 1.05em; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="slide">
+    <header>
+      <h1>La línea del tiempo — pasado, presente y futuro</h1>
+      <p class="sub">
+        Cada tiempo tiene su <strong>carril</strong>, su <strong>zona en el tiempo</strong> (banda) y
+        su <strong>dirección</strong> (flecha). Elige verbo y persona, y pulsa un carril.
+      </p>
+      <p class="sub en-sub" v-if="en">
+        Each tense has its <strong>lane</strong>, its <strong>time zone</strong> (band) and its
+        <strong>direction</strong> (arrow). Pick a verb and person, then click a lane.
+      </p>
+    </header>
+
+    <div class="controls">
+      <div class="grp">
+        <label for="verbo">Verbo</label>
+        <select id="verbo" v-model="verboId">
+          <option v-for="v in verbos" :key="v.infinitivo" :value="v.infinitivo">{{ v.infinitivo }}</option>
+        </select>
+      </div>
+      <div class="grp">
+        <label>Persona</label>
+        <div class="persona-group">
+          <button v-for="(p,i) in personas" :key="i" :class="{active: persona===i}" @click="persona=i">{{ p.lbl }}</button>
+        </div>
+      </div>
+      <div class="grp">
+        <label>Subtítulos</label>
+        <label class="switch" title="English subtitles">
+          <input type="checkbox" v-model="en">
+          <span class="track"><span class="thumb"></span></span>
+          <span class="sw-label">EN</span>
+        </label>
+      </div>
+      <div class="grp" style="margin-left:auto; gap:8px">
+        <button class="btn-imp" @click="impOpen=true">📣 {{ en ? 'Commands' : 'Imperativo' }}</button>
+        <button class="btn-practicar" @click="abrirPractica">⚡ {{ en ? 'Practice' : 'Practicar' }}</button>
+      </div>
+    </div>
+
+    <div class="stage">
+      <svg ref="svg" :viewBox="`0 0 ${W} ${H}`" preserveAspectRatio="xMidYMid meet"
+           role="img" aria-label="Carriles de los tiempos verbales del pasado"></svg>
+    </div>
+
+    <!-- panel de detalle -->
+    <div v-if="detalle" class="panel" :class="{mental: detalle.plano==='mental', perif: detalle.plano==='perif'}">
+      <div class="top">
+        <span class="chip">{{ detalle.nombre }}</span>
+        <span v-if="en" class="chip en-chip">{{ detalle.nombreEn }}</span>
+        <span class="plane-tag">{{ planeTag }}</span>
+      </div>
+      <p class="uso" v-html="detalle.uso"></p>
+      <p class="uso en-sub" v-if="en" v-html="detalle.usoEn"></p>
+      <p class="frase" v-html="detalle.frase"></p>
+      <div class="conj">
+        <span v-for="(f,i) in detalle.tabla" :key="i" class="c" :class="{on: i===persona}">
+          <span class="p">{{ personas[i].lbl }}</span>{{ f }}
+        </span>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="item"><svg class="swatch" viewBox="0 0 40 20"><circle cx="20" cy="10" r="7" fill="#2c3e8a"/><line x1="12" y1="4" x2="12" y2="16" stroke="#2c3e8a" stroke-width="2"/><line x1="28" y1="4" x2="28" y2="16" stroke="#2c3e8a" stroke-width="2"/></svg><span><strong>Punto entre topes</strong> = terminado (pretérito)</span></div>
+      <div class="item"><svg class="swatch" viewBox="0 0 40 20"><path d="M4 10 q3 -5 6 0 t6 0 t6 0 t6 0 t6 0" fill="none" stroke="#2c3e8a" stroke-width="2.5" stroke-linecap="round"/></svg><span><strong>Onda que se abre</strong> = en curso / fondo (imperfecto)</span></div>
+      <div class="item"><svg class="swatch" viewBox="0 0 40 20"><circle cx="8" cy="10" r="6" fill="#2c3e8a"/><line x1="14" y1="10" x2="34" y2="10" stroke="#2c3e8a" stroke-width="2.5" marker-end="url(#lg-arw)"/><defs><marker id="lg-arw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#2c3e8a"/></marker></defs></svg><span><strong>Flecha</strong> = dirección (hacia AHORA / hacia después)</span></div>
+      <div class="item"><svg class="swatch" viewBox="0 0 40 20"><rect x="6" y="4" width="28" height="12" rx="6" fill="#8a5bd6"/></svg><span><strong>Nube</strong> = deseo / duda / irreal (subjuntivo)</span></div>
+    </div>
+  </div>
+
+  <!-- modal de práctica: flashcards de opción múltiple -->
+  <div v-if="quizOpen" class="modal-overlay" @click.self="cerrarPractica">
+    <div class="modal-card" :class="{mental: quizQ && quizQ.plano==='mental'}">
+      <button class="modal-x" @click="cerrarPractica" aria-label="Cerrar">&times;</button>
+      <div class="modal-head">
+        <span class="modal-title">⚡ {{ en ? 'Practice' : 'Practicar' }}</span>
+        <span class="modal-score">{{ quizScore }}/{{ quizTotal }}</span>
+      </div>
+      <template v-if="quizQ">
+        <div class="q-tags">
+          <span class="chip">{{ quizQ.nombre }}</span>
+          <span class="q-meta">
+            {{ en ? 'verb' : 'verbo' }}: <b>{{ quizQ.infinitivo }}</b> ·
+            {{ en ? 'person' : 'persona' }}: <b>{{ quizQ.personaLbl }}</b>
+          </span>
+        </div>
+        <p class="q-frase" v-html="quizQ.fraseBlank"></p>
+        <p class="q-ask">{{ en ? 'Choose the correct form:' : 'Elige la forma correcta:' }}</p>
+        <div class="q-options">
+          <button v-for="op in quizQ.opciones" :key="op" class="q-op" :class="opClass(op)"
+                  :disabled="quizChoice!==null" @click="responder(op)">{{ op }}</button>
+        </div>
+        <div class="q-foot">
+          <span v-if="quizChoice!==null" class="q-result" :class="{ok: quizChoice===quizQ.correcta, bad: quizChoice!==quizQ.correcta}">
+            {{ quizChoice===quizQ.correcta ? (en ? 'Correct!' : '¡Correcto!') : (en ? 'The answer is ' : 'La respuesta es ') + quizQ.correcta }}
+          </span>
+          <button v-if="quizChoice!==null" class="btn-next" @click="siguiente">{{ en ? 'Next ▸' : 'Siguiente ▸' }}</button>
+        </div>
+      </template>
+    </div>
+  </div>
+
+  <!-- modal del imperativo (mandatos) -->
+  <div v-if="impOpen" class="modal-overlay" @click.self="impOpen=false">
+    <div class="modal-card">
+      <button class="modal-x" @click="impOpen=false" aria-label="Cerrar">&times;</button>
+      <div class="modal-head">
+        <span class="modal-title">📣 {{ en ? 'Commands (imperative)' : 'Imperativo' }}</span>
+        <select v-model="verboId">
+          <option v-for="v in verbos" :key="v.infinitivo" :value="v.infinitivo">{{ v.infinitivo }}</option>
+        </select>
+      </div>
+      <p class="imp-intro">
+        {{ en ? 'To order, advise or give permission. The affirmative has its own forms; the negative = «no» + present subjunctive.'
+              : 'Para ordenar, aconsejar o dar permiso. El afirmativo tiene forma propia; el negativo = «no» + presente de subjuntivo.' }}
+      </p>
+      <table class="imp-table">
+        <thead><tr>
+          <th>{{ en ? 'person' : 'persona' }}</th>
+          <th>{{ en ? 'affirmative' : 'afirmativo' }}</th>
+          <th>{{ en ? 'negative' : 'negativo' }}</th>
+        </tr></thead>
+        <tbody>
+          <tr v-for="r in imperativo" :key="r.p">
+            <td class="persona">{{ r.p }}</td>
+            <td class="imp-af">{{ r.af }}</td>
+            <td class="imp-neg">{{ r.neg }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { createApp, ref, computed, watch, onMounted } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js';
+import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
+
+/* =================================================================== *
+ * DATOS   (punto: marcador · span: banda de "cuándo" · forma: aspecto)*
+ * =================================================================== */
+const AHORA = 0.78;
+const TIEMPOS = [
+  // --- MENTAL (subjuntivo): lane 0..3 ---
+  { id:'pres_subj',    nombre:'Pres. subj.',    plano:'mental', lane:0, forma:'abierto-der', punto:AHORA, span:[AHORA-0.02, 0.97] },
+  { id:'perf_subj',    nombre:'Perf. subj.',    plano:'mental', lane:1, forma:'a-ahora',     punto:0.60,  span:[0.58, AHORA] },
+  { id:'imperf_subj',  nombre:'Imperf. subj.',  plano:'mental', lane:2, forma:'abierto',     punto:0.33,  span:[0.16, 0.50] },
+  { id:'pluscuam_subj',nombre:'Pluscuam. subj.',plano:'mental', lane:3, forma:'anterior',    punto:0.13,  span:[0.09, 0.24] },
+  // --- REAL (indicativo): lane 0..4 ---
+  { id:'presente',        nombre:'Presente',           plano:'real', lane:0, forma:'punto',         punto:AHORA, span:[AHORA-0.02, AHORA+0.02] },
+  { id:'futuro',          nombre:'Futuro',             plano:'real', lane:1, forma:'punto',         punto:0.92,  span:[0.89, 0.95] },
+  { id:'futuro_perfecto', nombre:'Futuro perfecto',    plano:'real', lane:2, forma:'anterior',      punto:0.84,  span:[0.82, 0.96] },
+  { id:'condicional',          nombre:'Condicional',          plano:'real', lane:3, forma:'punto', punto:0.90, span:[0.87, 0.93], hipo:true },
+  { id:'condicional_perfecto', nombre:'Condicional perfecto', plano:'real', lane:4, forma:'punto', punto:0.82, span:[0.79, 0.85], hipo:true },
+  { id:'perfecto',        nombre:'Pretérito perfecto', plano:'real', lane:5, forma:'a-ahora',       punto:0.60,  span:[0.58, AHORA] },
+  { id:'preterito',       nombre:'Pretérito',          plano:'real', lane:6, forma:'punto-cerrado', punto:0.33,  span:[0.30, 0.36] },
+  { id:'imperfecto',      nombre:'Imperfecto',         plano:'real', lane:7, forma:'abierto',       punto:0.33,  span:[0.16, 0.50] },
+  { id:'pluscuamperfecto',nombre:'Pluscuamperfecto',   plano:'real', lane:8, forma:'anterior',      punto:0.13,  span:[0.09, 0.24] },
+  // --- PERÍFRASIS (aspecto): lane 0..2 ---
+  { id:'acabar_de',  nombre:'Acabar de + inf.', plano:'perif', lane:0, forma:'punto',   punto:0.72, span:[0.69, 0.75] },
+  { id:'progresivo', nombre:'Estar + gerundio', plano:'perif', lane:1, forma:'abierto', punto:AHORA, span:[0.70, 0.86] },
+  { id:'ir_a',       nombre:'Ir a + inf.',      plano:'perif', lane:2, forma:'punto',   punto:0.86, span:[0.83, 0.89] },
+];
+
+// tiempos compuestos → tabla de "haber" a usar (haber + participio)
+const HABER = {
+  perfecto:         ['he','has','ha','hemos','habéis','han'],
+  pluscuamperfecto: ['había','habías','había','habíamos','habíais','habían'],
+  perf_subj:        ['haya','hayas','haya','hayamos','hayáis','hayan'],
+  pluscuam_subj:    ['hubiera','hubieras','hubiera','hubiéramos','hubierais','hubieran'],
+  futuro_perfecto:  ['habré','habrás','habrá','habremos','habréis','habrán'],
+  condicional_perfecto: ['habría','habrías','habría','habríamos','habríais','habrían'],
+};
+
+// auxiliares (en presente) de las perífrasis de aspecto
+const ESTAR_PRES  = ['estoy','estás','está','estamos','estáis','están'];
+const IR_PRES     = ['voy','vas','va','vamos','vais','van'];
+const ACABAR_PRES = ['acabo','acabas','acaba','acabamos','acabáis','acaban'];
+
+const TERM = {
+  presente:   { ar:['o','as','a','amos','áis','an'],       er:['o','es','e','emos','éis','en'],       ir:['o','es','e','imos','ís','en'] },
+  preterito:  { ar:['é','aste','ó','amos','asteis','aron'], er:['í','iste','ió','imos','isteis','ieron'], ir:['í','iste','ió','imos','isteis','ieron'] },
+  imperfecto: { ar:['aba','abas','aba','ábamos','abais','aban'], er:['ía','ías','ía','íamos','íais','ían'], ir:['ía','ías','ía','íamos','íais','ían'] },
+};
+
+const PERSONAS = [
+  { lbl:'yo', frase:'yo' }, { lbl:'tú', frase:'tú' }, { lbl:'él/ella', frase:'él' },
+  { lbl:'nosotros', frase:'nosotros' }, { lbl:'vosotros', frase:'vosotros' }, { lbl:'ellos', frase:'ellos' },
+];
+
+const VERBOS = [
+  { infinitivo:'terminar', grupo:'ar', comp:'el proyecto' },
+  { infinitivo:'estudiar', grupo:'ar', comp:'la lección' },
+  { infinitivo:'hablar',   grupo:'ar', comp:'con María' },
+  { infinitivo:'comer',    grupo:'er', comp:'paella' },
+  { infinitivo:'aprender', grupo:'er', comp:'español' },
+  { infinitivo:'vivir',    grupo:'ir', comp:'en Madrid' },
+  { infinitivo:'escribir', grupo:'ir', comp:'una carta', irr:{ participio:'escrito' } },
+  { infinitivo:'hacer',    grupo:'er', comp:'la tarea', irr:{
+      presente:['hago','haces','hace','hacemos','hacéis','hacen'],
+      preterito:['hice','hiciste','hizo','hicimos','hicisteis','hicieron'], participio:'hecho', futuroStem:'har', imperativoTu:'haz' } },
+  { infinitivo:'tener',    grupo:'er', comp:'mucho trabajo', irr:{
+      presente:['tengo','tienes','tiene','tenemos','tenéis','tienen'],
+      preterito:['tuve','tuviste','tuvo','tuvimos','tuvisteis','tuvieron'], futuroStem:'tendr', imperativoTu:'ten' } },
+  { infinitivo:'ir',       grupo:'ir', comp:'al mercado', irr:{
+      presente:['voy','vas','va','vamos','vais','van'],
+      preterito:['fui','fuiste','fue','fuimos','fuisteis','fueron'],
+      imperfecto:['iba','ibas','iba','íbamos','ibais','iban'],
+      pres_subj:['vaya','vayas','vaya','vayamos','vayáis','vayan'], participio:'ido', gerundio:'yendo', imperativoTu:'ve' } },
+  { infinitivo:'ser',      grupo:'er', comp:'muy feliz', irr:{
+      presente:['soy','eres','es','somos','sois','son'],
+      preterito:['fui','fuiste','fue','fuimos','fuisteis','fueron'],
+      imperfecto:['era','eras','era','éramos','erais','eran'],
+      pres_subj:['sea','seas','sea','seamos','seáis','sean'], imperativoTu:'sé' } },
+  { infinitivo:'ver',      grupo:'er', comp:'una película', irr:{
+      presente:['veo','ves','ve','vemos','veis','ven'],
+      preterito:['vi','viste','vio','vimos','visteis','vieron'],
+      imperfecto:['veía','veías','veía','veíamos','veíais','veían'], participio:'visto' } },
+  { infinitivo:'decir',    grupo:'ir', comp:'la verdad', irr:{
+      presente:['digo','dices','dice','decimos','decís','dicen'],
+      preterito:['dije','dijiste','dijo','dijimos','dijisteis','dijeron'], participio:'dicho', futuroStem:'dir', gerundio:'diciendo', imperativoTu:'di' } },
+];
+
+/* ===================== MOTOR DE CONJUGACIÓN ======================== */
+function participio(verbo) {
+  if (verbo.irr && verbo.irr.participio) return verbo.irr.participio;
+  return verbo.infinitivo.slice(0, -2) + (verbo.grupo === 'ar' ? 'ado' : 'ido');
+}
+function gerundio(verbo) {
+  if (verbo.irr && verbo.irr.gerundio) return verbo.irr.gerundio;
+  return verbo.infinitivo.slice(0, -2) + (verbo.grupo === 'ar' ? 'ando' : 'iendo');
+}
+function acentuarUltimaVocal(s) {
+  const map = { a:'á', e:'é', i:'í', o:'ó', u:'ú' };
+  for (let k = s.length - 1; k >= 0; k--) if (map[s[k]]) return s.slice(0, k) + map[s[k]] + s.slice(k + 1);
+  return s;
+}
+function conjugar(verbo, tiempoId, i) {
+  // compuestos: haber (en el tiempo/modo) + participio
+  if (HABER[tiempoId]) return HABER[tiempoId][i] + ' ' + participio(verbo);
+  // perífrasis de aspecto
+  if (tiempoId === 'progresivo') return ESTAR_PRES[i] + ' ' + gerundio(verbo);
+  if (tiempoId === 'ir_a')       return IR_PRES[i] + ' a ' + verbo.infinitivo;
+  if (tiempoId === 'acabar_de')  return ACABAR_PRES[i] + ' de ' + verbo.infinitivo;
+  // presente de subjuntivo: raíz de la 1ª persona del presente + vocal contraria
+  if (tiempoId === 'pres_subj') {
+    if (verbo.irr && verbo.irr.pres_subj) return verbo.irr.pres_subj[i];
+    const stem = conjugar(verbo, 'presente', 0).slice(0, -1);   // quita la -o de "yo"
+    const v = verbo.grupo === 'ar' ? ['e','es','e','emos','éis','en'] : ['a','as','a','amos','áis','an'];
+    return stem + v[i];
+  }
+  // futuro simple: infinitivo (o raíz irregular) + terminaciones
+  if (tiempoId === 'futuro') {
+    const stem = (verbo.irr && verbo.irr.futuroStem) || verbo.infinitivo;
+    return stem + ['é','ás','á','emos','éis','án'][i];
+  }
+  // condicional simple: misma raíz que el futuro + terminaciones de imperfecto -ER
+  if (tiempoId === 'condicional') {
+    const stem = (verbo.irr && verbo.irr.futuroStem) || verbo.infinitivo;
+    return stem + ['ía','ías','ía','íamos','íais','ían'][i];
+  }
+  // imperfecto de subjuntivo: raíz del pretérito de "ellos" (menos -ron) + -ra...
+  if (tiempoId === 'imperf_subj') {
+    const base = conjugar(verbo, 'preterito', 5).slice(0, -3);
+    if (i === 3) return acentuarUltimaVocal(base) + 'ramos';
+    return base + ['ra','ras','ra','','rais','ran'][i];
+  }
+  // simples (presente, pretérito, imperfecto)
+  if (verbo.irr && verbo.irr[tiempoId]) return verbo.irr[tiempoId][i];
+  return verbo.infinitivo.slice(0, -2) + TERM[tiempoId][verbo.grupo][i];
+}
+
+/* ============ "PARA QUÉ SIRVE" (corto y clarísimo) ================ */
+const USO = {
+  presente:        'Para lo que pasa <b>ahora</b> o en general. La acción ocurre en este momento.',
+  preterito:       'Para una acción del pasado <b>ya terminada</b>: empezó y acabó en un punto concreto.',
+  imperfecto:      'Para <b>describir</b> el pasado o algo que <b>duraba</b>: seguía en curso, sin marcar su final.',
+  perfecto:        'Para un pasado <b>reciente que aún cuenta</b>: acabó, pero sigue conectado con el ahora.',
+  pluscuamperfecto:'Para lo que <b>ya había pasado antes</b> de otro momento del pasado: el pasado del pasado.',
+  pres_subj:       'Para <b>deseos o dudas</b> sobre el ahora o el futuro: aún no es real, vive en tu mente.',
+  perf_subj:       'Para <b>reaccionar</b> a algo que quizá ya pasó: deseo o duda sobre un hecho reciente.',
+  imperf_subj:     'Para <b>peticiones, deseos o hipótesis</b> en el pasado: algo pedido o imaginado, no confirmado.',
+  pluscuam_subj:   'Para lo <b>irreal del pasado</b>, lo que no llegó a pasar: «si hubiera…», pero no fue.',
+  futuro:          'Para lo que <b>va a pasar</b> después de ahora: una acción todavía por venir.',
+  futuro_perfecto: 'Para lo que <b>estará terminado</b> antes de un momento futuro: acabará antes de entonces.',
+  condicional:         'Para lo que <b>pasaría</b> en una situación imaginada: un futuro hipotético o un consejo.',
+  condicional_perfecto:'Para lo que <b>habría pasado</b> si algo hubiera sido distinto: un resultado que no ocurrió.',
+  progresivo:      'Para lo que está <b>ocurriendo justo ahora</b>: la acción en curso en este momento.',
+  ir_a:            'Para un <b>futuro cercano o un plan</b>: lo que vas a hacer dentro de poco.',
+  acabar_de:       'Para un <b>pasado inmediato</b>: algo que terminó hace un instante.',
+};
+
+/* ============ SUBTÍTULOS EN INGLÉS (texto de enseñanza) =========== */
+const USO_EN = {
+  presente:        'For what happens <b>now</b> or in general. The action is happening right now.',
+  preterito:       'For a past action that is <b>already finished</b>: it started and ended at a set point.',
+  imperfecto:      'To <b>describe</b> the past or something that <b>was going on</b>: still in progress, no end marked.',
+  perfecto:        'For a <b>recent past that still counts</b>: it ended, but it stays connected to now.',
+  pluscuamperfecto:'For what <b>had already happened before</b> another past moment: the past of the past.',
+  pres_subj:       'For <b>wishes or doubts</b> about now or the future: not real yet, it lives in your mind.',
+  perf_subj:       'To <b>react</b> to something that maybe already happened: a wish or doubt about a recent event.',
+  imperf_subj:     'For <b>requests, wishes or hypotheses</b> in the past: asked or imagined, not confirmed.',
+  pluscuam_subj:   'For the <b>unreal past</b>, what never came to be: “if I had…”, but it wasn’t.',
+  futuro:          'For what <b>is going to happen</b> after now: an action still to come.',
+  futuro_perfecto: 'For what <b>will be finished</b> before a future moment: done by then.',
+  condicional:         'For what <b>would happen</b> in an imagined situation: a hypothetical future or advice.',
+  condicional_perfecto:'For what <b>would have happened</b> if things had been different: an outcome that didn’t occur.',
+  progresivo:      'For what is <b>happening right now</b>: the action in progress this moment.',
+  ir_a:            'For the <b>near future or a plan</b>: what you are going to do soon.',
+  acabar_de:       'For the <b>immediate past</b>: something that finished a moment ago.',
+};
+const NOMBRE_EN = {
+  presente:'Present', preterito:'Preterite', imperfecto:'Imperfect',
+  perfecto:'Present perfect', pluscuamperfecto:'Pluperfect',
+  pres_subj:'Present subjunctive', perf_subj:'Present perfect subjunctive',
+  imperf_subj:'Imperfect subjunctive', pluscuam_subj:'Pluperfect subjunctive',
+  futuro:'Future', futuro_perfecto:'Future perfect',
+  condicional:'Conditional', condicional_perfecto:'Conditional perfect',
+  progresivo:'Progressive (be + -ing)', ir_a:'Going to', acabar_de:'Just finished',
+};
+
+/* ==== disparadores (matriz) de los que "cuelga" cada subjuntivo ==== */
+const MATRIZ = {
+  pres_subj:     'Espero que…',
+  perf_subj:     'Espero que…',
+  imperf_subj:   'Me pidió que…',
+  pluscuam_subj: 'Si… (irreal)',
+};
+
+/* ============ FRASE ANCLA (misma frase, todos los tiempos) ======== */
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+const FRASE = {
+  presente:        (s,v,c) => `${cap(s)} <b>${v}</b> ${c}.`,
+  preterito:       (s,v,c) => `Ayer ${s} <b>${v}</b> ${c}.`,
+  imperfecto:      (s,v,c) => `${cap(s)} <b>${v}</b> ${c} cuando sonó el teléfono.`,
+  perfecto:        (s,v,c) => `${cap(s)} ya <b>${v}</b> ${c}.`,
+  pluscuamperfecto:(s,v,c) => `Cuando llamaste, ${s} ya <b>${v}</b> ${c}.`,
+  pres_subj:       (s,v,c) => `Espero que ${s} <b>${v}</b> ${c}.`,
+  perf_subj:       (s,v,c) => `Espero que ${s} <b>${v}</b> ${c}.`,
+  imperf_subj:     (s,v,c) => `Me pidió que ${s} <b>${v}</b> ${c}.`,
+  pluscuam_subj:   (s,v,c) => `Si ${s} <b>${v}</b> ${c}, todo habría cambiado.`,
+  futuro:          (s,v,c) => `Mañana ${s} <b>${v}</b> ${c}.`,
+  futuro_perfecto: (s,v,c) => `${cap(s)} <b>${v}</b> ${c} antes de las seis.`,
+  condicional:         (s,v,c) => `${cap(s)} <b>${v}</b> ${c} con más tiempo.`,
+  condicional_perfecto:(s,v,c) => `${cap(s)} <b>${v}</b> ${c}, pero no pude.`,
+  progresivo:      (s,v,c) => `${cap(s)} <b>${v}</b> ${c} ahora mismo.`,
+  ir_a:            (s,v,c) => `${cap(s)} <b>${v}</b> ${c} pronto.`,
+  acabar_de:       (s,v,c) => `${cap(s)} <b>${v}</b> ${c}.`,
+};
+function frasePara(verbo, tiempoId, i) {
+  return FRASE[tiempoId](PERSONAS[i].frase, conjugar(verbo, tiempoId, i), verbo.comp);
+}
+
+/* ============================== APP ================================ */
+createApp({
+  setup() {
+    const svg = ref(null);
+    const verbos = VERBOS, personas = PERSONAS;
+    const verboId = ref('terminar');
+    const persona = ref(0);
+    const tiempoActivo = ref('preterito');
+    const en = ref(false);
+    const verbo = computed(() => VERBOS.find(v => v.infinitivo === verboId.value));
+
+    const detalle = computed(() => {
+      const t = TIEMPOS.find(x => x.id === tiempoActivo.value);
+      if (!t) return null;
+      return {
+        nombre: t.nombre, nombreEn: NOMBRE_EN[t.id], plano: t.plano,
+        uso: USO[t.id], usoEn: USO_EN[t.id],
+        frase: frasePara(verbo.value, t.id, persona.value),
+        tabla: PERSONAS.map((_, i) => conjugar(verbo.value, t.id, i)),
+      };
+    });
+    const planeTag = computed(() => {
+      if (!detalle.value) return '';
+      const es = { mental:'En mi mente · subjuntivo', real:'Mundo real · indicativo', perif:'Perífrasis · aspecto' };
+      const enM= { mental:'In my mind · subjunctive', real:'Real world · indicative', perif:'Periphrases · aspect' };
+      return (en.value ? enM : es)[detalle.value.plano];
+    });
+
+    /* ---------------- geometría de carriles (compactos) ---------------- */
+    const W = 1240, H = 548;
+    const gutter = 150, tx0 = 166, tx1 = 1200;
+    const laneH = 28, mentalTop = 38, realTop = 168, perifTop = 438;
+    const x = d3.scaleLinear().domain([0, 1]).range([tx0, tx1]);
+    const cy = d => (d.plano === 'mental' ? mentalTop : d.plano === 'perif' ? perifTop : realTop) + laneH * (d.lane + 0.5);
+    const xa = x(AHORA);
+    const topY = mentalTop - 4, botY = perifTop + 3 * laneH;
+    const divY  = (mentalTop + 4 * laneH + realTop) / 2;   // mental | real
+    const divY2 = (realTop + 9 * laneH + perifTop) / 2;    // real | perífrasis
+
+    function dibujar() {
+      const root = d3.select(svg.value);
+      root.selectAll('*').remove();
+      const CReal = getVar('--real'), CMental = getVar('--mental'), CPerif = getVar('--perif');
+      const colDe = p => p === 'mental' ? CMental : p === 'perif' ? CPerif : CReal;
+      const arwDe = p => p === 'mental' ? 'url(#arw-mental)' : p === 'perif' ? 'url(#arw-perif)' : 'url(#arw-real)';
+      const defs = root.append('defs');
+      mkArrow(defs, 'arw-real', CReal); mkArrow(defs, 'arw-mental', CMental);
+      mkArrow(defs, 'arw-perif', CPerif); mkArrow(defs, 'arw-gray', '#b9b9b9');
+
+      // zona de futuro
+      root.append('rect').attr('x', xa).attr('y', topY).attr('width', tx1 + 8 - xa)
+        .attr('height', botY - topY).attr('fill', '#000').attr('opacity', .035);
+      root.append('text').attr('class','zone-label').attr('text-anchor','middle')
+        .attr('x', (xa + tx1) / 2).attr('y', topY + 11).text('FUTURO ▶');
+
+      // columna AHORA
+      root.append('line').attr('class','now-line').attr('x1', xa).attr('y1', topY - 8).attr('x2', xa).attr('y2', botY + 6);
+      root.append('text').attr('class','now-label').attr('text-anchor','middle').attr('x', xa).attr('y', topY - 12).text('AHORA');
+
+      // grupos + divisor
+      root.append('text').attr('class','group-label mental').attr('x', 8).attr('y', mentalTop - 8).text(en.value ? 'In my mind · subjunctive' : 'En mi mente · subjuntivo');
+      root.append('text').attr('class','group-label real').attr('x', 8).attr('y', realTop - 8).text(en.value ? 'Real world · indicative' : 'Mundo real · indicativo');
+      root.append('text').attr('class','group-label perif').attr('x', 8).attr('y', perifTop - 8).text(en.value ? 'Periphrases · aspect' : 'Perífrasis · aspecto');
+      root.append('line').attr('class','divider').attr('x1', 8).attr('y1', divY).attr('x2', tx1 + 8).attr('y2', divY);
+      root.append('line').attr('class','divider').attr('x1', 8).attr('y1', divY2).attr('x2', tx1 + 8).attr('y2', divY2);
+
+      // eje del tiempo
+      root.append('line').attr('class','axis-line').attr('x1', tx0 - 10).attr('y1', botY + 6).attr('x2', tx1 + 8).attr('y2', botY + 6).attr('marker-end','url(#arw-gray)');
+      root.append('text').attr('class','zone-label').attr('x', tx0 - 10).attr('y', botY + 20).text('◀ PASADO');
+
+      // ---------------- carriles ----------------
+      const activo = tiempoActivo.value;
+      const lane = root.selectAll('g.lane').data(TIEMPOS).enter().append('g')
+        .attr('class', d => 'lane' + (activo && d.id !== activo ? ' dim' : ''));
+
+      lane.filter(d => d.id === activo).append('rect')
+        .attr('x', 8).attr('y', d => cy(d) - laneH/2 + 2).attr('width', tx1)
+        .attr('height', laneH - 4).attr('rx', 6)
+        .attr('fill', d => colDe(d.plano)).attr('opacity', .10);
+
+      lane.append('rect').attr('class','lane-hit')
+        .attr('x', 8).attr('y', d => cy(d) - laneH/2).attr('width', tx1).attr('height', laneH)
+        .on('click', (ev, d) => { tiempoActivo.value = d.id; });
+
+      // etiqueta izquierda: nombre + forma conjugada
+      lane.append('text').attr('class','lane-name').attr('x', gutter).attr('y', d => cy(d) - 2)
+        .attr('fill', d => colDe(d.plano)).text(d => d.nombre);
+      lane.append('text').attr('class','lane-conj').attr('x', gutter).attr('y', d => cy(d) + 12)
+        .attr('fill', '#666').text(d => conjugar(verbo.value, d.id, persona.value));
+
+      // aspecto: banda + forma + flecha
+      lane.each(function(d){
+        const sel = d3.select(this);
+        const col = colDe(d.plano);
+        const arw = arwDe(d.plano);
+        const dashed = d.plano === 'mental';
+        const y = cy(d), x0 = x(d.span[0]), x1 = x(d.span[1]), xp = x(d.punto);
+
+        sel.append('rect').attr('x', x0).attr('y', y - 8).attr('width', Math.max(4, x1 - x0))
+          .attr('height', 16).attr('rx', 8).attr('fill', col).attr('opacity', .12);
+
+        if (d.forma === 'abierto') {
+          const id = 'fade-' + d.id; addFade(defs, id, x0, x1, col);
+          sel.append('path').attr('d', onda(x0, x1, y, 7, 5.5)).attr('fill','none')
+            .attr('stroke', `url(#${id})`).attr('stroke-width', 3.2).attr('stroke-linecap','round');
+        } else if (d.forma === 'abierto-der') {
+          sel.append('line').attr('x1', xp).attr('y1', y).attr('x2', x1 - 6).attr('y2', y)
+            .attr('stroke', col).attr('stroke-width', 3).attr('stroke-dasharray', dashed?'5 4':null).attr('marker-end', arw);
+          marcador(sel, d, xp, y, col);
+        } else if (d.forma === 'a-ahora') {
+          sel.append('line').attr('x1', xp).attr('y1', y).attr('x2', xa - 2).attr('y2', y)
+            .attr('stroke', col).attr('stroke-width', 3).attr('stroke-dasharray', dashed?'5 4':null).attr('marker-end', arw);
+          marcador(sel, d, xp, y, col);
+        } else if (d.forma === 'anterior') {
+          sel.append('line').attr('x1', xp).attr('y1', y).attr('x2', x1 + 8).attr('y2', y)
+            .attr('stroke', col).attr('stroke-width', 2.5).attr('stroke-dasharray','4 3').attr('marker-end', arw).attr('opacity',.85);
+          marcador(sel, d, xp, y, col);
+        } else if (d.forma === 'punto-cerrado') {
+          sel.append('line').attr('x1', x0).attr('y1', y-7).attr('x2', x0).attr('y2', y+7).attr('stroke', col).attr('stroke-width', 2);
+          sel.append('line').attr('x1', x1).attr('y1', y-7).attr('x2', x1).attr('y2', y+7).attr('stroke', col).attr('stroke-width', 2);
+          marcador(sel, d, xp, y, col);
+        } else {
+          marcador(sel, d, xp, y, col);
+        }
+      });
+
+      // conexiones (solo del tiempo activo, para no saturar)
+      dibujarConexiones(root, activo, CReal, CMental);
+    }
+
+    // flechas curvas entre carriles: interrupción, anterioridad y matriz
+    function dibujarConexiones(root, activo, CReal, CMental) {
+      const byId = id => TIEMPOS.find(t => t.id === id);
+      const conector = (x1,y1,x2,y2,color,label,bx,by,dashed) => {
+        const cxp = (x1+x2)/2 + (bx||0), cyp = (y1+y2)/2 + (by||0);
+        root.append('path').attr('d', `M ${x1} ${y1} Q ${cxp} ${cyp} ${x2} ${y2}`)
+          .attr('fill','none').attr('stroke',color).attr('stroke-width',2.2)
+          .attr('stroke-dasharray', dashed?'5 4':null)
+          .attr('marker-end', color===CMental?'url(#arw-mental)':'url(#arw-real)').attr('opacity',.95);
+        if (label) root.append('text').attr('class','conn-label').attr('text-anchor','middle')
+          .attr('fill',color).attr('x',cxp).attr('y',cyp-4).text(label);
+      };
+      // interrupción: el punto del pretérito cae sobre la onda del imperfecto
+      if (activo === 'preterito' || activo === 'imperfecto') {
+        const p = byId('preterito'), im = byId('imperfecto'), xp = x(p.punto);
+        conector(xp, cy(p)+8, xp+2, cy(im)-7, CReal, 'interrumpe', 28, 0, false);
+      }
+      // anterioridad: el pluscuamperfecto ocurre antes del pretérito
+      if (activo === 'pluscuamperfecto' || activo === 'preterito') {
+        const pl = byId('pluscuamperfecto'), p = byId('preterito');
+        conector(x(pl.punto)+15, cy(pl), x(p.punto)-9, cy(p)+7, CReal, 'antes de', 0, -24, false);
+      }
+      // matriz: el subjuntivo cuelga de un disparador
+      const t = byId(activo);
+      if (t && t.plano === 'mental') {
+        const xp = x(t.punto), yb = cy(t)+9;
+        conector(xp, yb+24, xp, yb, CMental, null, 9, 0, true);
+        root.append('text').attr('class','conn-label').attr('text-anchor','middle')
+          .attr('fill', CMental).attr('x', xp).attr('y', yb+38).text(MATRIZ[activo]);
+      }
+      // condicional: es el RESULTADO de una hipótesis (si + subjuntivo)
+      if (activo === 'condicional' || activo === 'condicional_perfecto') {
+        const c = byId(activo);
+        const p = byId(activo === 'condicional' ? 'imperf_subj' : 'pluscuam_subj');
+        conector(x(c.punto), cy(c)-9, x(p.punto), cy(p)+9, CMental,
+                 activo === 'condicional' ? 'si…' : 'si hubiera…', 0, 0, true);
+      }
+    }
+
+    function marcador(sel, d, cx, y, col) {
+      if (d.plano === 'mental')
+        sel.append('rect').attr('x', cx-14).attr('y', y-8).attr('width',28).attr('height',16).attr('rx',8).attr('fill',col).attr('opacity',.92);
+      else if (d.hipo)   // condicional: círculo punteado hueco = hipotético
+        sel.append('circle').attr('cx', cx).attr('cy', y).attr('r', 7).attr('fill','#fff')
+          .attr('stroke', col).attr('stroke-width', 2).attr('stroke-dasharray','3 2');
+      else
+        sel.append('circle').attr('cx', cx).attr('cy', y).attr('r', 7).attr('fill', col);
+    }
+    function onda(x0, x1, y, paso, amp) {
+      let d = `M ${x0} ${y}`, up = true;
+      for (let px = x0; px < x1; px += paso) { d += ` q ${paso/2} ${up?-amp:amp} ${paso} 0`; up = !up; }
+      return d;
+    }
+    function mkArrow(defs, id, color) {
+      defs.append('marker').attr('id', id).attr('viewBox','0 0 10 10').attr('refX',8).attr('refY',5)
+        .attr('markerWidth',7).attr('markerHeight',7).attr('orient','auto')
+        .append('path').attr('d','M0 0 L10 5 L0 10 z').attr('fill', color);
+    }
+    function addFade(defs, id, x0, x1, color) {
+      const g = defs.append('linearGradient').attr('id', id).attr('gradientUnits','userSpaceOnUse')
+        .attr('x1', x0).attr('y1', 0).attr('x2', x1).attr('y2', 0);
+      [['0%',0],['16%',1],['84%',1],['100%',0]].forEach(([o,op]) =>
+        g.append('stop').attr('offset',o).attr('stop-color',color).attr('stop-opacity',op));
+    }
+    const getVar = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+    /* ===================== MODO PRÁCTICA (flashcards) ===================== */
+    const quizOpen = ref(false);
+    const quizQ = ref(null);
+    const quizChoice = ref(null);
+    const quizScore = ref(0);
+    const quizTotal = ref(0);
+
+    const rnd = n => Math.floor(Math.random() * n);
+    function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = rnd(i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+    function nuevaPregunta() {
+      const vb = VERBOS[rnd(VERBOS.length)];
+      const t  = TIEMPOS[rnd(TIEMPOS.length)];
+      const pi = rnd(PERSONAS.length);
+      const correcta = conjugar(vb, t.id, pi);
+      // distractores: mismas formas confundibles (otras personas / otros tiempos del mismo verbo)
+      const pool = new Set();
+      PERSONAS.forEach((_, p) => { if (p !== pi) pool.add(conjugar(vb, t.id, p)); });
+      TIEMPOS.forEach(tt => { if (tt.id !== t.id) pool.add(conjugar(vb, tt.id, pi)); });
+      pool.delete(correcta);
+      const opciones = shuffle([correcta, ...shuffle([...pool]).slice(0, 3)]);
+      quizQ.value = {
+        plano: t.plano,
+        nombre: en.value ? NOMBRE_EN[t.id] : t.nombre,
+        infinitivo: vb.infinitivo, personaLbl: PERSONAS[pi].lbl,
+        fraseBlank: FRASE[t.id](PERSONAS[pi].frase, '_____', vb.comp),
+        opciones, correcta,
+      };
+      quizChoice.value = null;
+    }
+    function abrirPractica() { quizScore.value = 0; quizTotal.value = 0; quizOpen.value = true; nuevaPregunta(); }
+    function cerrarPractica() { quizOpen.value = false; }
+    function responder(op) {
+      if (quizChoice.value !== null) return;
+      quizChoice.value = op; quizTotal.value++;
+      if (op === quizQ.value.correcta) quizScore.value++;
+    }
+    function siguiente() { nuevaPregunta(); }
+    function opClass(op) {
+      if (quizChoice.value === null) return {};
+      return { 'op-ok': op === quizQ.value.correcta, 'op-bad': op === quizChoice.value && op !== quizQ.value.correcta };
+    }
+
+    /* ===================== IMPERATIVO (mandatos) ===================== */
+    const impOpen = ref(false);
+    const imperativo = computed(() => {
+      const vb = verbo.value;
+      const ps = i => conjugar(vb, 'pres_subj', i);                       // usted/nosotros/ustedes y todos los negativos
+      const tu = (vb.irr && vb.irr.imperativoTu) || conjugar(vb, 'presente', 2); // tú afirmativo (o 8 irregulares)
+      const vos = vb.infinitivo.slice(0, -1) + 'd';                       // vosotros: -r → -d
+      return [
+        { p:'tú',       af: tu,    neg: 'no ' + ps(1) },
+        { p:'usted',    af: ps(2), neg: 'no ' + ps(2) },
+        { p:'nosotros', af: ps(3), neg: 'no ' + ps(3) },
+        { p:'vosotros', af: vos,   neg: 'no ' + ps(4) },
+        { p:'ustedes',  af: ps(5), neg: 'no ' + ps(5) },
+      ];
+    });
+
+    onMounted(dibujar);
+    watch([verboId, persona, tiempoActivo, en], dibujar);
+
+    return { svg, W, H, verbos, personas, verboId, persona, detalle, en, planeTag,
+      quizOpen, quizQ, quizChoice, quizScore, quizTotal,
+      abrirPractica, cerrarPractica, responder, siguiente, opClass,
+      impOpen, imperativo };
+  }
+}).mount('#app');
+</script>
+</body>
+</html>
