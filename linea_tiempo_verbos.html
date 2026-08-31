@@ -10,12 +10,13 @@
     --real: #2c3e8a; --mental: #8a5bd6; --perif: #1f7a6b; --ok: #1a7a3a; --bad: #b3261e;
   }
   * { box-sizing: border-box; }
-  html, body { height: 100%; }
+  html, body { height: 100%; max-width: 100%; overflow-x: hidden; }
   body {
     font-family: 'Segoe UI', Arial, sans-serif; color: #1c1c1c; background: #ececec;
     margin: 0; padding: 22px; line-height: 1.5;
     display: flex; justify-content: center; align-items: flex-start;
   }
+  #app { width: 100%; max-width: 1120px; }
   .slide {
     width: 100%; max-width: 1120px; background: #fff; border-radius: 8px;
     box-shadow: 0 2px 14px rgba(0,0,0,.14); padding: 24px 40px 28px;
@@ -42,7 +43,7 @@
   .switch input:checked ~ .sw-label { color: var(--accent); }
 
   .stage { position: relative; width: 100%; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
-  .stage > svg { width: 100%; min-width: 1160px; height: auto; aspect-ratio: 1240 / 548; display: block; }
+  .stage > svg { width: 100%; min-width: 1160px; height: auto; aspect-ratio: 1240 / 644; display: block; }
   .stage::-webkit-scrollbar { height: 9px; }
   .stage::-webkit-scrollbar-thumb { background: #c7cbdc; border-radius: 999px; }
 
@@ -58,6 +59,7 @@
   .lane-hit { fill: transparent; cursor: pointer; }
   .lane-name { font-size: 12px; font-weight: 600; text-anchor: end; }
   .lane-conj { font-size: 11px; font-weight: 600; text-anchor: end; }
+  .lane-name-en { font-size: 9.5px; font-style: italic; font-weight: 600; text-anchor: end; fill: #9a9a9a; }
   .lane.dim { opacity: .34; }
   .conn-label { font-size: 10.5px; font-weight: 700; paint-order: stroke; stroke: #fff; stroke-width: 3.5px; stroke-linejoin: round; }
 
@@ -114,7 +116,8 @@
   .imp-neg { color: var(--bad); font-weight: 600; }
   .modal-x { position: absolute; top: 8px; right: 14px; border: none; background: none; font-size: 1.6em; line-height: 1; color: #aaa; cursor: pointer; }
   .modal-x:hover { color: #666; }
-  .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .modal-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  .modal-head select { max-width: 100%; }
   .modal-title { font-size: 1.15em; font-weight: 700; color: var(--accent); }
   .modal-card.mental .modal-title { color: var(--mental); }
   .modal-score { font-size: .9em; font-weight: 700; color: #666; background: #f0f2f8; padding: 4px 12px; border-radius: 999px; }
@@ -137,12 +140,26 @@
   .btn-next { font-family: inherit; font-size: .95em; font-weight: 700; padding: 9px 18px; border: none; border-radius: 999px; background: var(--accent); color: #fff; cursor: pointer; margin-left: auto; }
   .btn-next:hover { background: #22306e; }
 
+  .controls .actions { margin-left: auto; gap: 8px; }
+  .scroll-hint { display: none; }
+
   @media (max-width: 680px) {
     .q-options { grid-template-columns: 1fr; }
     body { padding: 12px; }
-    .slide { padding: 16px 16px 20px; }
+    .slide { padding: 16px 14px 18px; gap: 10px; }
     header h1 { font-size: 1.15em; }
+    header p.sub { font-size: .82em; }
     .frase { font-size: 1.05em; }
+    .controls { gap: 10px 14px; }
+    .controls .grp { flex-wrap: wrap; }
+    /* botones de acción a lo ancho, buen área táctil */
+    .controls .actions { margin-left: 0; width: 100%; }
+    .controls .actions button { flex: 1 1 0; }
+    .modal-overlay { padding: 12px; }
+    .modal-card { padding: 20px 18px 18px; }
+    .q-frase { font-size: 1.18em; }
+    /* pista de deslizar la línea del tiempo */
+    .scroll-hint { display: block; text-align: center; font-size: .75em; color: #999; margin: 0; }
   }
 </style>
 </head>
@@ -182,7 +199,7 @@
           <span class="sw-label">EN</span>
         </label>
       </div>
-      <div class="grp" style="margin-left:auto; gap:8px">
+      <div class="grp actions">
         <button class="btn-imp" @click="impOpen=true">📣 {{ en ? 'Commands' : 'Imperativo' }}</button>
         <button class="btn-practicar" @click="abrirPractica">⚡ {{ en ? 'Practice' : 'Practicar' }}</button>
       </div>
@@ -192,6 +209,7 @@
       <svg ref="svg" :viewBox="`0 0 ${W} ${H}`" preserveAspectRatio="xMidYMid meet"
            role="img" aria-label="Carriles de los tiempos verbales del pasado"></svg>
     </div>
+    <p class="scroll-hint">↔ {{ en ? 'Swipe to see the whole timeline' : 'Desliza para ver toda la línea del tiempo' }}</p>
 
     <!-- panel de detalle -->
     <div v-if="detalle" class="panel" :class="{mental: detalle.plano==='mental', perif: detalle.plano==='perif'}">
@@ -423,7 +441,7 @@ function conjugar(verbo, tiempoId, i) {
 /* ============ "PARA QUÉ SIRVE" (corto y clarísimo) ================ */
 const USO = {
   presente:        'Para lo que pasa <b>ahora</b> o en general. La acción ocurre en este momento.',
-  preterito:       'Para una acción del pasado <b>ya terminada</b>: empezó y acabó en un punto concreto.',
+  preterito:       'Para una acción del pasado <b>ya terminada</b>: empezó y acabó en un punto concreto. <i>Es el mismo «pretérito indefinido» (o perfecto simple).</i>',
   imperfecto:      'Para <b>describir</b> el pasado o algo que <b>duraba</b>: seguía en curso, sin marcar su final.',
   perfecto:        'Para un pasado <b>reciente que aún cuenta</b>: acabó, pero sigue conectado con el ahora.',
   pluscuamperfecto:'Para lo que <b>ya había pasado antes</b> de otro momento del pasado: el pasado del pasado.',
@@ -443,7 +461,7 @@ const USO = {
 /* ============ SUBTÍTULOS EN INGLÉS (texto de enseñanza) =========== */
 const USO_EN = {
   presente:        'For what happens <b>now</b> or in general. The action is happening right now.',
-  preterito:       'For a past action that is <b>already finished</b>: it started and ended at a set point.',
+  preterito:       'For a past action that is <b>already finished</b>: it started and ended at a set point. <i>Same tense as the “pretérito indefinido” (simple past).</i>',
   imperfecto:      'To <b>describe</b> the past or something that <b>was going on</b>: still in progress, no end marked.',
   perfecto:        'For a <b>recent past that still counts</b>: it ended, but it stays connected to now.',
   pluscuamperfecto:'For what <b>had already happened before</b> another past moment: the past of the past.',
@@ -530,9 +548,9 @@ createApp({
     });
 
     /* ---------------- geometría de carriles (compactos) ---------------- */
-    const W = 1240, H = 548;
+    const W = 1240, H = 644;
     const gutter = 150, tx0 = 166, tx1 = 1200;
-    const laneH = 28, mentalTop = 38, realTop = 168, perifTop = 438;
+    const laneH = 34, mentalTop = 38, realTop = 192, perifTop = 516;
     const x = d3.scaleLinear().domain([0, 1]).range([tx0, tx1]);
     const cy = d => (d.plano === 'mental' ? mentalTop : d.plano === 'perif' ? perifTop : realTop) + laneH * (d.lane + 0.5);
     const xa = x(AHORA);
@@ -585,10 +603,13 @@ createApp({
         .attr('x', 8).attr('y', d => cy(d) - laneH/2).attr('width', tx1).attr('height', laneH)
         .on('click', (ev, d) => { tiempoActivo.value = d.id; });
 
-      // etiqueta izquierda: nombre + forma conjugada
-      lane.append('text').attr('class','lane-name').attr('x', gutter).attr('y', d => cy(d) - 2)
+      // etiqueta izquierda: nombre + (nombre EN, si el interruptor está activo) + forma conjugada
+      lane.append('text').attr('class','lane-name').attr('x', gutter).attr('y', d => cy(d) + (en.value ? -9 : -6))
         .attr('fill', d => colDe(d.plano)).text(d => d.nombre);
-      lane.append('text').attr('class','lane-conj').attr('x', gutter).attr('y', d => cy(d) + 12)
+      if (en.value)
+        lane.append('text').attr('class','lane-name-en').attr('x', gutter).attr('y', d => cy(d) + 3)
+          .text(d => NOMBRE_EN[d.id]);
+      lane.append('text').attr('class','lane-conj').attr('x', gutter).attr('y', d => cy(d) + (en.value ? 14 : 8))
         .attr('fill', '#666').text(d => conjugar(verbo.value, d.id, persona.value));
 
       // aspecto: banda + forma + flecha
