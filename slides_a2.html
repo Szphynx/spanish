@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Subjuntivo e imperativo — slides</title>
+<title>A2 — Subjuntivo e imperativo</title>
 <style>
   /* ── Base ── */
   *, *::before, *::after { box-sizing: border-box; }
@@ -309,13 +309,47 @@ h1 .en{font-size:.6em;color:#6A85A8} h2 .en{font-size:.75em;text-transform:none;
 </head>
 <body>
 
-<!-- ===================== BLOQUE 4 ===================== -->
-<div class="block-title">Bloque 4 — Subjuntivo e imperativo</div>
+<script>
+function removeTildes(str) {
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+function norm(str) {
+  return str.trim().toLowerCase().replace(/[.¡!¿?]/g, '').replace(/\s+/g, ' ');
+}
+function checkAnswer(buttonEl) {
+  const container = buttonEl.closest('.exercise-item');
+  const input = container.querySelector('input[type="text"]');
+  const feedback = container.querySelector('.exercise-feedback');
+  const answer = container.dataset.answer;
+  const why = container.dataset.why ? ' <div class="feedback-answer">' + container.dataset.why + '</div>' : '';
+  const user = norm(input.value);
+  const isCorrect = user === norm(answer);
+  const onlyTilde = !isCorrect && removeTildes(user) === removeTildes(norm(answer));
 
-<!-- SLIDE 13 -->
-<div class="slide-label">13 / 16</div>
-<div class="slide" id="slide-13">
-  <h1><span class="slide-num">13.</span> Presente de subjuntivo: formación<span class="en" lang="en">Present subjunctive: how it is formed</span></h1>
+  feedback.classList.add('show');
+  feedback.classList.remove(isCorrect ? 'feedback-incorrect' : 'feedback-correct');
+  feedback.classList.add(isCorrect ? 'feedback-correct' : 'feedback-incorrect');
+
+  if (isCorrect) {
+    feedback.innerHTML = '<strong>✓ Correcto!</strong>' + why;
+  } else if (onlyTilde) {
+    feedback.innerHTML = '<strong>✗ Casi: revisa la tilde.</strong> <div class="feedback-answer">Respuesta: ' + answer + '</div>' + why;
+  } else {
+    feedback.innerHTML = '<strong>✗ Incorrecto.</strong> <div class="feedback-answer">Respuesta: ' + answer + '</div>' + why;
+  }
+}
+function handleKeyPress(e, buttonEl) {
+  if (e.key === 'Enter') checkAnswer(buttonEl);
+}
+</script>
+
+<!-- ===================== A2 ===================== -->
+<div class="block-title">A2 — Subjuntivo e imperativo</div>
+
+<!-- SLIDE 1 -->
+<div class="slide-label">1 / 4</div>
+<div class="slide" id="slide-1">
+  <h1><span class="slide-num">1.</span> Presente de subjuntivo: formación<span class="en" lang="en">Present subjunctive: how it is formed</span></h1>
 <p><b>Truco:</b> parte del <b>yo</b> del presente, quita la <b>-o</b> y cambia la vocal: <b>-ar → e</b>, <b>-er / -ir → a</b>.<span class="en" lang="en"><b>Trick:</b> start from the present-tense <b>yo</b> form, drop the <b>-o</b> and switch the vowel: <b>-ar → e</b>, <b>-er / -ir → a</b>.</span></p>
 
 <h2>Análisis<span class="en" lang="en">Breakdown</span></h2>
@@ -337,10 +371,128 @@ h1 .en{font-size:.6em;color:#6A85A8} h2 .en{font-size:.75em;text-transform:none;
 
 <hr class="page-break">
 
-<!-- SLIDE 14 -->
-<div class="slide-label">14 / 16</div>
-<div class="slide" id="slide-14">
-  <h1><span class="slide-num">14.</span> Imperativo afirmativo y negativo<span class="en" lang="en">Affirmative and negative imperative</span></h1>
+<!-- SLIDE 1b -->
+<div class="slide-label">1b / 4</div>
+<div class="slide" id="slide-1b">
+  <h1><span class="slide-num">1b.</span> Práctica — Presente de subjuntivo: formación<span class="en" lang="en">Practice: forming the present subjunctive</span></h1>
+
+  <h2>Ejercicio 1: Del yo al subjuntivo<span class="en" lang="en">Exercise 1: from yo to the subjunctive</span></h2>
+  <p class="note">Escribe la forma indicada. Piensa primero en el <b>yo</b> del presente.</p>
+  <div class="exercise-item" data-answer="hable" data-why="hablo → habl- + e">
+    <div class="exercise-prompt">hablar (yo) → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="comamos" data-why="como → com- + amos">
+    <div class="exercise-prompt">comer (nosotros) → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="escriba" data-why="-ir también cambia a &lt;b&gt;a&lt;/b&gt;: escribo → escrib- + a">
+    <div class="exercise-prompt">escribir (yo) → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="hagas" data-why="yo &lt;b&gt;hago&lt;/b&gt; → hag- + as">
+    <div class="exercise-prompt">hacer (tú) → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="conozcan" data-why="yo &lt;b&gt;conozco&lt;/b&gt; → conozc- + an">
+    <div class="exercise-prompt">conocer (ellos) → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="traiga" data-why="yo &lt;b&gt;traigo&lt;/b&gt; → traig- + a">
+    <div class="exercise-prompt">traer (usted) → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="veáis" data-why="yo &lt;b&gt;veo&lt;/b&gt; → ve- + áis">
+    <div class="exercise-prompt">ver (vosotros) → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+  <h2>Ejercicio 2: Cuando el truco cambia<span class="en" lang="en">Exercise 2: when the trick changes</span></h2>
+  <p class="note">Ortografía y los verbos cuyo yo no termina en -o.</p>
+  <div class="exercise-item" data-answer="busque" data-why="c → qu para mantener el sonido /k/">
+    <div class="exercise-prompt">buscar (yo) → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="lleguemos" data-why="g → gu para mantener el sonido /g/">
+    <div class="exercise-prompt">llegar (nosotros) → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="empieces" data-why="e → ie (empiezo) y z → c delante de e">
+    <div class="exercise-prompt">empezar (tú) → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="esté" data-why="yo &lt;b&gt;estoy&lt;/b&gt; no termina en -o: es uno de los 6 irregulares">
+    <div class="exercise-prompt">estar (yo) → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="sepas" data-why="yo &lt;b&gt;sé&lt;/b&gt;: irregular, raíz sep-">
+    <div class="exercise-prompt">saber (tú) → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="vayamos" data-why="yo &lt;b&gt;voy&lt;/b&gt;: irregular, raíz vay-">
+    <div class="exercise-prompt">ir (nosotros) → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+</div>
+
+<hr class="page-break">
+
+<!-- SLIDE 2 -->
+<div class="slide-label">2 / 4</div>
+<div class="slide" id="slide-2">
+  <h1><span class="slide-num">2.</span> Imperativo afirmativo y negativo<span class="en" lang="en">Affirmative and negative imperative</span></h1>
 
 <h2>Verbos regulares<span class="en" lang="en">Regular verbs</span></h2>
 <table>
@@ -383,10 +535,120 @@ h1 .en{font-size:.6em;color:#6A85A8} h2 .en{font-size:.75em;text-transform:none;
 
 <hr class="page-break">
 
-<!-- SLIDE 15 -->
-<div class="slide-label">15 / 16</div>
-<div class="slide" id="slide-15">
-  <h1><span class="slide-num">15.</span> Imperativo con pronombres<span class="en" lang="en">Imperative with pronouns</span></h1>
+<!-- SLIDE 2b -->
+<div class="slide-label">2b / 4</div>
+<div class="slide" id="slide-2b">
+  <h1><span class="slide-num">2b.</span> Práctica — Imperativo<span class="en" lang="en">Practice: the imperative</span></h1>
+
+  <h2>Ejercicio 1: Afirmativo<span class="en" lang="en">Exercise 1: affirmative</span></h2>
+  <p class="note">Escribe el imperativo afirmativo.</p>
+  <div class="exercise-item" data-answer="escribid" data-why="infinitivo: -r → -d">
+    <div class="exercise-prompt">escribir (vosotros) → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="salga" data-why="usted = subjuntivo (yo salgo → salga)">
+    <div class="exercise-prompt">salir (usted) → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="pon" data-why="irregular de tú">
+    <div class="exercise-prompt">poner (tú) → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="cierra" data-why="tú + = presente de él/ella: &lt;b&gt;cierra&lt;/b&gt; (e → ie también aquí)">
+    <div class="exercise-prompt">cerrar (tú) → _____ la puerta.</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="id" data-why="infinitivo ir: -r → -d">
+    <div class="exercise-prompt">ir (vosotros) → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="sé" data-why="irregular de tú, con tilde (sé ≠ se)">
+    <div class="exercise-prompt">ser (tú) → _____ amable.</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+  <h2>Ejercicio 2: Afirmativo → negativo<span class="en" lang="en">Exercise 2: affirmative → negative</span></h2>
+  <p class="note">El negativo no sale del afirmativo: sale del subjuntivo.</p>
+  <div class="exercise-item" data-answer="no hables" data-why="subjuntivo de tú">
+    <div class="exercise-prompt">Habla. → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="no cierres" data-why="cierro → cierr- + es">
+    <div class="exercise-prompt">Cierra. → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="no vengas" data-why="yo vengo → veng- + as">
+    <div class="exercise-prompt">Ven. → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="no hagas" data-why="yo hago → hag- + as">
+    <div class="exercise-prompt">Haz. → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="no vayas" data-why="ir: irregular, vay- + as">
+    <div class="exercise-prompt">Ve. → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="no seáis" data-why="ser: irregular, se- + áis">
+    <div class="exercise-prompt">Sed. → _____ (vosotros)</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+</div>
+
+<hr class="page-break">
+
+<!-- SLIDE 3 -->
+<div class="slide-label">3 / 4</div>
+<div class="slide" id="slide-3">
+  <h1><span class="slide-num">3.</span> Imperativo con pronombres<span class="en" lang="en">Imperative with pronouns</span></h1>
 
 <h2>Ejemplos<span class="en" lang="en">Examples</span></h2>
 <table>
@@ -421,10 +683,123 @@ h1 .en{font-size:.6em;color:#6A85A8} h2 .en{font-size:.75em;text-transform:none;
 
 <hr class="page-break">
 
-<!-- SLIDE 16 -->
-<div class="slide-label">16 / 16</div>
-<div class="slide" id="slide-16">
-  <h1><span class="slide-num">16.</span> Presente de subjuntivo<span class="en" lang="en">Present subjunctive</span></h1>
+<!-- SLIDE 3b -->
+<div class="slide-label">3b / 4</div>
+<div class="slide" id="slide-3b">
+  <h1><span class="slide-num">3b.</span> Práctica — Imperativo + pronombres<span class="en" lang="en">Practice: imperative + pronouns</span></h1>
+
+  <h2>Ejercicio 1: Afirmativo → negativo<span class="en" lang="en">Exercise 1: affirmative → negative</span></h2>
+  <p class="note">El pronombre pasa delante y se separa.</p>
+  <div class="exercise-item" data-answer="no te bañes" data-why="te delante, bañes en subjuntivo">
+    <div class="exercise-prompt">Báñate. → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="no me lo digas" data-why="me lo delante; decir → digas">
+    <div class="exercise-prompt">Dímelo. → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="no se siente" data-why="se delante; el verbo no cambia en usted">
+    <div class="exercise-prompt">Siéntese. (usted) → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="no os levantéis" data-why="os delante; levantéis en subjuntivo">
+    <div class="exercise-prompt">Levantaos. → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+  <h2>Ejercicio 2: Negativo → afirmativo<span class="en" lang="en">Exercise 2: negative → affirmative</span></h2>
+  <p class="note">El pronombre se une detrás. ¡Ojo con la tilde!</p>
+  <div class="exercise-item" data-answer="siéntate" data-why="sienta + te: esdrújula, lleva tilde">
+    <div class="exercise-prompt">No te sientes. → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="explícamelo" data-why="explica + me + lo: sobresdrújula, tilde">
+    <div class="exercise-prompt">No me lo expliques. → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="sentaos" data-why="sentad + os: se pierde la -d">
+    <div class="exercise-prompt">No os sentéis. → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="dáselo" data-why="da + se + lo: esdrújula, tilde">
+    <div class="exercise-prompt">No se lo des. (tú) → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+  <h2>Ejercicio 3: Sustituye los objetos por pronombres (tú)<span class="en" lang="en">Exercise 3: replace the objects with pronouns (tú)</span></h2>
+  <p class="note">le / les delante de lo / la / los / las → se.</p>
+  <div class="exercise-item" data-answer="dáselo" data-why="le + lo → se lo">
+    <div class="exercise-prompt">Da el libro a Ana. → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="explícaselas" data-why="les + las → se las">
+    <div class="exercise-prompt">Explica las reglas a los alumnos. → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="pónsela" data-why="le + la → se la; pón-se-la lleva tilde">
+    <div class="exercise-prompt">Pon la chaqueta al niño. → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="no se la digas" data-why="negativo: se la delante">
+    <div class="exercise-prompt">No digas la verdad a tu jefe. → _____</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+</div>
+
+<hr class="page-break">
+
+<!-- SLIDE 4 -->
+<div class="slide-label">4 / 4</div>
+<div class="slide" id="slide-4">
+  <h1><span class="slide-num">4.</span> Presente de subjuntivo<span class="en" lang="en">Present subjunctive</span></h1>
 
 <h2>Formación<span class="en" lang="en">Formation</span></h2>
 <div class="row"><span class="word">regla<span class="en" lang="en">rule</span></span><span class="chip "><b>yo presente</b><small>sin -o<span class="en" lang="en">drop -o</span></small></span><span class="op">+</span><span class="chip p"><b>-ar → e<br>-er / -ir → a</b><small>vocal cambiada<span class="en" lang="en">switched vowel</span></small></span></div>
@@ -458,6 +833,116 @@ h1 .en{font-size:.6em;color:#6A85A8} h2 .en{font-size:.75em;text-transform:none;
 <div class="row"><span class="word">3. Cuando</span><span class="chip "><b>Cuando llego, como</b><small>hábito: indicativo<span class="en" lang="en">habit: indicative</span></small></span><span class="chip ok"><b>Cuando llegue, comeré</b><small>futuro: subjuntivo<span class="en" lang="en">future: subjunctive</span></small></span><span class="chip x"><b>Cuando llegaré</b></span></div>
 <div class="row"><span class="word">4. -ir: nosotros</span><span class="chip p"><b>dormir → durmamos</b><small>o → u</small></span><span class="chip p"><b>sentir → sintamos</b><small>e → i</small></span></div>
 <div class="row"><span class="word">5. Ojalá</span><span class="chip ok"><b>Ojalá + subjuntivo</b><small>siempre<span class="en" lang="en">always</span></small></span></div>
+</div>
+
+<hr class="page-break">
+
+<!-- SLIDE 4b -->
+<div class="slide-label">4b / 4</div>
+<div class="slide" id="slide-4b">
+  <h1><span class="slide-num">4b.</span> Práctica — Indicativo o subjuntivo<span class="en" lang="en">Practice: indicative or subjunctive</span></h1>
+
+  <h2>Ejercicio 1: ¿Qué modo?<span class="en" lang="en">Exercise 1: which mood?</span></h2>
+  <p class="note">Conjuga el verbo. Los pares se parecen: mira qué cambia.</p>
+  <div class="exercise-item" data-answer="tiene" data-why="creer afirmativo → indicativo">
+    <div class="exercise-prompt">Creo que Ana _____ (tener) razón.</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="tenga" data-why="creer negativo → subjuntivo">
+    <div class="exercise-prompt">No creo que Ana _____ (tener) razón.</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="llego" data-why="hábito → indicativo">
+    <div class="exercise-prompt">Cuando _____ (llegar, yo) a casa, siempre ceno.</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="llegue" data-why="futuro → subjuntivo">
+    <div class="exercise-prompt">Cuando _____ (llegar, yo) a casa mañana, te llamo.</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="ir" data-why="mismo sujeto → infinitivo">
+    <div class="exercise-prompt">Quiero _____ (ir) al cine.</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="vayas" data-why="sujetos distintos → que + subjuntivo">
+    <div class="exercise-prompt">Quiero que tú _____ (ir) al cine.</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+
+  <h2>Ejercicio 2: Más difícil<span class="en" lang="en">Exercise 2: harder</span></h2>
+  <p class="note">Activadores mezclados y verbos irregulares.</p>
+  <div class="exercise-item" data-answer="está" data-why="certeza → indicativo">
+    <div class="exercise-prompt">Es evidente que él _____ (estar) cansado.</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="esté" data-why="valoración → subjuntivo">
+    <div class="exercise-prompt">Es importante que él _____ (estar) descansado.</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="haga" data-why="ojalá → siempre subjuntivo">
+    <div class="exercise-prompt">Ojalá _____ (hacer) buen tiempo mañana.</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="entiendas" data-why="para que → subjuntivo; e → ie">
+    <div class="exercise-prompt">Te lo explico para que lo _____ (entender, tú).</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="vengáis" data-why="emoción → subjuntivo; vengo → veng-">
+    <div class="exercise-prompt">Me alegra que _____ (venir, vosotros).</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
+  <div class="exercise-item" data-answer="sepan" data-why="duda → subjuntivo; saber es irregular">
+    <div class="exercise-prompt">Dudo que _____ (saber, ellos) la respuesta.</div>
+    <div class="exercise-input">
+      <input type="text" placeholder="respuesta" onkeypress="handleKeyPress(event, this.nextElementSibling)">
+      <button onclick="checkAnswer(this)">Verificar</button>
+    </div>
+    <div class="exercise-feedback"></div>
+  </div>
 </div>
 
 </body>
