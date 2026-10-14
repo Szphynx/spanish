@@ -333,20 +333,28 @@ h1 .en{font-size:.6em;color:#6A85A8} h2 .en{font-size:.75em;text-transform:none;
   ol.steps { margin: 6px 0 4px; padding-left: 22px; }
   ol.steps li { margin-bottom: 8px; }
   /* ── Side navigation ── */
-  .sidenav { position: fixed; top: 0; left: 0; bottom: 0; width: 250px; overflow-y: auto; background: #F7F3EC; border-right: 1.5px solid #BDD0E8; border-top: 4px solid #1E52A0; padding: 18px 14px 40px; font-size: 0.8em; z-index: 20; box-shadow: 2px 0 12px rgba(20,55,130,.12); transition: transform .2s ease; }
-  .sidenav-title { font-weight: 700; color: #1E52A0; text-transform: uppercase; letter-spacing: 1.2px; font-size: 0.85em; margin: 0 0 12px; padding-bottom: 6px; border-bottom: 2px solid #1E52A0; }
-  .sidenav a { display: block; text-decoration: none; color: #1A3A7A; border-radius: 3px; }
-  .sidenav a.nav-slide { font-weight: 700; padding: 6px 8px; margin-top: 6px; border-left: 3px solid transparent; }
-  .sidenav a.nav-slide .n { color: #2563EB; margin-right: 6px; }
-  .sidenav a.nav-slide.practice { font-weight: 600; color: #4A6A95; }
-  .sidenav a.nav-sub { padding: 3px 8px 3px 26px; color: #4A5A70; line-height: 1.35; }
-  .sidenav a:hover { background: #E3ECF8; }
-  .sidenav a.nav-slide.active { background: #DBEAFE; border-left-color: #2563EB; }
-  .nav-toggle { position: fixed; top: 12px; left: 12px; z-index: 30; padding: 7px 11px; background: #1E52A0; color: #fff; border: none; border-radius: 3px; font: inherit; font-size: 0.8em; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.2); }
-  body.nav-open .nav-toggle { top: auto; bottom: 12px; left: 12px; }
-  body:not(.nav-open) .sidenav { transform: translateX(-100%); box-shadow: none; }
-  @media (min-width: 1100px) { body.nav-open { padding-left: 270px; } }
+  .sidenav { position: fixed; top: 0; left: 0; bottom: 0; width: 230px; overflow-y: auto; background: #F7F3EC; border-right: 1px solid #D5E0EE; padding: 52px 10px 40px; font-size: 0.78em; z-index: 20; transition: transform .2s ease; }
+  .sidenav a { display: block; text-decoration: none; color: #1A3A7A; }
+  .nav-item { display: flex; align-items: flex-start; }
+  .nav-item .caret { flex: none; width: 18px; padding: 5px 0; border: none; background: none; color: #8AA0BC; cursor: pointer; font-size: 13px; line-height: 1.2; }
+  .nav-item .caret::before { content: '▸'; }
+  .nav-item.open .caret::before { content: '▾'; }
+  .nav-item .caret.empty { visibility: hidden; }
+  .sidenav a.nav-slide { flex: 1; padding: 4px 6px; border-left: 2px solid transparent; line-height: 1.35; }
+  .sidenav a.nav-slide .n { color: #8AA0BC; margin-right: 5px; font-variant-numeric: tabular-nums; }
+  .sidenav a.nav-slide.practice { color: #6A7F99; }
+  .sidenav a.nav-slide.active { border-left-color: #2563EB; color: #1E52A0; font-weight: 600; }
+  .sidenav a.nav-slide.active .n { color: #2563EB; }
+  .nav-subs { display: none; margin: 0 0 4px 24px; border-left: 1px solid #E0E7F0; }
+  .nav-item.open + .nav-subs { display: block; }
+  .sidenav a.nav-sub { padding: 2px 8px; color: #6A7F99; line-height: 1.35; }
+  .sidenav a:hover { color: #2563EB; }
+  .nav-toggle { position: fixed; top: 12px; left: 12px; z-index: 30; width: 30px; height: 30px; padding: 0; background: #F7F3EC; color: #1A3A7A; border: 1px solid #BDD0E8; border-radius: 3px; font-size: 15px; line-height: 1; cursor: pointer; }
+  .nav-toggle:hover { color: #2563EB; border-color: #2563EB; }
+  body:not(.nav-open) .sidenav { transform: translateX(-100%); }
+  @media (min-width: 1100px) { body.nav-open { padding-left: 246px; } }
   @media print { .sidenav, .nav-toggle { display: none; } body.nav-open { padding-left: 16px; } }
+
   /* ── Glossary tooltips and cross-links ── */
   .term { border-bottom: 1px dotted #2563EB; cursor: help; position: relative; color: inherit; text-decoration: none; }
   a.term { cursor: pointer; }
@@ -1288,8 +1296,8 @@ function toggleNotes() { setNotes(!document.body.classList.contains('with-notes'
   setNotes(on);
 })();
 </script>
-<nav class="sidenav" aria-label="Diapositivas"><div class="sidenav-title">Diapositivas</div></nav>
-<button class="nav-toggle" type="button" onclick="toggleNav()">☰ Índice</button>
+<nav class="sidenav" aria-label="Diapositivas"></nav>
+<button class="nav-toggle" type="button" onclick="toggleNav()" title="Índice" aria-label="Índice">☰</button>
 <script>
 (function () {
   var nav = document.querySelector('.sidenav');
@@ -1298,20 +1306,26 @@ function toggleNotes() { setNotes(!document.body.classList.contains('with-notes'
   document.querySelectorAll('.slide').forEach(function (slide) {
     var h1 = slide.querySelector('h1'); if (!h1) return;
     var num = h1.querySelector('.slide-num'); var n = num ? num.textContent.replace('.', '') : '';
+    var item = document.createElement('div'); item.className = 'nav-item';
+    var caret = document.createElement('button'); caret.type = 'button'; caret.className = 'caret'; caret.setAttribute('aria-label', 'Mostrar secciones');
     var a = document.createElement('a'); a.href = '#' + slide.id; a.className = 'nav-slide' + (/b$/.test(n) ? ' practice' : '');
     a.innerHTML = '<span class="n">' + n + '</span>'; a.appendChild(document.createTextNode(text(h1)));
-    nav.appendChild(a); links.push([slide, a]);
+    item.appendChild(caret); item.appendChild(a);
+    var subs = document.createElement('div'); subs.className = 'nav-subs';
     slide.querySelectorAll('h2').forEach(function (h2, i) {
       if (!h2.id) h2.id = slide.id + '-s' + (i + 1);
       h2.style.scrollMarginTop = '16px';
       var sub = document.createElement('a'); sub.href = '#' + h2.id; sub.className = 'nav-sub'; sub.textContent = text(h2);
-      nav.appendChild(sub);
+      subs.appendChild(sub);
     });
+    if (!subs.children.length) caret.classList.add('empty');
+    caret.addEventListener('click', function () { item.classList.toggle('open'); item.dataset.manual = '1'; });
+    nav.appendChild(item); nav.appendChild(subs); links.push([slide, a, item]);
   });
   var setActive = function () {
     var cur = links[0];
     links.forEach(function (l) { if (l[0].getBoundingClientRect().top < window.innerHeight * 0.3) cur = l; });
-    links.forEach(function (l) { l[1].classList.toggle('active', l === cur); });
+    links.forEach(function (l) { l[1].classList.toggle('active', l === cur); if (!l[2].dataset.manual) l[2].classList.toggle('open', l === cur); });
     if (cur) { var r = cur[1].getBoundingClientRect(), nr = nav.getBoundingClientRect(); if (r.top < nr.top || r.bottom > nr.bottom) cur[1].scrollIntoView({ block: 'nearest' }); }
   };
   window.addEventListener('scroll', setActive, { passive: true }); setActive();
