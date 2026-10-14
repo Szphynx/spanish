@@ -305,9 +305,30 @@ h1 .en{font-size:.6em;color:#6A85A8} h2 .en{font-size:.75em;text-transform:none;
 .chip.x{border-style:dashed}.chip.x b{color:#b00;text-decoration:line-through}
 .chip.ok{border-color:#080}.chip.ok b{color:#080}
   .slide p .en, .slide li .en {margin-top:2px}
+
+  /* ── Teacher notes sidebar ── */
+  .slide-wrap, body.with-notes .slide-label, body.with-notes .block-title, body.with-notes .page-break { width: 1200px; max-width: 100%; }
+  .slide-wrap { margin: 0 auto; display: grid; grid-template-columns: minmax(0, 860px) minmax(0, 1fr); gap: 20px; align-items: start; }
+  .slide-wrap .slide { width: auto; margin: 0; }
+  .notes { position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow-y: auto; background: #fef7e0; border: 1px solid #ecd9a0; border-top: 4px solid #d4a017; border-radius: 3px; padding: 16px 18px; font-size: 0.82em; line-height: 1.6; color: #333; }
+  .notes-title { font-weight: 700; color: #7d5a00; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85em; margin-bottom: 10px; }
+  .notes p, .notes li { font-size: 1em; margin: 0 0 10px; line-height: 1.6; }
+  .notes ul { padding-left: 18px; margin: 0 0 10px; }
+  .notes li { margin-bottom: 6px; }
+  .notes strong { color: #7d5a00; }
+  .notes em { color: #1A3A7A; }
+  body:not(.with-notes) .notes { display: none; }
+  body:not(.with-notes) .slide-wrap { width: 860px; grid-template-columns: minmax(0, 1fr); }
+  .notes-switch { position: fixed; right: 16px; bottom: 16px; z-index: 10; padding: 9px 14px; background: #fff8e1; border: 1px solid #d4a017; border-left: 4px solid #d4a017; color: #795b04; font: inherit; font-size: 0.83em; border-radius: 3px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+  .notes-switch:hover { background: #ffe69c; }
+  @media (max-width: 1100px) {
+    .slide-wrap { grid-template-columns: minmax(0, 1fr); }
+    .notes { position: static; max-height: none; }
+  }
+  @media print { .notes-switch { display: none; } }
 </style>
 </head>
-<body>
+<body class="with-notes">
 
 <script>
 function removeTildes(str) {
@@ -348,6 +369,7 @@ function handleKeyPress(e, buttonEl) {
 
 <!-- SLIDE 1 -->
 <div class="slide-label">1 / 4</div>
+<div class="slide-wrap">
 <div class="slide" id="slide-1">
   <h1><span class="slide-num">1.</span> Presente de subjuntivo: formación<span class="en" lang="en">Present subjunctive: how it is formed</span></h1>
 <p><b>Truco:</b> parte del <b>yo</b> del presente, quita la <b>-o</b> y cambia la vocal: <b>-ar → e</b>, <b>-er / -ir → a</b>.<span class="en" lang="en"><b>Trick:</b> start from the present-tense <b>yo</b> form, drop the <b>-o</b> and switch the vowel: <b>-ar → e</b>, <b>-er / -ir → a</b>.</span></p>
@@ -375,11 +397,25 @@ function handleKeyPress(e, buttonEl) {
 
 <p>Estas formas son el <b>imperativo negativo</b> y el de <b>usted / ustedes</b> (siguiente diapositiva).<span class="en" lang="en">These forms give the <b>negative imperative</b> and the <b>usted / ustedes</b> imperative (next slide).</span></p>
 </div>
+<aside class="notes"><div class="notes-title">Teacher notes</div>
+<p><strong>Goal.</strong> Pure morphology: students should be able to <em>build</em> any present subjunctive form. Meaning comes on slide 4, so don't let the class drift into "when do I use it?" yet. Promise them it's coming.</p>
+<p><strong>Why start from the yo?</strong> The yo form already carries most of the irregularity (<em>tengo, hago, conozco, digo</em>), so the stem comes free. Make it a ritual: say the yo out loud before every form.</p>
+<p><strong>The vowel swap.</strong> -ar verbs take the -er/-ir vowel and vice versa. One image that sticks is that the verb "changes uniform": same body, new vowel.</p>
+<p><strong>Irregulars are mostly not irregular.</strong></p>
+<ul>
+<li><em>Spelling changes</em> only protect the sound. Have them read <em>*buse</em> aloud and hear that it's wrong.</li>
+<li><em>The six</em> are irregular for a neat reason: their yo doesn't end in -o (<em>doy, estoy, he, voy, sé, soy</em>), so the trick has nothing to cut. This explanation makes the list feel logical rather than arbitrary.</li>
+<li><em>Stem changes</em> follow the yo, except in nosotros/vosotros: <em>pensemos</em>, not <em>*piensemos</em>. Only -ir stem-changers keep a change there (<em>durmamos, sintamos, pidamos</em>).</li>
+</ul>
+<p><strong>Bridge.</strong> Before moving on, point out that students have already heard these forms in signs and instructions (<em>no fume, pase</em>). The next slide makes that explicit.</p>
+</aside>
+</div>
 
 <hr class="page-break">
 
 <!-- SLIDE 1b -->
 <div class="slide-label">1b / 4</div>
+<div class="slide-wrap">
 <div class="slide" id="slide-1b">
   <h1><span class="slide-num">1b.</span> Práctica — Presente de subjuntivo: formación<span class="en" lang="en">Practice: forming the present subjunctive</span></h1>
 
@@ -493,11 +529,18 @@ function handleKeyPress(e, buttonEl) {
     <div class="exercise-feedback"></div>
   </div>
 </div>
+<aside class="notes"><div class="notes-title">Teacher notes</div>
+<p><strong>How the exercises escalate.</strong> Exercise 1 goes regular → -ir (does it really take <em>a</em>?) → irregular yo (<em>hago, conozco, traigo, veo</em>). Exercise 2 is about the edges: spelling, a double change (<em>empieces</em>: e→ie <em>and</em> z→c), and three of the six.</p>
+<p><strong>Run it aloud first.</strong> Ask for the yo form before anyone types. Most wrong answers come from skipping that step.</p>
+<p><strong>Typical errors:</strong> <em>*escribe</em> (wrong vowel for -ir), <em>*conozan</em> (lost the c), <em>*este</em> (missing tilde). If the feedback says "Casi: revisa la tilde", only the accent is wrong. That's a good moment to explain that <em>esté</em> ≠ <em>este</em>.</p>
+</aside>
+</div>
 
 <hr class="page-break">
 
 <!-- SLIDE 2 -->
 <div class="slide-label">2 / 4</div>
+<div class="slide-wrap">
 <div class="slide" id="slide-2">
   <h1><span class="slide-num">2.</span> Imperativo afirmativo y negativo<span class="en" lang="en">Affirmative and negative imperative</span></h1>
 
@@ -533,11 +576,22 @@ function handleKeyPress(e, buttonEl) {
 <div class="row"><span class="word">tú +</span><span class="chip "><b>8 formas cortas</b><small>de memoria<span class="en" lang="en">memorize</span></small></span><span class="op">=</span><span class="chip ok"><b>tener → ¡Ten!</b></span></div>
 <div class="row"><span class="word">el resto<span class="en" lang="en">the rest</span></span><span class="chip "><b>subjuntivo</b><small>yo tengo → teng-<span class="en" lang="en">I have → teng-</span></small></span><span class="op">=</span><span class="chip ok"><b>¡No tengas!</b></span></div>
 </div>
+<aside class="notes"><div class="notes-title">Teacher notes</div>
+<p><strong>The big relief.</strong> Only <em>two</em> forms are new: affirmative tú and affirmative vosotros. Everything else is the subjunctive they just learned. Say this first; it lowers the temperature.</p>
+<p><strong>tú affirmative = él/ella present.</strong> They already know it. Stem changes carry over (<em>cierra, duerme, pide</em>).</p>
+<p><strong>vosotros</strong> is mainly used in Spain. In Latin America, <em>ustedes</em> covers both informal and formal plural. If your students will mostly speak with Latin Americans, teach vosotros for recognition only.</p>
+<p><strong>The negative never comes from the affirmative.</strong> <em>*No habla</em> is a statement ("he doesn't speak"), not an order. Expect <em>*no ten</em> and <em>*no di</em> early on and correct them every time.</p>
+<p><strong>The eight short tú forms:</strong> <em>ven, di, sal, haz, ten, ve, pon, sé</em>. A well-known mnemonic keeps them in that order: "<em>Vin Diesel Has Ten Weapons</em>" (Ven, Di-Sal, Haz, Ten, We-a-Pons → ve, pon, sé).</p>
+<p><strong>Homonyms.</strong> <em>ve</em> is both <em>ir</em> and <em>ver</em>, and <em>sé</em> is both <em>ser</em> and <em>saber</em>. Context always decides, so it isn't a real problem; say so before someone asks.</p>
+<p><strong>Register.</strong> A direct imperative isn't rude in Spanish the way it can be in English. <em>Pásame la sal</em> is perfectly friendly at a table.</p>
+</aside>
+</div>
 
 <hr class="page-break">
 
 <!-- SLIDE 2b -->
 <div class="slide-label">2b / 4</div>
+<div class="slide-wrap">
 <div class="slide" id="slide-2b">
   <h1><span class="slide-num">2b.</span> Práctica — Imperativo<span class="en" lang="en">Practice: the imperative</span></h1>
 
@@ -643,11 +697,18 @@ function handleKeyPress(e, buttonEl) {
     <div class="exercise-feedback"></div>
   </div>
 </div>
+<aside class="notes"><div class="notes-title">Teacher notes</div>
+<p><strong>Exercise 1 mixes persons on purpose.</strong> Students first have to decide <em>which rule</em> applies, and only then form the verb. Each item tests one point: <em>cierra</em> (the stem change survives), <em>id</em> (r→d on the shortest verb there is), and <em>sé</em> (the tilde).</p>
+<p><strong>Exercise 2</strong> drives home the slide's key idea: the negative comes from the subjunctive, never from the affirmative. <em>Ve → no vayas</em> is the hardest one; students who answer <em>*no ves</em> are still deriving from the affirmative.</p>
+<p><strong>Tip:</strong> before checking, have students say <em>why</em>, for example "usted, so subjunctive". The reasoning is what transfers to new verbs.</p>
+</aside>
+</div>
 
 <hr class="page-break">
 
 <!-- SLIDE 3 -->
 <div class="slide-label">3 / 4</div>
+<div class="slide-wrap">
 <div class="slide" id="slide-3">
   <h1><span class="slide-num">3.</span> Imperativo con pronombres<span class="en" lang="en">Imperative with pronouns</span></h1>
 
@@ -669,11 +730,21 @@ function handleKeyPress(e, buttonEl) {
 <tr><td>ustedes</td><td>báñen<b>se</b></td><td class="neg">no <b>se</b> bañen</td></tr>
 </table>
 </div>
+<aside class="notes"><div class="notes-title">Teacher notes</div>
+<p><strong>The whole slide in one sentence:</strong> pronouns go <em>before</em> any conjugated verb in Spanish, and the affirmative imperative is the one exception, where they attach at the end. Framed that way, the negative isn't a new rule; it's just normal Spanish.</p>
+<p><strong>Order: RID</strong>, Reflexive, Indirect, Direct. Two pronouns never swap: it's always <em>me lo</em>, never <em>*lo me</em>.</p>
+<p><strong>le → se.</strong> Spanish avoids "le lo" for the sound. Students will then ask who <em>se</em> refers to. If context doesn't make it clear, add <em>a él / a ella / a usted</em>: <em>Dáselo a ella</em>.</p>
+<p><strong>The tilde</strong> follows ordinary accent rules. Adding syllables pushes the stress back to the third-from-last syllable, and such words always carry a written accent. <em>Dame</em> (2 syllables) needs no accent; <em>dámelo</em> does.</p>
+<p><strong>vosotros + os.</strong> The -d drops: <em>sentaos</em>. <em>Idos</em> is the only exception. The RAE also accepts <em>iros</em> because it's so widespread in speech, but <em>idos</em> remains the standard written form.</p>
+<p><strong>Extension for strong students:</strong> nosotros + nos drops the -s: <em>sentemos + nos → sentémonos</em>.</p>
+</aside>
+</div>
 
 <hr class="page-break">
 
 <!-- SLIDE 3b -->
 <div class="slide-label">3b / 4</div>
+<div class="slide-wrap">
 <div class="slide" id="slide-3b">
   <h1><span class="slide-num">3b.</span> Práctica — Imperativo + pronombres<span class="en" lang="en">Practice: imperative + pronouns</span></h1>
 
@@ -782,11 +853,19 @@ function handleKeyPress(e, buttonEl) {
     <div class="exercise-feedback"></div>
   </div>
 </div>
+<aside class="notes"><div class="notes-title">Teacher notes</div>
+<p><strong>How the exercises escalate:</strong> (1) just move the pronoun; (2) attach it and get the tilde right; (3) do the whole job: replace the nouns, apply le→se, attach, accent.</p>
+<p><strong><em>pónsela</em></strong> catches almost everyone. <em>Pon</em> has no accent alone, but with two pronouns it becomes a three-syllable word stressed on the first syllable, so it needs one.</p>
+<p>The last item in Exercise 3 switches to the <em>negative</em> without warning. That's deliberate: it checks whether students are thinking or just pattern-matching.</p>
+<p>Expect <em>*dálelo</em> in Exercise 3. When it appears, go back to rule 4 and have them say "le lo" aloud.</p>
+</aside>
+</div>
 
 <hr class="page-break">
 
 <!-- SLIDE 4 -->
 <div class="slide-label">4 / 4</div>
+<div class="slide-wrap">
 <div class="slide" id="slide-4">
   <h1><span class="slide-num">4.</span> Presente de subjuntivo: usos<span class="en" lang="en">Present subjunctive: uses</span></h1>
 
@@ -810,11 +889,20 @@ function handleKeyPress(e, buttonEl) {
 <div class="row"><span class="word">2. Creer / pensar</span><span class="chip "><b>Creo que es</b><small>afirmativo: indicativo<span class="en" lang="en">affirmative: indicative</span></small></span><span class="chip ok"><b>No creo que sea</b><small>negativo: subjuntivo<span class="en" lang="en">negative: subjunctive</span></small></span></div>
 <div class="row"><span class="word">3. Cuando</span><span class="chip "><b>Cuando salgo, corro</b><small>hábito: indicativo<span class="en" lang="en">habit: indicative</span></small></span><span class="chip ok"><b>Cuando salga, te llamo</b><small>futuro: subjuntivo<span class="en" lang="en">future: subjunctive</span></small></span><span class="chip x"><b>Cuando saldré</b></span></div>
 </div>
+<aside class="notes"><div class="notes-title">Teacher notes</div>
+<p><strong>The core idea.</strong> The indicative <em>asserts</em> something as fact. The subjunctive presents an idea <em>without asserting it</em>: as something wished for, doubted, judged or still pending. Avoid teaching it as "uncertainty": in <em>Me alegra que estés aquí</em>, your presence is certain, but the sentence is about my reaction to it, not a statement of the fact.</p>
+<p><strong>Structure.</strong> Two clauses, two different subjects, joined by <em>que</em>. With a single subject Spanish uses the infinitive (<em>Espero llegar</em>), just as English does ("I hope to arrive").</p>
+<p><strong>A mnemonic for the triggers: WEIRDO.</strong> Wishes, Emotions, Impersonal expressions (<em>es importante que</em>), Recommendations, Doubt/denial, Ojalá. <em>Ojalá</em> comes from Arabic ("if God wills") and always takes the subjunctive.</p>
+<p><strong>creer / pensar.</strong> Affirmative asserts, so indicative. Negating removes the assertion, so subjunctive.</p>
+<p><strong>cuando.</strong> For the future, use the subjunctive and never the future tense: <em>*cuando saldré</em> is wrong. But the <em>question</em> <em>¿Cuándo saldrás?</em> is fine. Students often confuse the two, so contrast them on the board.</p>
+</aside>
+</div>
 
 <hr class="page-break">
 
 <!-- SLIDE 4b -->
 <div class="slide-label">4b / 4</div>
+<div class="slide-wrap">
 <div class="slide" id="slide-4b">
   <h1><span class="slide-num">4b.</span> Práctica — Indicativo o subjuntivo<span class="en" lang="en">Practice: indicative or subjunctive</span></h1>
 
@@ -920,6 +1008,26 @@ function handleKeyPress(e, buttonEl) {
     <div class="exercise-feedback"></div>
   </div>
 </div>
+<aside class="notes"><div class="notes-title">Teacher notes</div>
+<p><strong>Minimal pairs.</strong> In each pair only one element changes. Before typing, have students name the word that triggers the mood. If they can point to it, they've understood the rule.</p>
+<p><strong>Exercise 2</strong> sets assertion against evaluation: <em>es evidente</em> asserts (indicative), while <em>es importante</em> judges (subjunctive). Same structure, opposite mood: a strong discussion point.</p>
+<p>Several items also hide an irregular form (<em>haga, vengáis, sepan</em>). This connects back to slide 1.</p>
+</aside>
+</div>
 
+<button class="notes-switch" type="button" onclick="toggleNotes()">Ocultar notas</button>
+<script>
+function setNotes(on) {
+  document.body.classList.toggle('with-notes', on);
+  document.querySelector('.notes-switch').textContent = on ? 'Ocultar notas' : 'Mostrar notas';
+  try { localStorage.setItem('a2-notes', on ? '1' : '0'); } catch (e) {}
+}
+function toggleNotes() { setNotes(!document.body.classList.contains('with-notes')); }
+(function () {
+  var on = true;
+  try { on = localStorage.getItem('a2-notes') !== '0'; } catch (e) {}
+  setNotes(on);
+})();
+</script>
 </body>
 </html>
