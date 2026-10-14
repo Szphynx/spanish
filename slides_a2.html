@@ -347,6 +347,13 @@ h1 .en{font-size:.6em;color:#6A85A8} h2 .en{font-size:.75em;text-transform:none;
   body:not(.nav-open) .sidenav { transform: translateX(-100%); box-shadow: none; }
   @media (min-width: 1100px) { body.nav-open { padding-left: 270px; } }
   @media print { .sidenav, .nav-toggle { display: none; } body.nav-open { padding-left: 16px; } }
+  /* ── Glossary tooltips and cross-links ── */
+  .term { border-bottom: 1px dotted #2563EB; cursor: help; position: relative; color: inherit; text-decoration: none; }
+  a.term { cursor: pointer; }
+  .term::after { content: attr(data-tip); position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translateX(-50%); width: max-content; max-width: 260px; padding: 8px 11px; background: #1A3A7A; color: #fff; font-size: 13px; font-weight: normal; line-height: 1.45; text-align: left; text-transform: none; letter-spacing: 0; border-radius: 4px; box-shadow: 0 3px 12px rgba(0,0,0,.25); opacity: 0; pointer-events: none; transition: opacity .12s; z-index: 40; white-space: normal; }
+  .term:hover::after, .term:focus::after { opacity: 1; }
+  a.xref { color: #2563EB; text-decoration: underline; text-decoration-style: dotted; }
+  @media print { .term { border: none; } .term::after { display: none; } }
 </style>
 </head>
 <body class="with-notes">
@@ -389,7 +396,7 @@ function handleKeyPress(e, buttonEl) {
 <div class="block-title">A2 — Subjuntivo e imperativo</div>
 
 <!-- SLIDE 1 -->
-<div class="slide-label">1 / 5</div>
+<div class="slide-label">1 / 6</div>
 <div class="slide-wrap">
 <div class="slide" id="slide-1">
   <h1><span class="slide-num">1.</span> Presente de subjuntivo: formación<span class="en" lang="en">Present subjunctive: how it is formed</span></h1>
@@ -418,7 +425,7 @@ function handleKeyPress(e, buttonEl) {
 <p>Estas formas son el <b>imperativo negativo</b> y el de <b>usted / ustedes</b> (diapositiva 3).<span class="en" lang="en">These forms give the <b>negative imperative</b> and the <b>usted / ustedes</b> imperative (slide 3).</span></p>
 </div>
 <aside class="notes"><div class="notes-title">Teacher notes</div>
-<p><strong>Goal.</strong> Pure morphology: students should be able to <em>build</em> any present subjunctive form. Meaning comes on slide 5, so don't let the class drift into "when do I use it?" yet. Promise them it's coming.</p>
+<p><strong>Goal.</strong> Pure morphology: students should be able to <em>build</em> any present subjunctive form. Meaning comes on slide 6, so don't let the class drift into "when do I use it?" yet. Promise them it's coming.</p>
 <p><strong>Why start from the yo?</strong> The yo form already carries most of the irregularity (<em>tengo, hago, conozco, digo</em>), so the stem comes free. Make it a ritual: say the yo out loud before every form.</p>
 <p><strong>The vowel swap.</strong> -ar verbs take the -er/-ir vowel and vice versa. One image that sticks is that the verb "changes uniform": same body, new vowel.</p>
 <p><strong>Next.</strong> The yo trick covers most verbs. Slide 2 deals with the four groups where it needs adjusting.</p>
@@ -429,7 +436,7 @@ function handleKeyPress(e, buttonEl) {
 <hr class="page-break">
 
 <!-- SLIDE 2 -->
-<div class="slide-label">2 / 5</div>
+<div class="slide-label">2 / 6</div>
 <div class="slide-wrap">
 <div class="slide spaced" id="slide-2">
   <h1><span class="slide-num">2.</span> Presente de subjuntivo: irregulares<span class="en" lang="en">Present subjunctive: irregular verbs</span></h1>
@@ -494,7 +501,7 @@ function handleKeyPress(e, buttonEl) {
 <hr class="page-break">
 
 <!-- SLIDE 2b -->
-<div class="slide-label">2b / 5</div>
+<div class="slide-label">2b / 6</div>
 <div class="slide-wrap">
 <div class="slide" id="slide-2b">
   <h1><span class="slide-num">2b.</span> Práctica — Presente de subjuntivo: formación<span class="en" lang="en">Practice: forming the present subjunctive</span></h1>
@@ -619,7 +626,7 @@ function handleKeyPress(e, buttonEl) {
 <hr class="page-break">
 
 <!-- SLIDE 3 -->
-<div class="slide-label">3 / 5</div>
+<div class="slide-label">3 / 6</div>
 <div class="slide-wrap">
 <div class="slide" id="slide-3">
   <h1><span class="slide-num">3.</span> Imperativo afirmativo y negativo<span class="en" lang="en">Affirmative and negative imperative</span></h1>
@@ -671,7 +678,7 @@ function handleKeyPress(e, buttonEl) {
 <hr class="page-break">
 
 <!-- SLIDE 3b -->
-<div class="slide-label">3b / 5</div>
+<div class="slide-label">3b / 6</div>
 <div class="slide-wrap">
 <div class="slide" id="slide-3b">
   <h1><span class="slide-num">3b.</span> Práctica — Imperativo<span class="en" lang="en">Practice: the imperative</span></h1>
@@ -788,19 +795,108 @@ function handleKeyPress(e, buttonEl) {
 <hr class="page-break">
 
 <!-- SLIDE 4 -->
-<div class="slide-label">4 / 5</div>
+<div class="slide-label">4 / 6</div>
 <div class="slide-wrap">
-<div class="slide" id="slide-4">
-  <h1><span class="slide-num">4.</span> Imperativo con pronombres<span class="en" lang="en">Imperative with pronouns</span></h1>
+<div class="slide spaced" id="slide-4">
+  <h1><span class="slide-num">4.</span> Pronombres: directo, indirecto y reflexivo<span class="en" lang="en">Pronouns: direct, indirect and reflexive</span></h1>
+<p>Un pronombre sustituye a un nombre para no repetirlo. Para elegir el correcto, pregunta <b>qué papel</b> tiene ese nombre en la frase.<span class="en" lang="en">A pronoun replaces a noun so you don't repeat it. To choose the right one, ask <b>what role</b> that noun plays in the sentence.</span></p>
+
+<h2>1. Directo: ¿qué? / ¿a quién?<span class="en" lang="en">1. Direct object: what? / whom?</span></h2>
+<p>Recibe la acción directamente.<span class="en" lang="en">It receives the action directly.</span></p>
+<table>
+<tr><th>Frase<span class="en" lang="en">Sentence</span></th><th>Pregunta<span class="en" lang="en">Question</span></th><th>Con pronombre<span class="en" lang="en">With pronoun</span></th></tr>
+<tr><td>Compro <u>el pan</u>.</td><td>¿Qué compro?</td><td><b class="hl">Lo</b> compro.</td></tr>
+<tr><td>Veo <u>a María</u>.</td><td>¿A quién veo?</td><td><b class="hl">La</b> veo.</td></tr>
+<tr><td>Tengo <u>los billetes</u>.</td><td>¿Qué tengo?</td><td><b class="hl">Los</b> tengo.</td></tr>
+<tr><td>Riego <u>las plantas</u>.</td><td>¿Qué riego?</td><td><b class="hl">Las</b> riego.</td></tr>
+</table>
+
+<h2>2. Indirecto: ¿a quién? / ¿para quién?<span class="en" lang="en">2. Indirect object: to whom? / for whom?</span></h2>
+<p>Es la persona que <b>recibe</b> la cosa o el efecto de la acción.<span class="en" lang="en">It's the person who <b>receives</b> the thing or the effect of the action.</span></p>
+<table>
+<tr><th>Frase<span class="en" lang="en">Sentence</span></th><th>Pregunta<span class="en" lang="en">Question</span></th><th>Con pronombre<span class="en" lang="en">With pronoun</span></th></tr>
+<tr><td>Doy las llaves <u>a Pedro</u>.</td><td>¿A quién doy las llaves?</td><td><b class="hl">Le</b> doy las llaves.</td></tr>
+<tr><td>Escribo <u>a mis padres</u>.</td><td>¿A quién escribo?</td><td><b class="hl">Les</b> escribo.</td></tr>
+<tr><td>Compro un regalo <u>para ti</u>.</td><td>¿Para quién?</td><td><b class="hl">Te</b> compro un regalo.</td></tr>
+</table>
+<div class="row"><span class="word">truco<span class="en" lang="en">tip</span></span><span class="chip "><b>¿Hay una cosa?</b><small>¿qué? ya tiene respuesta<span class="en" lang="en">“what?” is already answered</span></small></span><span class="op">→</span><span class="chip ok"><b>la persona es indirecto</b><small>Doy las llaves a Pedro → le</small></span><span class="chip "><b>Veo a María → la</b><small>no hay cosa: directo<span class="en" lang="en">no thing: direct</span></small></span></div>
+
+<h2>3. Reflexivo: la acción vuelve al sujeto<span class="en" lang="en">3. Reflexive: the action comes back to the subject</span></h2>
+<p>El sujeto hace la acción <b>sobre sí mismo</b>.<span class="en" lang="en">The subject does the action <b>to itself</b>.</span></p>
+<table>
+<tr><th>Sobre otro<span class="en" lang="en">On someone else</span></th><th>Sobre sí mismo<span class="en" lang="en">On oneself</span></th></tr>
+<tr><td>Baño <u>al niño</u>.</td><td><b class="hl">Me</b> baño.</td></tr>
+<tr><td>Lavo <u>el coche</u>.</td><td><b class="hl">Me</b> lavo las manos.</td></tr>
+<tr><td>Despierto <u>a mi hermana</u>.</td><td><b class="hl">Me</b> despierto a las siete.</td></tr>
+<tr><td>Pongo la mesa.</td><td><b class="hl">Me</b> pongo la chaqueta.</td></tr>
+</table>
+
+<h2>4. Resumen: solo cambia la tercera persona<span class="en" lang="en">4. Summary: only the third person changes</span></h2>
+<table>
+<tr><th></th><th>Directo<span class="en" lang="en">Direct</span></th><th>Indirecto<span class="en" lang="en">Indirect</span></th><th>Reflexivo<span class="en" lang="en">Reflexive</span></th></tr>
+<tr><td>yo</td><td>me</td><td>me</td><td>me</td></tr>
+<tr><td>tú</td><td>te</td><td>te</td><td>te</td></tr>
+<tr><td>él / ella / usted</td><td><b class="hl">lo / la</b></td><td><b class="hl">le</b></td><td><b class="hl">se</b></td></tr>
+<tr><td>nosotros</td><td>nos</td><td>nos</td><td>nos</td></tr>
+<tr><td>vosotros</td><td>os</td><td>os</td><td>os</td></tr>
+<tr><td>ellos / ellas / ustedes</td><td><b class="hl">los / las</b></td><td><b class="hl">les</b></td><td><b class="hl">se</b></td></tr>
+</table>
+
+<h2>5. le / les + lo / la → se<span class="en" lang="en">5. le / les + lo / la → se</span></h2>
+<p>Con dos pronombres de tercera persona, <b>le</b> y <b>les</b> se convierten en <b>se</b>.<span class="en" lang="en">With two third-person pronouns, <b>le</b> and <b>les</b> become <b>se</b>.</span></p>
+<table>
+<tr><th>Frase<span class="en" lang="en">Sentence</span></th><th>Un pronombre<span class="en" lang="en">One pronoun</span></th><th>Dos pronombres<span class="en" lang="en">Two pronouns</span></th></tr>
+<tr><td>Doy las llaves a Pedro.</td><td><b class="hl">Le</b> doy las llaves.</td><td><b class="hl">Se las</b> doy.</td></tr>
+<tr><td>Cuento la noticia a mis padres.</td><td><b class="hl">Les</b> cuento la noticia.</td><td><b class="hl">Se la</b> cuento.</td></tr>
+<tr><td>Compro flores a mi madre.</td><td><b class="hl">Le</b> compro flores.</td><td><b class="hl">Se las</b> compro.</td></tr>
+</table>
+<p class="note"><span class="neg">✗ <s>Le las doy</s></span> · Este <b>se</b> no es reflexivo.<span class="en" lang="en">This <b>se</b> is not reflexive.</span></p>
+</div>
+<aside class="notes"><div class="notes-title">Teacher notes</div>
+<p><strong>Why this slide.</strong> Students can't place pronouns around an imperative until they can pick the right pronoun in the first place. Teach this slide in ordinary present-tense sentences, then move to slide 5.</p>
+<p><strong>The question test.</strong> Ask "¿qué?" to find the direct object and "¿a quién? / ¿para quién?" to find the indirect one. The trap is that a direct object can also be a person with <em>a</em> (<em>Veo a María</em>). The tip on the slide resolves it: if the "what?" is already answered by a thing (<em>las llaves</em>), the person must be the indirect object.</p>
+<p><strong>Reflexive</strong> isn't a third kind of object so much as an object that happens to be the subject. The left/right table makes this concrete: same verb, but the action lands on someone else or comes back. Many daily-routine verbs work this way (<em>ducharse, levantarse, acostarse</em>), which is exactly the vocabulary of unit 7A's exercise 5.</p>
+<p><strong>The summary table</strong> is the reassuring part: <em>me, te, nos, os</em> do every job. Only the third person has separate forms, so that's where students need to think.</p>
+<p><strong>le → se</strong> is purely about sound: Spanish avoids two "l" pronouns in a row. Point out that this <em>se</em> means <em>a él / a ella / a ellos</em>, not "himself". If it's ambiguous, add the person: <em>Se las doy a Pedro</em>.</p>
+<p><strong>Leísmo.</strong> In parts of Spain you'll hear <em>le</em> for a male person as direct object (<em>Le veo</em> for <em>Lo veo</em>). The RAE accepts it for masculine singular people, but teach <em>lo</em> as the default.</p>
+</aside>
+</div>
+
+<hr class="page-break">
+
+<!-- SLIDE 5 -->
+<div class="slide-label">5 / 6</div>
+<div class="slide-wrap">
+<div class="slide" id="slide-5">
+  <h1><span class="slide-num">5.</span> Imperativo con pronombres<span class="en" lang="en">Imperative with pronouns</span></h1>
 
 <h2>Reglas<span class="en" lang="en">Rules</span></h2>
 <div class="row"><span class="word">1. Afirmativo<span class="en" lang="en">Affirmative</span></span><span class="chip "><b>verbo</b></span><span class="op">+</span><span class="chip p"><b>pronombre</b><small>detrás, unido<span class="en" lang="en">after, attached</span></small></span><span class="op">=</span><span class="chip ok"><b>dúchate</b></span></div>
 <div class="row"><span class="word">2. Negativo<span class="en" lang="en">Negative</span></span><span class="chip n"><b>no</b></span><span class="op">+</span><span class="chip p"><b>pronombre</b><small>delante, separado<span class="en" lang="en">before, separate</span></small></span><span class="op">+</span><span class="chip "><b>subjuntivo</b></span><span class="op">=</span><span class="chip ok"><b>no te duches</b></span></div>
-<div class="row"><span class="word">3. Orden<span class="en" lang="en">Order</span></span><span class="chip p"><b>me / te / se / nos / os</b><small>indirecto o reflexivo<span class="en" lang="en">indirect or reflexive</span></small></span><span class="op">+</span><span class="chip p"><b>lo / la / los / las</b><small>directo<span class="en" lang="en">direct</span></small></span><span class="op">=</span><span class="chip ok"><b>dámelo</b></span></div>
-<div class="row"><span class="word">4. le → se</span><span class="chip p"><b>le / les</b></span><span class="op">+</span><span class="chip p"><b>lo / la</b></span><span class="op">→</span><span class="chip p"><b>se lo</b></span><span class="op">=</span><span class="chip ok"><b>pásaselo</b></span><span class="chip x"><b>pásalelo</b></span></div>
-<div class="row"><span class="word">5. Tilde<span class="en" lang="en">Accent</span></span><span class="chip "><b>baña + te</b><small>el acento no se mueve<span class="en" lang="en">stress stays put</span></small></span><span class="op">=</span><span class="chip ok"><b>báñate</b></span></div>
-<div class="row"><span class="word">6. vosotros + os</span><span class="chip "><b>sentad + os</b><small>se pierde la -d<span class="en" lang="en">the -d drops</span></small></span><span class="op">=</span><span class="chip ok"><b>sentaos</b></span><span class="chip x"><b>sentaros</b></span></div>
+<div class="row"><span class="word">3. Tilde<span class="en" lang="en">Accent</span></span><span class="chip "><b>baña + te</b><small>el acento no se mueve<span class="en" lang="en">stress stays put</span></small></span><span class="op">=</span><span class="chip ok"><b>báñate</b></span></div>
+<div class="row"><span class="word">4. vosotros + os</span><span class="chip "><b>sentad + os</b><small>se pierde la -d<span class="en" lang="en">the -d drops</span></small></span><span class="op">=</span><span class="chip ok"><b>sentaos</b></span><span class="chip x"><b>sentaros</b></span></div>
 <p>Excepción: <b>idos</b>.<span class="en" lang="en">Exception: <b>idos</b>.</span></p>
+
+<h2>Dos pronombres: el orden<span class="en" lang="en">Two pronouns: the order</span></h2>
+<p>Primero va la <b>persona</b> (indirecto o reflexivo) y después la <b>cosa</b> (directo). Nunca al revés.<span class="en" lang="en">The <b>person</b> (indirect or reflexive) comes first, then the <b>thing</b> (direct). Never the other way round.</span></p>
+<div class="row"><span class="word"></span><span class="chip p"><b>me / te / se / nos / os</b><small>persona<span class="en" lang="en">person</span></small></span><span class="op">+</span><span class="chip p"><b>lo / la / los / las</b><small>cosa<span class="en" lang="en">thing</span></small></span></div>
+<table>
+<tr><th>Frase<span class="en" lang="en">Sentence</span></th><th>Afirmativo<span class="en" lang="en">Affirmative</span></th><th>Negativo<span class="en" lang="en">Negative</span></th></tr>
+<tr><td>Dame el libro.</td><td>da + <b class="hl">me</b> + <b class="hl">lo</b> → <b>dámelo</b></td><td><span class="neg">No <b class="hl">me lo</b> des.</span></td></tr>
+<tr><td>Lávate las manos.</td><td>láva + <b class="hl">te</b> + <b class="hl">las</b> → <b>lávatelas</b></td><td><span class="neg">No <b class="hl">te las</b> laves.</span></td></tr>
+<tr><td>Ponte la chaqueta.</td><td>pon + <b class="hl">te</b> + <b class="hl">la</b> → <b>póntela</b></td><td><span class="neg">No <b class="hl">te la</b> pongas.</span></td></tr>
+<tr><td>Cómpranos las entradas.</td><td>compra + <b class="hl">nos</b> + <b class="hl">las</b> → <b>cómpranoslas</b></td><td><span class="neg">No <b class="hl">nos las</b> compres.</span></td></tr>
+</table>
+
+<h2>le / les + lo / la → se<span class="en" lang="en">le / les + lo / la → se</span></h2>
+<p>Si <b>le</b> o <b>les</b> va delante de <b>lo, la, los, las</b>, se convierte en <b>se</b>. Este <b>se</b> no es reflexivo: es <i>le</i> con otro nombre.<span class="en" lang="en">When <b>le</b> or <b>les</b> comes before <b>lo, la, los, las</b>, it becomes <b>se</b>. This <b>se</b> isn’t reflexive: it is <i>le</i> in disguise.</span></p>
+<div class="row"><span class="word"></span><span class="chip p"><b>le / les</b><small>a él, a ella…<span class="en" lang="en">to him, to her…</span></small></span><span class="op">+</span><span class="chip p"><b>lo / la</b></span><span class="op">→</span><span class="chip ok"><b>se lo / se la</b></span><span class="chip x"><b>le lo</b></span></div>
+<table>
+<tr><th>Frase<span class="en" lang="en">Sentence</span></th><th>Afirmativo<span class="en" lang="en">Affirmative</span></th><th>Negativo<span class="en" lang="en">Negative</span></th></tr>
+<tr><td>Lee el cuento a los niños.</td><td>lée + <b class="hl">se</b> + <b class="hl">lo</b> → <b>léeselo</b></td><td><span class="neg">No <b class="hl">se lo</b> leas.</span></td></tr>
+<tr><td>Manda el mensaje a tu jefe.</td><td>manda + <b class="hl">se</b> + <b class="hl">lo</b> → <b>mándaselo</b></td><td><span class="neg">No <b class="hl">se lo</b> mandes.</span></td></tr>
+<tr><td>Dé la receta al paciente. (usted)</td><td>dé + <b class="hl">se</b> + <b class="hl">la</b> → <b>désela</b></td><td><span class="neg">No <b class="hl">se la</b> dé.</span></td></tr>
+</table>
 
 <h2>bañarse en todas las personas<span class="en" lang="en">bañarse in every person</span></h2>
 <table>
@@ -825,8 +921,8 @@ function handleKeyPress(e, buttonEl) {
 <aside class="notes"><div class="notes-title">Teacher notes</div>
 <p><strong>Book link.</strong> Unit 7A states the same two rules with <em>Dúchate, dámelo, póngase</em> and <em>No te duches, no me lo des</em>; those are the rule examples here. The doctor table comes from the unit’s Comunicación box (síntomas / remedios). Use it for a doctor–patient role play, as in activity 8.</p>
 <p><strong>The whole slide in one sentence:</strong> pronouns go <em>before</em> any conjugated verb in Spanish, and the affirmative imperative is the one exception, where they attach at the end. Framed that way, the negative isn't a new rule; it's just normal Spanish.</p>
-<p><strong>Order: RID</strong>, Reflexive, Indirect, Direct. Two pronouns never swap: it's always <em>me lo</em>, never <em>*lo me</em>.</p>
-<p><strong>le → se.</strong> Spanish avoids "le lo" for the sound. Students will then ask who <em>se</em> refers to. If context doesn't make it clear, add <em>a él / a ella / a usted</em>: <em>Dáselo a ella</em>.</p>
+<p><strong>Order.</strong> Person before thing: <em>me lo</em>, never <em>*lo me</em>. If students know RID (Reflexive, Indirect, Direct), it's the same rule. Slide 4 explains what each pronoun is, so do that slide first if the class is shaky on <em>lo</em> vs <em>le</em>.</p>
+<p><strong>le → se.</strong> Spanish avoids "le lo" for the sound. Stress that this <em>se</em> is not reflexive: in <em>Léeselo</em> nobody is reading to themselves. Students will then ask who <em>se</em> refers to. If context doesn't make it clear, add <em>a él / a ella / a usted</em>: <em>Dáselo a ella</em>.</p>
 <p><strong>The tilde</strong> follows ordinary accent rules. Adding syllables pushes the stress back to the third-from-last syllable, and such words always carry a written accent. <em>Dame</em> (2 syllables) needs no accent; <em>dámelo</em> does.</p>
 <p><strong>vosotros + os.</strong> The -d drops: <em>sentaos</em>. <em>Idos</em> is the only exception. The RAE also accepts <em>iros</em> because it's so widespread in speech, but <em>idos</em> remains the standard written form.</p>
 <p><strong>Extension for strong students:</strong> nosotros + nos drops the -s: <em>sentemos + nos → sentémonos</em>.</p>
@@ -835,11 +931,11 @@ function handleKeyPress(e, buttonEl) {
 
 <hr class="page-break">
 
-<!-- SLIDE 4b -->
-<div class="slide-label">4b / 5</div>
+<!-- SLIDE 5b -->
+<div class="slide-label">5b / 6</div>
 <div class="slide-wrap">
-<div class="slide" id="slide-4b">
-  <h1><span class="slide-num">4b.</span> Práctica — Imperativo + pronombres<span class="en" lang="en">Practice: imperative + pronouns</span></h1>
+<div class="slide" id="slide-5b">
+  <h1><span class="slide-num">5b.</span> Práctica — Imperativo + pronombres<span class="en" lang="en">Practice: imperative + pronouns</span></h1>
 
   <h2>Ejercicio 1: Afirmativo → negativo<span class="en" lang="en">Exercise 1: affirmative → negative</span></h2>
   <p class="note">El pronombre pasa delante y se separa.</p>
@@ -956,11 +1052,11 @@ function handleKeyPress(e, buttonEl) {
 
 <hr class="page-break">
 
-<!-- SLIDE 5 -->
-<div class="slide-label">5 / 5</div>
+<!-- SLIDE 6 -->
+<div class="slide-label">6 / 6</div>
 <div class="slide-wrap">
-<div class="slide" id="slide-5">
-  <h1><span class="slide-num">5.</span> Presente de subjuntivo: deseos<span class="en" lang="en">Present subjunctive: wishes</span></h1>
+<div class="slide" id="slide-6">
+  <h1><span class="slide-num">6.</span> Presente de subjuntivo: deseos<span class="en" lang="en">Present subjunctive: wishes</span></h1>
 
 <h2>1. Buenos deseos: ¡Que + subjuntivo!<span class="en" lang="en">1. Good wishes: ¡Que + subjunctive!</span></h2>
 <p>Para desear algo bueno a alguien.<span class="en" lang="en">To wish someone well.</span></p>
@@ -1011,11 +1107,11 @@ function handleKeyPress(e, buttonEl) {
 
 <hr class="page-break">
 
-<!-- SLIDE 5b -->
-<div class="slide-label">5b / 5</div>
+<!-- SLIDE 6b -->
+<div class="slide-label">6b / 6</div>
 <div class="slide-wrap">
-<div class="slide" id="slide-5b">
-  <h1><span class="slide-num">5b.</span> Práctica — Deseos e indicativo o subjuntivo<span class="en" lang="en">Practice: wishes, indicative or subjunctive</span></h1>
+<div class="slide" id="slide-6b">
+  <h1><span class="slide-num">6b.</span> Práctica — Deseos e indicativo o subjuntivo<span class="en" lang="en">Practice: wishes, indicative or subjunctive</span></h1>
 
   <h2>Ejercicio 1: Buenos deseos<span class="en" lang="en">Exercise 1: good wishes</span></h2>
   <p class="note">¿Qué le dices? Completa con el subjuntivo o el infinitivo.</p>
@@ -1229,6 +1325,64 @@ function setNav(on, init) {
   if (!init) { try { localStorage.setItem('a2-nav', on ? '1' : '0'); } catch (e) {} }
 }
 function toggleNav() { setNav(!document.body.classList.contains('nav-open')); }
+</script>
+<script>
+/* GLOSARIO: first mention of each term per slide gets an explanation; "diapositiva N" becomes a link */
+(function () {
+  var G = [
+    ['subjuntivo', 'Modo para deseos, consejos y dudas: espero que vengas. Formación: diapositiva 1.', '#slide-1'],
+    ['indicativo', 'Modo de los hechos: vienes, como, vivo.'],
+    ['imperativo', 'Forma para dar órdenes y consejos: ¡bebe!, ¡no salgas! Ver diapositiva 3.', '#slide-3'],
+    ['infinitivo', 'La forma básica del verbo: hablar, comer, vivir.'],
+    ['raíz', 'La parte del verbo sin la terminación: descans-, teng-.'],
+    ['cambio de raíz', 'La vocal de la raíz cambia: pensar → pienso, poder → puedo. Ver diapositiva 2.', '#slide-2'],
+    ['pronombre', 'Palabra que sustituye a un nombre: lo, la, le, me, te, se… Ver diapositiva 4.', '#slide-4'],
+    ['directo', 'Objeto directo: recibe la acción. Pregunta: ¿qué? → lo, la, los, las. Ver diapositiva 4.', '#slide-4'],
+    ['indirecto', 'Objeto indirecto: la persona que recibe algo. Pregunta: ¿a quién? → le, les. Ver diapositiva 4.', '#slide-4'],
+    ['reflexivo', 'La acción vuelve al sujeto: me ducho, te levantas, se baña. Ver diapositiva 4.', '#slide-4'],
+    ['esdrújula', 'Palabra con el acento en la antepenúltima sílaba (bá-ña-te). Siempre lleva tilde.'],
+    ['tilde', 'El acento escrito: é, á, í. Cambia el significado: esté ≠ este.'],
+    ['vosotros', 'Plural informal, usado en España. En Latinoamérica se usa ustedes.'],
+    ['usted', 'Tratamiento de respeto. Se conjuga como él / ella.'],
+    ['activador', 'Palabra que pide subjuntivo: espero que, ojalá, para que…', '#slide-6'],
+    ['ortografía', 'Cambios de letra para mantener el sonido: busque, llegue, empiece.', '#slide-2']
+  ];
+  var esc = function (t) { return t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); };
+  var skip = 'H1, H2, .en, .notes, .exercise-feedback, input, button, script, a, .term';
+  document.querySelectorAll('.slide').forEach(function (slide) {
+    var used = {};
+    var walker = document.createTreeWalker(slide, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) { return n.parentElement.closest(skip) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT; }
+    });
+    var nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function (node) {
+      var parts = [], text = node.nodeValue, re, m, best;
+      // slide cross-references
+      text = text;
+      var out = document.createDocumentFragment(), pos = 0, changed = false;
+      var pat = new RegExp('(diapositivas? (\\d+[a-z]?)(?:\\s*y\\s*(\\d+[a-z]?))?)|(?<![\\p{L}])(' + G.map(function (g) { return esc(g[0]); }).sort(function (a, b) { return b.length - a.length; }).join('|') + ')(?![\\p{L}])', 'giu');
+      while ((m = pat.exec(text))) {
+        if (m[1]) {
+          out.appendChild(document.createTextNode(text.slice(pos, m.index)));
+          var a = document.createElement('a'); a.className = 'xref'; a.href = '#slide-' + m[2]; a.textContent = m[0];
+          out.appendChild(a); pos = m.index + m[0].length; changed = true; continue;
+        }
+        var key = m[4].toLowerCase(), g = G.filter(function (x) { return x[0] === key; })[0];
+        if (!g || used[key]) continue;
+        if (g[2] && '#' + slide.id === g[2]) g = [g[0], g[1].replace(/ Ver diapositiva \d+[a-z]?\./, '').replace(/ Formación: diapositiva 1\./, '')];
+        used[key] = true;
+        out.appendChild(document.createTextNode(text.slice(pos, m.index)));
+        var el = document.createElement(g[2] ? 'a' : 'span');
+        el.className = 'term'; el.setAttribute('data-tip', g[1]); el.textContent = m[4];
+        if (g[2]) el.href = g[2]; else el.tabIndex = 0;
+        out.appendChild(el); pos = m.index + m[0].length; changed = true;
+      }
+      if (!changed) return;
+      out.appendChild(document.createTextNode(text.slice(pos)));
+      node.parentNode.replaceChild(out, node);
+    });
+  });
+})();
 </script>
 </body>
 </html>
