@@ -332,6 +332,21 @@ h1 .en{font-size:.6em;color:#6A85A8} h2 .en{font-size:.75em;text-transform:none;
   .hl { color: #2563EB; }
   ol.steps { margin: 6px 0 4px; padding-left: 22px; }
   ol.steps li { margin-bottom: 8px; }
+  /* ── Side navigation ── */
+  .sidenav { position: fixed; top: 0; left: 0; bottom: 0; width: 250px; overflow-y: auto; background: #F7F3EC; border-right: 1.5px solid #BDD0E8; border-top: 4px solid #1E52A0; padding: 18px 14px 40px; font-size: 0.8em; z-index: 20; box-shadow: 2px 0 12px rgba(20,55,130,.12); transition: transform .2s ease; }
+  .sidenav-title { font-weight: 700; color: #1E52A0; text-transform: uppercase; letter-spacing: 1.2px; font-size: 0.85em; margin: 0 0 12px; padding-bottom: 6px; border-bottom: 2px solid #1E52A0; }
+  .sidenav a { display: block; text-decoration: none; color: #1A3A7A; border-radius: 3px; }
+  .sidenav a.nav-slide { font-weight: 700; padding: 6px 8px; margin-top: 6px; border-left: 3px solid transparent; }
+  .sidenav a.nav-slide .n { color: #2563EB; margin-right: 6px; }
+  .sidenav a.nav-slide.practice { font-weight: 600; color: #4A6A95; }
+  .sidenav a.nav-sub { padding: 3px 8px 3px 26px; color: #4A5A70; line-height: 1.35; }
+  .sidenav a:hover { background: #E3ECF8; }
+  .sidenav a.nav-slide.active { background: #DBEAFE; border-left-color: #2563EB; }
+  .nav-toggle { position: fixed; top: 12px; left: 12px; z-index: 30; padding: 7px 11px; background: #1E52A0; color: #fff; border: none; border-radius: 3px; font: inherit; font-size: 0.8em; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.2); }
+  body.nav-open .nav-toggle { top: auto; bottom: 12px; left: 12px; }
+  body:not(.nav-open) .sidenav { transform: translateX(-100%); box-shadow: none; }
+  @media (min-width: 1100px) { body.nav-open { padding-left: 270px; } }
+  @media print { .sidenav, .nav-toggle { display: none; } body.nav-open { padding-left: 16px; } }
 </style>
 </head>
 <body class="with-notes">
@@ -1176,6 +1191,44 @@ function toggleNotes() { setNotes(!document.body.classList.contains('with-notes'
   try { on = localStorage.getItem('a2-notes') !== '0'; } catch (e) {}
   setNotes(on);
 })();
+</script>
+<nav class="sidenav" aria-label="Diapositivas"><div class="sidenav-title">Diapositivas</div></nav>
+<button class="nav-toggle" type="button" onclick="toggleNav()">☰ Índice</button>
+<script>
+(function () {
+  var nav = document.querySelector('.sidenav');
+  var text = function (el) { var c = el.cloneNode(true); c.querySelectorAll('.en, .slide-num').forEach(function (x) { x.remove(); }); return c.textContent.trim(); };
+  var links = [];
+  document.querySelectorAll('.slide').forEach(function (slide) {
+    var h1 = slide.querySelector('h1'); if (!h1) return;
+    var num = h1.querySelector('.slide-num'); var n = num ? num.textContent.replace('.', '') : '';
+    var a = document.createElement('a'); a.href = '#' + slide.id; a.className = 'nav-slide' + (/b$/.test(n) ? ' practice' : '');
+    a.innerHTML = '<span class="n">' + n + '</span>'; a.appendChild(document.createTextNode(text(h1)));
+    nav.appendChild(a); links.push([slide, a]);
+    slide.querySelectorAll('h2').forEach(function (h2, i) {
+      if (!h2.id) h2.id = slide.id + '-s' + (i + 1);
+      h2.style.scrollMarginTop = '16px';
+      var sub = document.createElement('a'); sub.href = '#' + h2.id; sub.className = 'nav-sub'; sub.textContent = text(h2);
+      nav.appendChild(sub);
+    });
+  });
+  var setActive = function () {
+    var cur = links[0];
+    links.forEach(function (l) { if (l[0].getBoundingClientRect().top < window.innerHeight * 0.3) cur = l; });
+    links.forEach(function (l) { l[1].classList.toggle('active', l === cur); });
+    if (cur) { var r = cur[1].getBoundingClientRect(), nr = nav.getBoundingClientRect(); if (r.top < nr.top || r.bottom > nr.bottom) cur[1].scrollIntoView({ block: 'nearest' }); }
+  };
+  window.addEventListener('scroll', setActive, { passive: true }); setActive();
+  nav.addEventListener('click', function (e) { if (e.target.closest('a') && window.innerWidth < 1100) setNav(false); });
+  var open = window.innerWidth >= 1100;
+  try { var v = localStorage.getItem('a2-nav'); if (v !== null && window.innerWidth >= 1100) open = v === '1'; } catch (e) {}
+  setNav(open, true);
+})();
+function setNav(on, init) {
+  document.body.classList.toggle('nav-open', on);
+  if (!init) { try { localStorage.setItem('a2-nav', on ? '1' : '0'); } catch (e) {} }
+}
+function toggleNav() { setNav(!document.body.classList.contains('nav-open')); }
 </script>
 </body>
 </html>
