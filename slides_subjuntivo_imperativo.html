@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Subjuntivo e imperativo — slides</title>
+<style>
+  /* ── Base ── */
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: #7A90A8;
+    margin: 0;
+    padding: 32px 16px;
+    color: #1a1a1a;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Layout wrappers ── */
+  .slide, .slide-label, .block-title,
+  .page-break, .teacher-notes-toggle,
+  .teacher-notes-content, .draft-banner {
+    width: 860px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .draft-banner {
+    padding: 10px 18px;
+    background: #e8d5f5;
+    border-left: 5px solid #8e44ad;
+    font-size: 0.88em;
+    color: #5b2c6f;
+    font-weight: bold;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+
+  /* ── Slide card — bone white with blue boundary ── */
+  .slide {
+    background: #F7F3EC;
+    min-height: 480px;
+    padding: 44px 52px;
+    border-radius: 3px;
+    border: 1.5px solid #BDD0E8;
+    border-top: 4px solid #1E52A0;
+    box-shadow: 0 3px 18px rgba(20, 55, 130, 0.14), 0 1px 4px rgba(0,0,0,.10);
+    scroll-margin-top: 16px;
+  }
+
+  .page-break {
+    border: none;
+    border-top: 4px dashed #8AAAC8;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 8px 0;
+  }
+
+  .slide-label {
+    font-size: 0.72em;
+    color: #6A85A8;
+    padding: 6px 2px 2px;
+    text-align: right;
+    letter-spacing: .5px;
+  }
+
+  .block-title {
+    margin-top: 28px;
+    margin-bottom: 6px;
+    font-size: 0.72em;
+    font-weight: 700;
+    color: #1E52A0;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 0;
+    border-bottom: 2px solid #1E52A0;
+  }
+
+  /* ── Slide number badge in h1 ── */
+  .slide-num {
+    display: inline-block;
+    color: #2563EB;
+    font-weight: 700;
+    font-size: 0.85em;
+    margin-right: 8px;
+    opacity: 0.75;
+    letter-spacing: 0;
+  }
+
+  /* ── Typography ── */
+  h1 {
+    font-size: 1.35em;
+    font-weight: 700;
+    margin: 0 0 18px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #1A3A7A;
+    line-height: 1.3;
+    color: #1A3A7A;
+  }
+
+  h2 {
+    font-size: 0.95em;
+    font-weight: 700;
+    margin: 22px 0 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #C8D8EE;
+    color: #1E52A0;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+
+  p { font-size: 0.9em; margin: 0 0 8px; line-height: 1.65; }
+
+  ul { margin: 4px 0 10px; padding-left: 20px; }
+  li { font-size: 0.9em; line-height: 1.65; margin-bottom: 10px; }
+  li:last-child { margin-bottom: 0; }
+
+  /* ── Tables ── */
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 0.85em; }
+  th, td { border: 1px solid #C8D8EE; padding: 8px 12px; text-align: left; vertical-align: top; line-height: 1.5; }
+  th { background: #E4EEF9; font-weight: 700; color: #1A3A7A; }
+  tr:nth-child(even) td { background: #F2F7FD; }
+
+  /* ── Rule boxes ── */
+  .rule {
+    background: #EDF3FB;
+    border-left: 4px solid #2563EB;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88em;
+    line-height: 1.7;
+    border-radius: 0 4px 4px 0;
+  }
+  .rule strong { color: #1A3A7A; }
+  .rule em {
+    background: #DBEAFE;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-style: italic;
+    color: #1E40AF;
+  }
+
+  /* ── Notes ── */
+  .note {
+    font-size: 0.82em;
+    color: #4A6080;
+    line-height: 1.55;
+    margin: 8px 0;
+    padding-left: 10px;
+    border-left: 2px solid #B8CCE4;
+  }
+
+  /* ── Status colors ── */
+  .ok   { color: #1e7e34; font-weight: 600; }
+  .warn { color: #856404; font-weight: 600; }
+  .bad  { color: #a71d2a; font-weight: 600; }
+
+  /* ── Inline key-term highlight ── */
+  .key {
+    background: #DBEAFE;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-weight: 700;
+    color: #1E40AF;
+  }
+
+  /* ── Layout columns ── */
+  .cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .cols3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+
+  /* ── Teacher notes (collapsible) ── */
+  .teacher-notes-toggle {
+    display: block;
+    padding: 9px 14px;
+    background: #fff8e1;
+    border-left: 4px solid #d4a017;
+    font-size: 0.83em;
+    color: #795b04;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 3px;
+    margin-top: 2px;
+  }
+  .teacher-notes-toggle:hover { background: #ffe69c; }
+
+  .teacher-notes-content {
+    margin-bottom: 32px;
+    padding: 0 18px;
+    background: #fef7e0;
+    border-left: 4px solid #d4a017;
+    font-size: 0.83em;
+    line-height: 1.65;
+    color: #333;
+    border-radius: 0 4px 4px 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+  }
+  .teacher-notes-content.show { max-height: 2400px; padding: 14px 18px; }
+  .teacher-notes-content strong { color: #7d5a00; }
+  .teacher-notes-content em { font-style: italic; color: #555; }
+  .teacher-notes-content p { margin-bottom: 10px; }
+
+  /* ── Interactive exercises ── */
+  .exercise-item {
+    background: #EDF3FB;
+    border-left: 4px solid #2563EB;
+    padding: 14px 16px;
+    margin: 14px 0;
+    border-radius: 0 5px 5px 0;
+  }
+  .exercise-context {
+    font-size: 0.82em;
+    color: #4A6080;
+    margin-bottom: 8px;
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .exercise-prompt {
+    font-size: 0.92em;
+    margin-bottom: 10px;
+    color: #1a1a1a;
+    line-height: 1.6;
+  }
+  .exercise-input { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; }
+  .exercise-input input {
+    flex: 1;
+    padding: 7px 10px;
+    border: 1px solid #B0C4DE;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.92em;
+    color: #222;
+    background: #fff;
+  }
+  .exercise-input input:focus { outline: 2px solid #2563EB; border-color: transparent; }
+  .exercise-input button {
+    padding: 7px 16px;
+    background: #2563EB;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .exercise-input button:hover { background: #1D4ED8; }
+  .exercise-feedback { margin-top: 8px; padding: 9px 12px; border-radius: 4px; font-size: 0.88em; display: none; line-height: 1.5; }
+  .exercise-feedback.show { display: block; }
+  .feedback-correct  { background: #d4edda; border-left: 3px solid #28a745; color: #155724; }
+  .feedback-incorrect { background: #f8d7da; border-left: 3px solid #c0392b; color: #721c24; }
+  .feedback-answer   { font-weight: 700; margin-top: 5px; font-family: 'Courier New', monospace; }
+
+  /* ── Collapsible examples ── */
+  .examples-toggle {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #DBEAFE;
+    border-left: 3px solid #1D4ED8;
+    font-size: 0.8em;
+    color: #1D4ED8;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 0 3px 3px 0;
+    margin: 10px 0 2px;
+  }
+  .examples-toggle:hover { background: #BFDBFE; }
+  .examples-content {
+    max-height: 2400px;
+    overflow: hidden;
+    transition: opacity 0.3s ease, max-height 0.35s ease;
+    opacity: 1;
+    padding-top: 4px;
+  }
+  .examples-content.collapsed { max-height: 0; opacity: 0; }
+
+  /* ── Responsive ── */
+  @media (max-width: 680px) {
+    body { padding: 10px 8px; }
+    .slide { padding: 22px 18px; min-height: unset; }
+    .cols2, .cols3 { grid-template-columns: 1fr; gap: 14px; }
+    table { font-size: 0.78em; }
+    th, td { padding: 5px 7px; }
+    h1 { font-size: 1.1em; }
+    h2 { font-size: 0.9em; }
+    .exercise-input { flex-wrap: wrap; }
+    .exercise-input input { min-width: 0; }
+    .rule { padding: 9px 12px; }
+  }
+
+  /* ── Bilingüe + análisis en bloques ── */
+  .neg{color:#b00}
+.en{display:block;font-size:.85em;color:#666;font-weight:normal}
+h1 .en{font-size:.6em;color:#6A85A8} h2 .en{font-size:.75em;text-transform:none;letter-spacing:0}
+.row{display:flex;flex-wrap:wrap;align-items:flex-start;gap:6px;margin:10px 0}
+.word{font-weight:bold;min-width:150px;padding-top:6px}
+.op{font-size:1.2em;padding-top:6px}
+.chip{display:inline-block;border:1px solid #999;padding:4px 8px;text-align:center}
+.chip b{display:block;font-size:1.15em}
+.chip small{display:block;font-size:.8em}
+.chip.p{border-color:#2563EB}.chip.p b{color:#2563EB}
+.chip.n b{color:#b00}
+.chip.x{border-style:dashed}.chip.x b{color:#b00;text-decoration:line-through}
+.chip.ok{border-color:#080}.chip.ok b{color:#080}
+  .slide p .en, .slide li .en {margin-top:2px}
+</style>
+</head>
+<body>
+
+<!-- ===================== BLOQUE 4 ===================== -->
+<div class="block-title">Bloque 4 — Subjuntivo e imperativo</div>
+
+<!-- SLIDE 13 -->
+<div class="slide-label">13 / 16</div>
+<div class="slide" id="slide-13">
+  <h1><span class="slide-num">13.</span> Presente de subjuntivo: formación<span class="en" lang="en">Present subjunctive: how it is formed</span></h1>
+<p><b>Truco:</b> parte del <b>yo</b> del presente, quita la <b>-o</b> y cambia la vocal: <b>-ar → e</b>, <b>-er / -ir → a</b>.<span class="en" lang="en"><b>Trick:</b> start from the present-tense <b>yo</b> form, drop the <b>-o</b> and switch the vowel: <b>-ar → e</b>, <b>-er / -ir → a</b>.</span></p>
+
+<h2>Análisis<span class="en" lang="en">Breakdown</span></h2>
+<div class="row"><span class="word">hablar</span><span class="chip "><b>hablo</b><small>yo, presente<span class="en" lang="en">I, present</span></small></span><span class="op">→</span><span class="chip "><b>habl-</b><small>raíz<span class="en" lang="en">stem</span></small></span><span class="op">+</span><span class="chip p"><b>-e</b><small>-ar → e</small></span><span class="op">=</span><span class="chip ok"><b>hable</b></span></div>
+<div class="row"><span class="word">tener</span><span class="chip "><b>tengo</b><small>yo, presente<span class="en" lang="en">I, present</span></small></span><span class="op">→</span><span class="chip "><b>teng-</b><small>raíz irregular<span class="en" lang="en">irregular stem</span></small></span><span class="op">+</span><span class="chip p"><b>-a</b><small>-er → a</small></span><span class="op">=</span><span class="chip ok"><b>tenga</b></span></div>
+
+<h2>Tabla<span class="en" lang="en">Table</span></h2>
+<table>
+<tr><th></th><th>hablar</th><th>comer</th><th>vivir</th><th>tener</th></tr>
+<tr><td>yo</td><td>hable</td><td>coma</td><td>viva</td><td>tenga</td></tr>
+<tr><td>tú</td><td>hables</td><td>comas</td><td>vivas</td><td>tengas</td></tr>
+<tr><td>él / ella / usted</td><td>hable</td><td>coma</td><td>viva</td><td>tenga</td></tr>
+<tr><td>nosotros</td><td>hablemos</td><td>comamos</td><td>vivamos</td><td>tengamos</td></tr>
+<tr><td>vosotros</td><td>habléis</td><td>comáis</td><td>viváis</td><td>tengáis</td></tr>
+<tr><td>ellos / ustedes</td><td>hablen</td><td>coman</td><td>vivan</td><td>tengan</td></tr>
+</table>
+<p>Estas formas son el <b>imperativo negativo</b> y el de <b>usted / ustedes</b> (siguiente diapositiva).<span class="en" lang="en">These forms give the <b>negative imperative</b> and the <b>usted / ustedes</b> imperative (next slide).</span></p>
+</div>
+
+<hr class="page-break">
+
+<!-- SLIDE 14 -->
+<div class="slide-label">14 / 16</div>
+<div class="slide" id="slide-14">
+  <h1><span class="slide-num">14.</span> Imperativo afirmativo y negativo<span class="en" lang="en">Affirmative and negative imperative</span></h1>
+
+<h2>Verbos regulares<span class="en" lang="en">Regular verbs</span></h2>
+<table>
+<tr><th></th><th>hablar</th><th>comer</th><th>vivir</th></tr>
+<tr><td>tú</td><td>habla <span class="neg">/ no hables</span></td><td>come <span class="neg">/ no comas</span></td><td>vive <span class="neg">/ no vivas</span></td></tr>
+<tr><td>usted</td><td>hable <span class="neg">/ no hable</span></td><td>coma <span class="neg">/ no coma</span></td><td>viva <span class="neg">/ no viva</span></td></tr>
+<tr><td>vosotros</td><td>hablad <span class="neg">/ no habléis</span></td><td>comed <span class="neg">/ no comáis</span></td><td>vivid <span class="neg">/ no viváis</span></td></tr>
+<tr><td>ustedes</td><td>hablen <span class="neg">/ no hablen</span></td><td>coman <span class="neg">/ no coman</span></td><td>vivan <span class="neg">/ no vivan</span></td></tr>
+</table>
+
+<h2>Reglas<span class="en" lang="en">Rules</span></h2>
+<div class="row"><span class="word">tú +</span><span class="chip "><b>habla</b><small>presente: él/ella<span class="en" lang="en">present: he/she</span></small></span></div>
+<div class="row"><span class="word">vosotros +</span><span class="chip "><b>hablar</b><small>infinitivo<span class="en" lang="en">infinitive</span></small></span><span class="op">→</span><span class="chip "><b>habla<u>d</u></b><small>-r → -d</small></span></div>
+<div class="row"><span class="word">usted / ustedes</span><span class="chip "><b>hable / hablen</b><small>subjuntivo<span class="en" lang="en">subjunctive</span></small></span></div>
+<div class="row"><span class="word">negativo<span class="en" lang="en">negative</span></span><span class="chip n"><b>no</b></span><span class="op">+</span><span class="chip "><b>hables</b><small>subjuntivo<span class="en" lang="en">subjunctive</span></small></span></div>
+
+<h2>Verbos irregulares (tú)<span class="en" lang="en">Irregular verbs (tú)</span></h2>
+<table>
+<tr><th>Infinitivo</th><th>tú +</th><th class="neg">tú −</th><th>usted / ustedes</th><th>vosotros + / −</th></tr>
+<tr><td>tener</td><td>ten</td><td class="neg">no tengas</td><td>tenga / tengan</td><td>tened <span class="neg">/ no tengáis</span></td></tr>
+<tr><td>venir</td><td>ven</td><td class="neg">no vengas</td><td>venga / vengan</td><td>venid <span class="neg">/ no vengáis</span></td></tr>
+<tr><td>poner</td><td>pon</td><td class="neg">no pongas</td><td>ponga / pongan</td><td>poned <span class="neg">/ no pongáis</span></td></tr>
+<tr><td>salir</td><td>sal</td><td class="neg">no salgas</td><td>salga / salgan</td><td>salid <span class="neg">/ no salgáis</span></td></tr>
+<tr><td>hacer</td><td>haz</td><td class="neg">no hagas</td><td>haga / hagan</td><td>haced <span class="neg">/ no hagáis</span></td></tr>
+<tr><td>decir</td><td>di</td><td class="neg">no digas</td><td>diga / digan</td><td>decid <span class="neg">/ no digáis</span></td></tr>
+<tr><td>ir</td><td>ve</td><td class="neg">no vayas</td><td>vaya / vayan</td><td>id <span class="neg">/ no vayáis</span></td></tr>
+<tr><td>ser</td><td>sé</td><td class="neg">no seas</td><td>sea / sean</td><td>sed <span class="neg">/ no seáis</span></td></tr>
+</table>
+
+<h2>Reglas<span class="en" lang="en">Rules</span></h2>
+<div class="row"><span class="word">tú +</span><span class="chip "><b>ten, ven, pon…</b><small>irregular<span class="en" lang="en">irregular</span></small></span></div>
+<div class="row"><span class="word">el resto<span class="en" lang="en">the rest</span></span><span class="chip "><b>tengo</b><small>yo, presente<span class="en" lang="en">I, present</span></small></span><span class="op">→</span><span class="chip "><b>teng-</b></span><span class="op">+</span><span class="chip "><b>-a / -as / -an / -áis</b><small>subjuntivo<span class="en" lang="en">subjunctive</span></small></span></div>
+
+<h2>Pronombres<span class="en" lang="en">Pronouns</span></h2>
+<div class="row"><span class="word">afirmativo<span class="en" lang="en">affirmative</span></span><span class="chip "><b>baña</b></span><span class="op">+</span><span class="chip p"><b>te</b><small>detrás, unido<span class="en" lang="en">after, attached</span></small></span><span class="op">=</span><span class="chip "><b>báñate</b></span></div>
+<div class="row"><span class="word">negativo<span class="en" lang="en">negative</span></span><span class="chip n"><b>no</b></span><span class="op">+</span><span class="chip p"><b>te</b><small>delante, separado<span class="en" lang="en">before, separate</span></small></span><span class="op">+</span><span class="chip "><b>bañes</b></span></div>
+<div class="row"><span class="word">vosotros + os</span><span class="chip "><b>sentad</b></span><span class="op">+</span><span class="chip p"><b>os</b></span><span class="op">=</span><span class="chip ok"><b>sentaos</b><small>se pierde la -d<span class="en" lang="en">the -d drops</span></small></span><span class="chip x"><b>sentaros</b><small>✗ infinitivo<span class="en" lang="en">✗ infinitive</span></small></span></div>
+<p>Excepción: <b>idos</b>. Más en la diapositiva de pronombres.<span class="en" lang="en">Exception: idos. More on the pronouns slide.</span></p>
+</div>
+
+<hr class="page-break">
+
+<!-- SLIDE 15 -->
+<div class="slide-label">15 / 16</div>
+<div class="slide" id="slide-15">
+  <h1><span class="slide-num">15.</span> Imperativo con pronombres<span class="en" lang="en">Imperative with pronouns</span></h1>
+
+<h2>Ejemplos<span class="en" lang="en">Examples</span></h2>
+<table>
+<tr><th>Afirmativo: detrás y unido<span class="en" lang="en">Affirmative: after, attached</span></th><th class="neg">Negativo: delante y separado<span class="en" lang="en">Negative: before, separate</span></th></tr>
+<tr><td>báña<b>te</b></td><td class="neg">no <b>te</b> bañes</td></tr>
+<tr><td>pása<b>selo</b></td><td class="neg">no <b>se lo</b> pases</td></tr>
+<tr><td>dí<b>melo</b></td><td class="neg">no <b>me lo</b> digas</td></tr>
+</table>
+
+<h2>Análisis<span class="en" lang="en">Breakdown</span></h2>
+<div class="row"><span class="word">Báñate</span><span class="chip "><b>baña</b><small>verbo (tú)<span class="en" lang="en">verb (tú)</span></small></span><span class="op">+</span><span class="chip p"><b>te</b><small>reflexivo<span class="en" lang="en">reflexive</span></small></span></div>
+<div class="row"><span class="word">No te bañes</span><span class="chip n"><b>no</b><small>negación<span class="en" lang="en">negation</span></small></span><span class="op">+</span><span class="chip p"><b>te</b><small>reflexivo<span class="en" lang="en">reflexive</span></small></span><span class="op">+</span><span class="chip "><b>bañes</b><small>subjuntivo<span class="en" lang="en">subjunctive</span></small></span></div>
+<div class="row"><span class="word">Pásaselo</span><span class="chip "><b>pasa</b><small>verbo (tú)<span class="en" lang="en">verb (tú)</span></small></span><span class="op">+</span><span class="chip p"><b>se</b><small>a él/ella<span class="en" lang="en">to him/her</span></small></span><span class="op">+</span><span class="chip p"><b>lo</b><small>la cosa<span class="en" lang="en">the thing</span></small></span></div>
+<div class="row"><span class="word">No se lo pases</span><span class="chip n"><b>no</b><small>negación<span class="en" lang="en">negation</span></small></span><span class="op">+</span><span class="chip p"><b>se</b><small>a él/ella<span class="en" lang="en">to him/her</span></small></span><span class="op">+</span><span class="chip p"><b>lo</b><small>la cosa<span class="en" lang="en">the thing</span></small></span><span class="op">+</span><span class="chip "><b>pases</b><small>subjuntivo<span class="en" lang="en">subjunctive</span></small></span></div>
+
+<h2>Reglas<span class="en" lang="en">Rules</span></h2>
+<div class="row"><span class="word">1. Afirmativo<span class="en" lang="en">Affirmative</span></span><span class="chip "><b>verbo</b></span><span class="op">+</span><span class="chip p"><b>pronombre</b><small>detrás, unido<span class="en" lang="en">after, attached</span></small></span></div>
+<div class="row"><span class="word">2. Negativo<span class="en" lang="en">Negative</span></span><span class="chip n"><b>no</b></span><span class="op">+</span><span class="chip p"><b>pronombre</b><small>delante, separado<span class="en" lang="en">before, separate</span></small></span><span class="op">+</span><span class="chip "><b>verbo</b><small>subjuntivo<span class="en" lang="en">subjunctive</span></small></span></div>
+<div class="row"><span class="word">3. Orden<span class="en" lang="en">Order</span></span><span class="chip p"><b>me / te / se / nos / os</b><small>indirecto o reflexivo<span class="en" lang="en">indirect or reflexive</span></small></span><span class="op">+</span><span class="chip p"><b>lo / la / los / las</b><small>directo<span class="en" lang="en">direct</span></small></span></div>
+<div class="row"><span class="word">4. le → se</span><span class="chip p"><b>le / les</b></span><span class="op">+</span><span class="chip p"><b>lo</b></span><span class="op">→</span><span class="chip p"><b>se lo</b></span><span class="chip x"><b>pásalelo</b></span><span class="chip ok"><b>pásaselo</b></span></div>
+<div class="row"><span class="word">5. Tilde<span class="en" lang="en">Accent</span></span><span class="chip "><b>baña</b></span><span class="op">→</span><span class="chip ok"><b>báñate</b><small>esdrújula: tilde<span class="en" lang="en">stress stays: accent added</span></small></span><span class="chip "><b>dame</b><small>llana: sin tilde<span class="en" lang="en">no accent needed</span></small></span></div>
+
+<h2>bañarse en todas las personas<span class="en" lang="en">bañarse in every person</span></h2>
+<table>
+<tr><th></th><th>+</th><th class="neg">−</th></tr>
+<tr><td>tú</td><td>báña<b>te</b></td><td class="neg">no <b>te</b> bañes</td></tr>
+<tr><td>usted</td><td>báñe<b>se</b></td><td class="neg">no <b>se</b> bañe</td></tr>
+<tr><td>vosotros</td><td>baña<b>os</b></td><td class="neg">no <b>os</b> bañéis</td></tr>
+<tr><td>ustedes</td><td>báñen<b>se</b></td><td class="neg">no <b>se</b> bañen</td></tr>
+</table>
+</div>
+
+<hr class="page-break">
+
+<!-- SLIDE 16 -->
+<div class="slide-label">16 / 16</div>
+<div class="slide" id="slide-16">
+  <h1><span class="slide-num">16.</span> Presente de subjuntivo<span class="en" lang="en">Present subjunctive</span></h1>
+
+<h2>Formación<span class="en" lang="en">Formation</span></h2>
+<div class="row"><span class="word">regla<span class="en" lang="en">rule</span></span><span class="chip "><b>yo presente</b><small>sin -o<span class="en" lang="en">drop -o</span></small></span><span class="op">+</span><span class="chip p"><b>-ar → e<br>-er / -ir → a</b><small>vocal cambiada<span class="en" lang="en">switched vowel</span></small></span></div>
+
+<h2>Análisis de la frase<span class="en" lang="en">Sentence breakdown</span></h2>
+<div class="row"><span class="word">Quiero que vengas<span class="en" lang="en">I want you to come</span></span><span class="chip "><b>Quiero</b><small>deseo<span class="en" lang="en">wish</span></small></span><span class="op">+</span><span class="chip p"><b>que</b></span><span class="op">+</span><span class="chip "><b>(tú)</b><small>otro sujeto<span class="en" lang="en">different subject</span></small></span><span class="op">+</span><span class="chip ok"><b>vengas</b><small>subjuntivo<span class="en" lang="en">subjunctive</span></small></span></div>
+<div class="row"><span class="word">No creo que sea verdad<span class="en" lang="en">I don't think it's true</span></span><span class="chip n"><b>No creo</b><small>duda<span class="en" lang="en">doubt</span></small></span><span class="op">+</span><span class="chip p"><b>que</b></span><span class="op">+</span><span class="chip ok"><b>sea</b><small>subjuntivo<span class="en" lang="en">subjunctive</span></small></span></div>
+<div class="row"><span class="word">Cuando llegues, llama<span class="en" lang="en">When you arrive, call</span></span><span class="chip "><b>Cuando</b><small>futuro<span class="en" lang="en">future</span></small></span><span class="op">+</span><span class="chip ok"><b>llegues</b><small>subjuntivo<span class="en" lang="en">subjunctive</span></small></span><span class="op">+</span><span class="chip "><b>llama</b><small>imperativo<span class="en" lang="en">imperative</span></small></span></div>
+
+<h2>Usos<span class="en" lang="en">Uses</span></h2>
+<table>
+<tr><th>Uso<span class="en">Use</span></th><th>Activador<span class="en">Trigger</span></th><th>Ejemplo<span class="en">Example</span></th></tr>
+<tr><td>Deseo<span class="en">Wishes</span></td><td>querer, esperar, ojalá</td><td>Ojalá <b>llueva</b>.</td></tr>
+<tr><td>Influencia<span class="en">Influence</span></td><td>pedir, recomendar, aconsejar</td><td>Te recomiendo que <b>estudies</b>.</td></tr>
+<tr><td>Emoción<span class="en">Emotion</span></td><td>alegrarse, gustar, molestar</td><td>Me alegra que <b>estés</b> aquí.</td></tr>
+<tr><td>Duda / negación<span class="en">Doubt / denial</span></td><td>no creer, dudar, no es verdad</td><td>Dudo que <b>venga</b>.</td></tr>
+<tr><td>Valoración<span class="en">Evaluation</span></td><td>es importante / necesario / mejor que</td><td>Es mejor que <b>salgas</b> ya.</td></tr>
+<tr><td>Finalidad<span class="en">Purpose</span></td><td>para que</td><td>Lo digo para que lo <b>sepas</b>.</td></tr>
+<tr><td>Tiempo futuro<span class="en">Future time</span></td><td>cuando, en cuanto, hasta que</td><td>Cuando <b>tengas</b> tiempo, llámame.</td></tr>
+</table>
+
+<h2>Irregulares<span class="en" lang="en">Irregular verbs</span></h2>
+<div class="row"><span class="word">raíz del yo<span class="en" lang="en">yo stem</span></span><span class="chip "><b>tengo → tenga</b></span><span class="chip "><b>hago → haga</b></span><span class="chip "><b>digo → diga</b></span><span class="chip "><b>conozco → conozca</b></span><span class="chip "><b>veo → vea</b></span></div>
+<div class="row"><span class="word">6 totalmente irregulares<span class="en" lang="en">6 fully irregular</span></span><span class="chip "><b>dar → dé</b></span><span class="chip "><b>estar → esté</b></span><span class="chip "><b>haber → haya</b></span><span class="chip "><b>ir → vaya</b></span><span class="chip "><b>saber → sepa</b></span><span class="chip "><b>ser → sea</b></span></div>
+<div class="row"><span class="word">cambio de raíz<span class="en" lang="en">stem change</span></span><span class="chip p"><b>pensar → piense</b><small>e → ie</small></span><span class="chip p"><b>poder → pueda</b><small>o → ue</small></span><span class="chip p"><b>pedir → pida</b><small>e → i</small></span></div>
+<div class="row"><span class="word">ortografía<span class="en" lang="en">spelling</span></span><span class="chip "><b>buscar → busque</b><small>c → qu</small></span><span class="chip "><b>llegar → llegue</b><small>g → gu</small></span><span class="chip "><b>empezar → empiece</b><small>z → c</small></span><span class="chip "><b>coger → coja</b><small>g → j</small></span></div>
+
+<h2>Trucos<span class="en" lang="en">Tips</span></h2>
+<div class="row"><span class="word">1. Mismo sujeto<span class="en" lang="en">Same subject</span></span><span class="chip ok"><b>Quiero venir</b><small>infinitivo<span class="en" lang="en">infinitive</span></small></span><span class="chip ok"><b>Quiero que vengas</b><small>sujetos distintos: subjuntivo<span class="en" lang="en">different subjects: subjunctive</span></small></span></div>
+<div class="row"><span class="word">2. Creer / pensar</span><span class="chip "><b>Creo que es</b><small>afirmativo: indicativo<span class="en" lang="en">affirmative: indicative</span></small></span><span class="chip ok"><b>No creo que sea</b><small>negativo: subjuntivo<span class="en" lang="en">negative: subjunctive</span></small></span></div>
+<div class="row"><span class="word">3. Cuando</span><span class="chip "><b>Cuando llego, como</b><small>hábito: indicativo<span class="en" lang="en">habit: indicative</span></small></span><span class="chip ok"><b>Cuando llegue, comeré</b><small>futuro: subjuntivo<span class="en" lang="en">future: subjunctive</span></small></span><span class="chip x"><b>Cuando llegaré</b></span></div>
+<div class="row"><span class="word">4. -ir: nosotros</span><span class="chip p"><b>dormir → durmamos</b><small>o → u</small></span><span class="chip p"><b>sentir → sintamos</b><small>e → i</small></span></div>
+<div class="row"><span class="word">5. Ojalá</span><span class="chip ok"><b>Ojalá + subjuntivo</b><small>siempre<span class="en" lang="en">always</span></small></span></div>
+</div>
+
+</body>
+</html>
